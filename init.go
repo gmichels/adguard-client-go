@@ -56,6 +56,7 @@ func NewClient(host, username, password, scheme *string, timeout *int) (*ADG, er
 func (c *ADG) doRequest(req *http.Request) ([]byte, error) {
 	// add auth info to request
 	req.SetBasicAuth(c.Auth.Username, c.Auth.Password)
+	req.Header.Set("Content-Type", "application/json")
 
 	// perform request
 	res, err := c.HTTPClient.Do(req)
