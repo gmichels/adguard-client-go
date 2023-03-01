@@ -65,3 +65,30 @@ func (c *ADG) CreateClient(client Client) (*Client, error) {
 	// return the same client that was passed
 	return &client, nil
 }
+
+// UpdateClient - Update a client
+func (c *ADG) UpdateClient(clientUpdate ClientUpdate) (*Client, error) {
+	// convert provided update client to JSON
+	rb, err := json.Marshal(clientUpdate)
+	if err != nil {
+		return nil, err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/clients/update", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return nil, err
+	}
+
+	// perform request
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// appease Go
+	_ = body
+
+	// return the client data that was passed
+	return &clientUpdate.Data, nil
+}

@@ -28,25 +28,8 @@ type ClientAuto struct {
 	WhoisInfo map[string]string `json:"whois_info"`
 }
 
-// type ClientsFind struct {
-// 	Id []ClientsFindEntry
-// }
-
-// type ClientsFindEntry struct {
-// 	Id ClientFindSubEntry
-// }
-
-// type ClientFindSubEntry struct {
-// 	Name                     string    `json:"name"`
-// 	Ids                      []string  `json:"ids"`
-// 	UseGlobalSettings        bool      `json:"use_global_settings"`
-// 	FilteringEnabled         bool      `json:"filtering_enabled"`
-// 	ParentalEnabled          bool      `json:"parental_enabled"`
-// 	SafebrowsingEnabled      bool      `json:"safebrowsing_enabled"`
-// 	SafeSearchEnabled        bool      `json:"safesearch_enabled"`
-// 	UseGlobalBlockedServices bool      `json:"use_global_blocked_services"`
-// 	BlockedServices          []string  `json:"blocked_services"`
-// 	WhoisInfo                WhoisInfo `json:"whois_info"`
-// 	Disallowed               bool      `json:"disallowed"`
-// 	DisallowedRule           string    `json:"disallowed_rule"`
-// }
+// ClientUpdate
+type ClientUpdate struct {
+	Name string `json:"name"`
+	Data Client `json:"data"`
+}
