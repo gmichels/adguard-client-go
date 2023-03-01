@@ -92,3 +92,30 @@ func (c *ADG) UpdateClient(clientUpdate ClientUpdate) (*Client, error) {
 	// return the client data that was passed
 	return &clientUpdate.Data, nil
 }
+
+// DeleteClient - Deletes a client
+func (c *ADG) DeleteClient(clientDelete ClientDelete) error {
+	// convert provided delete client to JSON
+	rb, err := json.Marshal(clientDelete)
+	if err != nil {
+		return err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/clients/delete", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	body, err := c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// appease Go
+	_ = body
+
+	// no need to return anything
+	return nil
+}

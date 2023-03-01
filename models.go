@@ -33,3 +33,8 @@ type ClientUpdate struct {
 	Name string `json:"name"`
 	Data Client `json:"data"`
 }
+
+// ClientDelete
+type ClientDelete struct {
+	Name string `json:"name"`
+}
