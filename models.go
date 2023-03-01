@@ -9,15 +9,17 @@ type AllClients struct {
 
 // Client
 type Client struct {
-	Name                string   `json:"name"`
-	Ids                 []string `json:"ids"`
-	UseGlobalSettings   bool     `json:"use_global_settings"`
-	FilteringEnabled    bool     `json:"filtering_enabled"`
-	ParentalEnabled     bool     `json:"parental_enabled"`
-	SafebrowsingEnabled bool     `json:"safebrowsing_enabled"`
-	BlockedServices     []string `json:"blocked_services"`
-	Upstreams           []string `json:"upstreams"`
-	Tags                []string `json:"tags"`
+	Name                     string   `json:"name"`
+	Ids                      []string `json:"ids"`
+	UseGlobalSettings        bool     `json:"use_global_settings"`
+	FilteringEnabled         bool     `json:"filtering_enabled"`
+	ParentalEnabled          bool     `json:"parental_enabled"`
+	SafebrowsingEnabled      bool     `json:"safebrowsing_enabled"`
+	SafesearchEnabled        bool     `json:"safesearch_enabled"`
+	UseGlobalBlockedServices bool     `json:"use_global_blocked_services"`
+	BlockedServices          []string `json:"blocked_services"`
+	Upstreams                []string `json:"upstreams"`
+	Tags                     []string `json:"tags"`
 }
 
 // ClientAuto
