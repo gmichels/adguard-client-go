@@ -167,7 +167,7 @@ func (c *ADG) CreateListFilter(filterData AddUrlRequest) (*Filter, error) {
 }
 
 // UpdateListFilter - Update a list filter
-func (c *ADG) UpdateListFilter(filterUpdate FilterSetUrl) (*FilterSetUrl, error) {
+func (c *ADG) UpdateListFilter(filterUpdate FilterSetUrl) (*Filter, error) {
 	// convert provided update list info to JSON
 	rb, err := json.Marshal(filterUpdate)
 	if err != nil {
@@ -189,8 +189,21 @@ func (c *ADG) UpdateListFilter(filterUpdate FilterSetUrl) (*FilterSetUrl, error)
 	// appease Go
 	_ = body
 
-	// return the data that was passed
-	return &filterUpdate, nil
+	// default filter type to blacklist
+	filterType := "blacklist"
+	if filterUpdate.Whitelist {
+		// switch to whitelist
+		filterType = "whitelist"
+	}
+
+	// retrieve the filter from the all filters list
+	filter, err := c.GetListFilterByName(filterUpdate.Data.Name, filterType)
+	if err != nil {
+		return nil, err
+	}
+
+	// return the filter
+	return filter, nil
 }
 
 // DeleteListFilter - Deletes a client
