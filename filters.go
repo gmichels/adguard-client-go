@@ -41,7 +41,7 @@ func (c *ADG) GetUserRules() (*[]string, error) {
 	return &allFilters.UserRules, nil
 }
 
-// UpdateUserRules - Returns a list of all user rules
+// UpdateUserRules - Update user-provided rules, returning the list of all user rules
 func (c *ADG) UpdateUserRules(rules SetRulesRequest) (*[]string, error) {
 	// convert provided filter to JSON
 	rb, err := json.Marshal(rules)
@@ -68,145 +68,121 @@ func (c *ADG) UpdateUserRules(rules SetRulesRequest) (*[]string, error) {
 	return &rules.Rules, nil
 }
 
-// GetListFilterById - Returns a list filter based on its id and whether it's a blacklist/whitelist filter
-func (c *ADG) GetListFilterById(id int64, filterType string) (*Filter, error) {
+// GetListFilterById - Returns a list filter based on its name and whether it's a whitelist filter
+func (c *ADG) GetListFilterById(id int64) (*Filter, bool, error) {
 	allFilters, err := c.GetAllFilters()
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 
-	// go through the filters in the response until we find the one we want, based on the filter type
-	if filterType == "blacklist" {
-		for _, filterInfo := range allFilters.Filters {
-			if filterInfo.Id == id {
-				return &filterInfo, nil
-			}
+	// go through the blacklist filters in the response until we find the one we want
+	for _, filterInfo := range allFilters.Filters {
+		if filterInfo.Id == id {
+			return &filterInfo, false, nil
 		}
-	} else if filterType == "whitelist" {
-		for _, filterInfo := range allFilters.WhitelistFilters {
-			if filterInfo.Id == id {
-				return &filterInfo, nil
-			}
+	}
+	// go through the whitelist filters in the response until we find the one we want
+	for _, filterInfo := range allFilters.WhitelistFilters {
+		if filterInfo.Id == id {
+			return &filterInfo, true, nil
 		}
-	} else {
-		// if we got here, someone passed gibberish for filterType
-		return nil, fmt.Errorf("unknown value `%s` for `filterType` (allowed values are `blacklist` or `whitelist`)", filterType)
 	}
 
 	// when no matches are found
-	return nil, nil
+	return nil, false, nil
 }
 
-// GetListFilterByName - Returns a list filter based on its name and whether it's a blacklist/whitelist filter
-func (c *ADG) GetListFilterByName(listName string, filterType string) (*Filter, error) {
+// GetListFilterByName - Returns a list filter based on its name and whether it's a whitelist filter
+func (c *ADG) GetListFilterByName(listName string) (*Filter, bool, error) {
 	allFilters, err := c.GetAllFilters()
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 
-	// go through the filters in the response until we find the one we want, based on the filter type
-	if filterType == "blacklist" {
-		for _, filterInfo := range allFilters.Filters {
-			if filterInfo.Name == listName {
-				return &filterInfo, nil
-			}
+	// go through the blacklist filters in the response until we find the one we want
+	for _, filterInfo := range allFilters.Filters {
+		if filterInfo.Name == listName {
+			return &filterInfo, false, nil
 		}
-	} else if filterType == "whitelist" {
-		for _, filterInfo := range allFilters.WhitelistFilters {
-			if filterInfo.Name == listName {
-				return &filterInfo, nil
-			}
+	}
+	// go through the whitelist filters in the response until we find the one we want
+	for _, filterInfo := range allFilters.WhitelistFilters {
+		if filterInfo.Name == listName {
+			return &filterInfo, true, nil
 		}
-	} else {
-		// if we got here, someone passed gibberish for filterType
-		return nil, fmt.Errorf("unknown value `%s` for `filterType` (allowed values are `blacklist` or `whitelist`)", filterType)
 	}
 
 	// when no matches are found
-	return nil, nil
+	return nil, false, nil
 }
 
-// CreateListFilter - Create a list filter
-func (c *ADG) CreateListFilter(filterData AddUrlRequest) (*Filter, error) {
+// CreateListFilter - Create a list filter, returning the created filter and whether it's a whitelist filter
+func (c *ADG) CreateListFilter(filterData AddUrlRequest) (*Filter, bool, error) {
 	// convert provided filter to JSON
 	rb, err := json.Marshal(filterData)
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 
 	// initialize request
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/filtering/add_url", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 
 	// perform request
 	body, err := c.doRequest(req)
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 
 	// appease Go as returned body is useless
 	_ = body
 
-	// default filter type to blacklist
-	filterType := "blacklist"
-	if filterData.Whitelist {
-		// switch to whitelist
-		filterType = "whitelist"
-	}
-
 	// retrieve the filter from the all filters list
-	filter, err := c.GetListFilterByName(filterData.Name, filterType)
+	filter, whitelist, err := c.GetListFilterByName(filterData.Name)
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 
 	// return the filter
-	return filter, nil
+	return filter, whitelist, nil
 }
 
-// UpdateListFilter - Update a list filter
-func (c *ADG) UpdateListFilter(filterUpdate FilterSetUrl) (*Filter, error) {
+// UpdateListFilter - Update a list filter, returning the updated filter and whether it's a whitelist filter
+func (c *ADG) UpdateListFilter(filterUpdate FilterSetUrl) (*Filter, bool, error) {
 	// convert provided update list info to JSON
 	rb, err := json.Marshal(filterUpdate)
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 
 	// initialize request
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/filtering/set_url", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 
 	// perform request
 	body, err := c.doRequest(req)
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 
 	// appease Go
 	_ = body
 
-	// default filter type to blacklist
-	filterType := "blacklist"
-	if filterUpdate.Whitelist {
-		// switch to whitelist
-		filterType = "whitelist"
-	}
-
 	// retrieve the filter from the all filters list
-	filter, err := c.GetListFilterByName(filterUpdate.Data.Name, filterType)
+	filter, whitelist, err := c.GetListFilterByName(filterUpdate.Data.Name)
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 
 	// return the filter
-	return filter, nil
+	return filter, whitelist, nil
 }
 
-// DeleteListFilter - Deletes a client
+// DeleteListFilter - Deletes a list filter
 func (c *ADG) DeleteListFilter(filterDelete RemoveUrlRequest) error {
 	// convert provided delete filter to JSON
 	rb, err := json.Marshal(filterDelete)
