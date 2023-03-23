@@ -40,3 +40,54 @@ type ClientUpdate struct {
 type ClientDelete struct {
 	Name string `json:"name"`
 }
+
+// FilterStatus
+type FilterStatus struct {
+	Enabled          bool     `json:"enabled"`
+	Interval         int      `json:"interval"`
+	Filters          []Filter `json:"filters"`
+	WhitelistFilters []Filter `json:"whitelist_filters"`
+	UserRules        []string `json:"user_rules"`
+}
+
+// Filter
+type Filter struct {
+	Enabled     bool   `json:"enabled"`
+	Id          int64  `json:"id"`
+	LastUpdated string `json:"last_updated"`
+	Name        string `json:"name"`
+	RulesCount  int32  `json:"rules_count"`
+	Url         string `json:"url"`
+}
+
+// AddUrlRequest
+type AddUrlRequest struct {
+	Name      string `json:"name"`
+	Url       string `json:"url"`
+	Whitelist bool   `json:"whitelist"`
+}
+
+// FilterSetUrl
+type FilterSetUrl struct {
+	Data      FilterSetUrlData `json:"data"`
+	Url       string           `json:"url"`
+	Whitelist bool             `json:"whitelist"`
+}
+
+// FilterSetUrlData
+type FilterSetUrlData struct {
+	Enabled bool   `json:"enabled"`
+	Name    string `json:"name"`
+	Url     string `json:"url"`
+}
+
+// RemoveUrlRequest
+type RemoveUrlRequest struct {
+	Url       string `json:"url"`
+	Whitelist bool   `json:"whitelist"`
+}
+
+// SetRulesRequest
+type SetRulesRequest struct {
+	Rules []string `json:"rules"`
+}
