@@ -29,12 +29,12 @@ builds:
       - goos: darwin
         goarch: "386"
     binary: "{{ .ProjectName }}_v{{ .Version }}"
-archives:
-  - format: zip
-    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
-checksum:
-  name_template: "{{ .ProjectName }}_{{ .Version }}_SHA256SUMS"
-  algorithm: sha256
+# archives:
+#   - format: zip
+#     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+# checksum:
+#   name_template: "{{ .ProjectName }}_{{ .Version }}_SHA256SUMS"
+#   algorithm: sha256
 release:
   # If you want to manually examine the release before its live, uncomment this line:
   draft: true
