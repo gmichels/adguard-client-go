@@ -91,3 +91,9 @@ type RemoveUrlRequest struct {
 type SetRulesRequest struct {
 	Rules []string `json:"rules"`
 }
+
+// RewriteEntry
+type RewriteEntry struct {
+	Domain string `json:"domain"`
+	Answer string `json:"answer"`
+}
