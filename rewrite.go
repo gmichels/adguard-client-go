@@ -33,11 +33,13 @@ func (c *ADG) GetAllRewrites() (*[]RewriteEntry, error) {
 
 // GetRewrite - Return a DNS rewrite rule based on the domain
 func (c *ADG) GetRewrite(domain string) (*RewriteEntry, error) {
+	// retrieve all DNS rewrite rules
 	allRewrites, err := c.GetAllRewrites()
 	if err != nil {
 		return nil, err
 	}
 
+	// loop over the results until we find the one we want
 	for _, rewrite := range *allRewrites {
 		if rewrite.Domain == domain {
 			return &rewrite, nil
@@ -94,7 +96,7 @@ func (c *ADG) UpdateRewrite(rewrite RewriteEntry) (*RewriteEntry, error) {
 
 // DeleteRewrite - Delete a DNS rewrite rule based on the domain
 func (c *ADG) DeleteRewrite(domain string) error {
-	// confirm the DNS rewrite entry exists
+	// confirm the DNS rewrite rule entry exists
 	rewrite, err := c.GetRewrite(domain)
 	if err != nil {
 		return err
