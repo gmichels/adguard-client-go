@@ -103,8 +103,6 @@ type DNSConfig struct {
 	BootstrapDns           []string `json:"bootstrap_dns"`
 	UpstreamDns            []string `json:"upstream_dns"`
 	UpstreamDnsFile        string   `json:"upstream_dns_file"`
-	ProtectionEnabled      bool     `json:"protection_enabled"`
-	DhcpAvailable          bool     `json:"dhcp_available"`
 	RateLimit              uint     `json:"ratelimit"`
 	BlockingMode           string   `json:"blocking_mode"`
 	BlockingIpv4           string   `json:"blocking_ipv4"`
