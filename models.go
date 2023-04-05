@@ -97,3 +97,31 @@ type RewriteEntry struct {
 	Domain string `json:"domain"`
 	Answer string `json:"answer"`
 }
+
+// DNSConfig
+type DNSConfig struct {
+	BootstrapDns           []string `json:"bootstrap_dns"`
+	UpstreamDns            []string `json:"upstream_dns"`
+	UpstreamDnsFile        string   `json:"upstream_dns_file"`
+	RateLimit              uint     `json:"ratelimit"`
+	BlockingMode           string   `json:"blocking_mode"`
+	BlockingIpv4           string   `json:"blocking_ipv4"`
+	BlockingIpv6           string   `json:"blocking_ipv6"`
+	EDnsCsEnabled          bool     `json:"edns_cs_enabled"`
+	DisableIpv6            bool     `json:"disable_ipv6"`
+	DnsSecEnabled          bool     `json:"dnssec_enabled"`
+	CacheSize              uint     `json:"cache_size"`
+	CacheTtlMin            uint     `json:"cache_ttl_min"`
+	CacheTtlMax            uint     `json:"cache_ttl_max"`
+	CacheOptimistic        bool     `json:"cache_optimistic"`
+	UpstreamMode           string   `json:"upstream_mode"`
+	UsePrivatePtrResolvers bool     `json:"use_private_ptr_resolvers"`
+	ResolveClients         bool     `json:"resolve_clients"`
+	LocalPtrUpstreams      []string `json:"local_ptr_upstreams"`
+}
+
+// DNSInfo
+type DNSInfo struct {
+	*DNSConfig
+	DefaultLocalPtrUpstreams []string `json:"default_local_ptr_upstreams"`
+}
