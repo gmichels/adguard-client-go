@@ -125,3 +125,10 @@ type DNSInfo struct {
 	*DNSConfig
 	DefaultLocalPtrUpstreams []string `json:"default_local_ptr_upstreams"`
 }
+
+// AccessList
+type AccessList struct {
+	AllowedClients    []string `json:"allowed_clients"`
+	DisallowedClients []string `json:"disallowed_clients"`
+	BlockedHosts      []string `json:"blocked_hosts"`
+}
