@@ -140,3 +140,10 @@ type GetQueryLogConfigResponse struct {
 	AnonymizeClientIp bool     `json:"anonymize_client_ip"`
 	Ignored           []string `json:"ignored"`
 }
+
+// GetStatsConfigResponse
+type GetStatsConfigResponse struct {
+	Enabled  bool     `json:"enabled"`
+	Interval uint     `json:"interval"`
+	Ignored  []string `json:"ignored"`
+}
