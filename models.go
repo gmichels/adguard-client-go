@@ -158,3 +158,14 @@ type GetStatsConfigResponse struct {
 type Enabled struct {
 	Enabled bool `json:"enabled"`
 }
+
+// SafeSearchConfig
+type SafeSearchConfig struct {
+	Enabled    bool `json:"enabled"`
+	Bing       bool `json:"bing"`
+	DuckDuckGo bool `json:"duckduckgo"`
+	Google     bool `json:"google"`
+	Pixabay    bool `json:"pixabay"`
+	Yandex     bool `json:"yandex"`
+	YouTube    bool `json:"youtube"`
+}
