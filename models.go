@@ -132,3 +132,11 @@ type AccessList struct {
 	DisallowedClients []string `json:"disallowed_clients"`
 	BlockedHosts      []string `json:"blocked_hosts"`
 }
+
+// GetQueryLogConfigResponse
+type GetQueryLogConfigResponse struct {
+	Enabled           bool     `json:"enabled"`
+	Interval          uint     `json:"interval"`
+	AnonymizeClientIp bool     `json:"anonymize_client_ip"`
+	Ignored           []string `json:"ignored"`
+}
