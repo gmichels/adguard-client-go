@@ -137,6 +137,6 @@ type AccessList struct {
 type GetQueryLogConfigResponse struct {
 	Enabled           bool     `json:"enabled"`
 	Interval          uint     `json:"interval"`
-	AnonymizeClientIP bool     `json:"anonymize_client_ip"`
+	AnonymizeClientIp bool     `json:"anonymize_client_ip"`
 	Ignored           []string `json:"ignored"`
 }
