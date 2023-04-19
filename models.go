@@ -44,7 +44,7 @@ type ClientDelete struct {
 // FilterStatus
 type FilterStatus struct {
 	Enabled          bool     `json:"enabled"`
-	Interval         int      `json:"interval"`
+	Interval         uint     `json:"interval"`
 	Filters          []Filter `json:"filters"`
 	WhitelistFilters []Filter `json:"whitelist_filters"`
 	UserRules        []string `json:"user_rules"`
@@ -152,4 +152,9 @@ type GetStatsConfigResponse struct {
 	Enabled  bool     `json:"enabled"`
 	Interval uint     `json:"interval"`
 	Ignored  []string `json:"ignored"`
+}
+
+// SafeBrowsingStatus
+type SafeBrowsingStatus struct {
+	Enabled bool `json:"enabled"`
 }
