@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 )
 
 // GetSafeBrowsingStatus - Returns whether safe-browsing is enabled or not
@@ -40,7 +41,7 @@ func (c *ADG) SetSafeBrowsingStatus(status bool) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/safebrowsing/%s", c.HostURL, endpoint), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/safebrowsing/%s", c.HostURL, endpoint), strings.NewReader(string([]byte(`{}`))))
 	if err != nil {
 		return err
 	}
