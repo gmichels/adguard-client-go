@@ -50,6 +50,12 @@ type FilterStatus struct {
 	UserRules        []string `json:"user_rules"`
 }
 
+// FilterConfig
+type FilterConfig struct {
+	Enabled  bool `json:"enabled"`
+	Interval uint `json:"interval"`
+}
+
 // Filter
 type Filter struct {
 	Enabled     bool   `json:"enabled"`
