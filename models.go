@@ -154,7 +154,7 @@ type GetStatsConfigResponse struct {
 	Ignored  []string `json:"ignored"`
 }
 
-// SafeBrowsingStatus
-type SafeBrowsingStatus struct {
+// Enabled
+type Enabled struct {
 	Enabled bool `json:"enabled"`
 }

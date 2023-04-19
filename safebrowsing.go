@@ -21,14 +21,14 @@ func (c *ADG) GetSafeBrowsingStatus() (*bool, error) {
 		return nil, err
 	}
 
-	// convert response to SafeBrowsingStatus object
-	var safeBrowsingStatus SafeBrowsingStatus
-	err = json.Unmarshal(body, &safeBrowsingStatus)
+	// convert response to an Enabled object
+	var enabled Enabled
+	err = json.Unmarshal(body, &enabled)
 	if err != nil {
 		return nil, err
 	}
 
-	return &safeBrowsingStatus.Enabled, nil
+	return &enabled.Enabled, nil
 }
 
 // SetSafeBrowsingStatus - Enable or disable safe-browsing
