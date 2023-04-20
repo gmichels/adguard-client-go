@@ -163,9 +163,9 @@ type Enabled struct {
 type SafeSearchConfig struct {
 	Enabled    bool `json:"enabled"`
 	Bing       bool `json:"bing"`
-	DuckDuckGo bool `json:"duckduckgo"`
+	Duckduckgo bool `json:"duckduckgo"`
 	Google     bool `json:"google"`
 	Pixabay    bool `json:"pixabay"`
 	Yandex     bool `json:"yandex"`
-	YouTube    bool `json:"youtube"`
+	Youtube    bool `json:"youtube"`
 }
