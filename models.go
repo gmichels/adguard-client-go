@@ -44,10 +44,16 @@ type ClientDelete struct {
 // FilterStatus
 type FilterStatus struct {
 	Enabled          bool     `json:"enabled"`
-	Interval         int      `json:"interval"`
+	Interval         uint     `json:"interval"`
 	Filters          []Filter `json:"filters"`
 	WhitelistFilters []Filter `json:"whitelist_filters"`
 	UserRules        []string `json:"user_rules"`
+}
+
+// FilterConfig
+type FilterConfig struct {
+	Enabled  bool `json:"enabled"`
+	Interval uint `json:"interval"`
 }
 
 // Filter
@@ -146,4 +152,20 @@ type GetStatsConfigResponse struct {
 	Enabled  bool     `json:"enabled"`
 	Interval uint     `json:"interval"`
 	Ignored  []string `json:"ignored"`
+}
+
+// Enabled
+type Enabled struct {
+	Enabled bool `json:"enabled"`
+}
+
+// SafeSearchConfig
+type SafeSearchConfig struct {
+	Enabled    bool `json:"enabled"`
+	Bing       bool `json:"bing"`
+	Duckduckgo bool `json:"duckduckgo"`
+	Google     bool `json:"google"`
+	Pixabay    bool `json:"pixabay"`
+	Yandex     bool `json:"yandex"`
+	Youtube    bool `json:"youtube"`
 }

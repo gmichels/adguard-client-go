@@ -208,3 +208,30 @@ func (c *ADG) DeleteListFilter(filterDelete RemoveUrlRequest) error {
 	// no need to return anything
 	return nil
 }
+
+// ConfigureFiltering - Configure DNS server filtering parameters
+func (c *ADG) ConfigureFiltering(filterConfig FilterConfig) (*FilterConfig, error) {
+	// convert provided filtering config to JSON
+	rb, err := json.Marshal(filterConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/filtering/config", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return nil, err
+	}
+
+	// perform request
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// appease Go
+	_ = body
+
+	// return what was passed
+	return &filterConfig, nil
+}
