@@ -169,3 +169,16 @@ type SafeSearchConfig struct {
 	Yandex     bool `json:"yandex"`
 	Youtube    bool `json:"youtube"`
 }
+
+// BlockedService
+type BlockedService struct {
+	IconSvg string   `json:"icon_svg"`
+	Id      string   `json:"id"`
+	Name    string   `json:"name"`
+	Rules   []string `json:"rules"`
+}
+
+// BlockedServicesAll
+type BlockedServicesAll struct {
+	BlockedServices []BlockedService `json:"blocked_services"`
+}
