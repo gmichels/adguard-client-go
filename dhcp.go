@@ -117,3 +117,24 @@ func (c *ADG) ManageDhcpStaticLease(add bool, dhcpStaticLease DhcpStaticLease) (
 	// return the same DHCP static lease that was passed
 	return &dhcpStaticLease, nil
 }
+
+// ResetDhcpConfig - reset all DHCP configuration to defaults
+func (c *ADG) ResetDhcpConfig() error {
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/reset", c.HostURL), strings.NewReader(string([]byte(`{}`))))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	body, err := c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// appease Go
+	_ = body
+
+	// return nothing
+	return nil
+}
