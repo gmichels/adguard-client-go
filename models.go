@@ -193,19 +193,27 @@ type DhcpStatus struct {
 	StaticLeases  []DhcpStaticLease `json:"static_leases"`
 }
 
+// DhcpConfig
+type DhcpConfig struct {
+	Enabled       bool         `json:"enabled"`
+	InterfaceName string       `json:"interface_name"`
+	V4            DhcpConfigV4 `json:"v4,omitempty"`
+	V6            DhcpConfigV6 `json:"v6,omitempty"`
+}
+
 // DhcpConfigV4
 type DhcpConfigV4 struct {
-	GatewayIp     string `json:"gateway_ip"`
-	SubnetMask    string `json:"subnet_mask"`
-	RangeStart    string `json:"range_start"`
-	RangeEnd      string `json:"range_end"`
-	LeaseDuration uint64 `json:"lease_duration"`
+	GatewayIp     string `json:"gateway_ip,omitempty"`
+	SubnetMask    string `json:"subnet_mask,omitempty"`
+	RangeStart    string `json:"range_start,omitempty"`
+	RangeEnd      string `json:"range_end,omitempty"`
+	LeaseDuration uint64 `json:"lease_duration,omitempty"`
 }
 
 // DhcpConfigV6
 type DhcpConfigV6 struct {
-	RangeStart    string `json:"range_start"`
-	LeaseDuration uint64 `json:"lease_duration"`
+	RangeStart    string `json:"range_start,omitempty"`
+	LeaseDuration uint64 `json:"lease_duration,omitempty"`
 }
 
 // DhcpLease
@@ -228,19 +236,11 @@ type NetInterface struct {
 	Flags           string   `json:"flags"`
 	HardwareAddress string   `json:"hardware_address"`
 	Name            string   `json:"name"`
-	IpAddresses     []string `json:"ip_addresses`
+	IpAddresses     []string `json:"ip_addresses"`
 	Mtu             int      `json:"mtu"`
 }
 
 // NetInterfaces
 type NetInterfaces struct {
 	Name NetInterface
-}
-
-// DhcpConfig
-type DhcpConfig struct {
-	Enabled       bool         `json:"enabled"`
-	InterfaceName string       `json:"interface_name"`
-	V4            DhcpConfigV4 `json:"v4"`
-	V6            DhcpConfigV6 `json:"v6"`
 }
