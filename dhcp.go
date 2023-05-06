@@ -138,3 +138,24 @@ func (c *ADG) ResetDhcpConfig() error {
 	// return nothing
 	return nil
 }
+
+// ResetDhcpStaticLeases - reset all DHCP static leases
+func (c *ADG) ResetDhcpStaticLeases() error {
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/reset_leases", c.HostURL), strings.NewReader(string([]byte(`{}`))))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	body, err := c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// appease Go
+	_ = body
+
+	// return nothing
+	return nil
+}
