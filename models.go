@@ -244,3 +244,29 @@ type NetInterface struct {
 type NetInterfaces struct {
 	Name NetInterface
 }
+
+// TlsConfig
+type TlsConfig struct {
+	Enabled           bool     `json:"enabled"`
+	ServerName        string   `json:"server_name"`
+	ForceHttps        bool     `json:"force_https"`
+	PortHttps         uint16   `json:"port_https"`
+	PortDnsOverTls    uint16   `json:"port_dns_over_tls"`
+	PortDnsOverQuic   uint16   `json:"port_dns_over_quic"`
+	CertificateChain  string   `json:"certificate_chain"`
+	PrivateKey        string   `json:"private_key"`
+	PrivateKeySaved   bool     `json:"private_key_saved"`
+	CertificatePath   string   `json:"certificate_path"`
+	PrivateKeyPath    string   `json:"private_key_path"`
+	ValidCert         bool     `json:"valid_cert"`
+	ValidChain        bool     `json:"valid_chain"`
+	Subject           string   `json:"subject"`
+	Issuer            string   `json:"issuer"`
+	NotBefore         string   `json:"not_before"`
+	NotAfter          string   `json:"not_after"`
+	DnsNames          []string `json:"dns_names"`
+	ValidKey          bool     `json:"valid_key"`
+	KeyType           string   `json:"key_type"`
+	WarningValidation string   `json:"warning_validation"`
+	ValidPair         bool     `json:"valid_pair"`
+}
