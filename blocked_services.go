@@ -32,9 +32,9 @@ func (c *ADG) GetBlockedServicesList() (*BlockedServicesAll, error) {
 }
 
 // GetBlockedServices - Returns the services that are blocked globally
-func (c *ADG) GetBlockedServices() (*[]string, error) {
+func (c *ADG) GetBlockedServices() (*BlockedServicesSchedule, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/blocked_services/list", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/blocked_services/get", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -45,26 +45,26 @@ func (c *ADG) GetBlockedServices() (*[]string, error) {
 		return nil, err
 	}
 
-	// convert response to a list of strings
-	var blockedServices []string
-	err = json.Unmarshal(body, &blockedServices)
+	// convert response to BlockedServicesSchedule object
+	var blockedServicesSchedule BlockedServicesSchedule
+	err = json.Unmarshal(body, &blockedServicesSchedule)
 	if err != nil {
 		return nil, err
 	}
 
-	return &blockedServices, nil
+	return &blockedServicesSchedule, nil
 }
 
-// SetBlockedServices - Sets the services to be blocked globally
-func (c *ADG) SetBlockedServices(blockedServices []string) (*[]string, error) {
+// UpdateBlockedServices - Update blocked services
+func (c *ADG) SetBlockedServices(blockedServicesSchedule BlockedServicesSchedule) (*BlockedServicesSchedule, error) {
 	// convert provided blocked services to JSON
-	rb, err := json.Marshal(blockedServices)
+	rb, err := json.Marshal(blockedServicesSchedule)
 	if err != nil {
 		return nil, err
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/blocked_services/set", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/blocked_services/update", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -79,5 +79,5 @@ func (c *ADG) SetBlockedServices(blockedServices []string) (*[]string, error) {
 	_ = body
 
 	// return the same blocked services that were passed
-	return &blockedServices, nil
+	return &blockedServicesSchedule, nil
 }
