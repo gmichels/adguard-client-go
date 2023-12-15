@@ -15,7 +15,6 @@ type Client struct {
 	FilteringEnabled         bool             `json:"filtering_enabled"`
 	ParentalEnabled          bool             `json:"parental_enabled"`
 	SafebrowsingEnabled      bool             `json:"safebrowsing_enabled"`
-	SafesearchEnabled        bool             `json:"safesearch_enabled"` // deprecated
 	SafeSearch               SafeSearchConfig `json:"safe_search"`
 	UseGlobalBlockedServices bool             `json:"use_global_blocked_services"`
 	BlockedServicesSchedule  Schedule         `json:"blocked_services_schedule"`
@@ -116,14 +115,13 @@ type DNSConfig struct {
 	UpstreamDnsFile              string   `json:"upstream_dns_file"`
 	ProtectionEnabled            bool     `json:"protection_enabled"`
 	RateLimit                    uint     `json:"ratelimit"`
-	RateLimitSubnetSubnetLenIpv4 uint     `json:"ratelimit_subnet_subnet_len_ipv4"`
-	RateLimitSubnetSubnetLenIpv6 uint     `json:"ratelimit_subnet_subnet_len_ipv6"`
+	RateLimitSubnetSubnetLenIpv4 uint     `json:"ratelimit_subnet_len_ipv4"`
+	RateLimitSubnetSubnetLenIpv6 uint     `json:"ratelimit_subnet_len_ipv6"`
 	RateLimitWhitelist           []string `json:"ratelimit_whitelist"`
 	BlockingMode                 string   `json:"blocking_mode"`
 	BlockingIpv4                 string   `json:"blocking_ipv4"`
 	BlockingIpv6                 string   `json:"blocking_ipv6"`
 	BlockedResponseTtl           uint     `json:"blocked_response_ttl"`
-	ProtectionDisabledUntil      string   `json:"protection_disabled_until"`
 	EDnsCsEnabled                bool     `json:"edns_cs_enabled"`
 	EDnsCsUseCustom              bool     `json:"edns_cs_use_custom"`
 	EDnsCsCustomIp               string   `json:"edns_cs_custom_ip"`
@@ -286,24 +284,24 @@ type TlsConfig struct {
 
 // Schedule
 type Schedule struct {
-	TimeZone string   `json:"time_zone"`
-	Sun      DayRange `json:"sun"`
-	Mon      DayRange `json:"mon"`
-	Tue      DayRange `json:"tue"`
-	Wed      DayRange `json:"wed"`
-	Thu      DayRange `json:"thu"`
-	Fri      DayRange `json:"fri"`
-	Sat      DayRange `json:"sat"`
+	TimeZone  string   `json:"time_zone,omitempty"`
+	Sunday    DayRange `json:"sun,omitempty"`
+	Monday    DayRange `json:"mon,omitempty"`
+	Tuesday   DayRange `json:"tue,omitempty"`
+	Wednesday DayRange `json:"wed,omitempty"`
+	Thursday  DayRange `json:"thu,omitempty"`
+	Friday    DayRange `json:"fri,omitempty"`
+	Saturday  DayRange `json:"sat,omitempty"`
 }
 
 // DayRange
 type DayRange struct {
-	Start uint `json:"start"`
-	End   uint `json:"end"`
+	Start uint `json:"start,omitempty"`
+	End   uint `json:"end,omitempty"`
 }
 
 // BlockedServicesSchedule
 type BlockedServicesSchedule struct {
-	Schedule Schedule `json:"schedule"`
+	Schedule Schedule `json:"schedule,omitempty"`
 	Ids      []string `json:"ids"`
 }

@@ -1,10 +1,12 @@
 package adguard
 
 import (
-	"encoding/json"
+	// custom json module to allow for omitting zero value structs
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/clarketm/json"
 )
 
 // GetBlockedServicesList - Returns the list of all available services to be blocked
@@ -64,7 +66,7 @@ func (c *ADG) SetBlockedServices(blockedServicesSchedule BlockedServicesSchedule
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/blocked_services/update", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/blocked_services/update", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
