@@ -23,6 +23,8 @@ type Client struct {
 	Tags                     []string         `json:"tags"`
 	IgnoreQuerylog           bool             `json:"ignore_querylog"`
 	IgnoreStatistics         bool             `json:"ignore_statistics"`
+	UpstreamsCacheEnabled    bool             `json:"upstreams_cache_enabled"`
+	UpstreamsCacheSize       uint             `json:"upstreams_cache_size"`
 }
 
 // ClientAuto
