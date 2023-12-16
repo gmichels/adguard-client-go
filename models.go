@@ -15,6 +15,7 @@ type Client struct {
 	FilteringEnabled         bool             `json:"filtering_enabled"`
 	ParentalEnabled          bool             `json:"parental_enabled"`
 	SafebrowsingEnabled      bool             `json:"safebrowsing_enabled"`
+	SafesearchEnabled        bool             `json:"safesearch_enabled"` // deprecated
 	SafeSearch               SafeSearchConfig `json:"safe_search"`
 	UseGlobalBlockedServices bool             `json:"use_global_blocked_services"`
 	BlockedServicesSchedule  Schedule         `json:"blocked_services_schedule"`
