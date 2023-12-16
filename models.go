@@ -9,17 +9,23 @@ type AllClients struct {
 
 // Client
 type Client struct {
-	Name                     string   `json:"name"`
-	Ids                      []string `json:"ids"`
-	UseGlobalSettings        bool     `json:"use_global_settings"`
-	FilteringEnabled         bool     `json:"filtering_enabled"`
-	ParentalEnabled          bool     `json:"parental_enabled"`
-	SafebrowsingEnabled      bool     `json:"safebrowsing_enabled"`
-	SafesearchEnabled        bool     `json:"safesearch_enabled"`
-	UseGlobalBlockedServices bool     `json:"use_global_blocked_services"`
-	BlockedServices          []string `json:"blocked_services"`
-	Upstreams                []string `json:"upstreams"`
-	Tags                     []string `json:"tags"`
+	Name                     string           `json:"name"`
+	Ids                      []string         `json:"ids"`
+	UseGlobalSettings        bool             `json:"use_global_settings"`
+	FilteringEnabled         bool             `json:"filtering_enabled"`
+	ParentalEnabled          bool             `json:"parental_enabled"`
+	SafebrowsingEnabled      bool             `json:"safebrowsing_enabled"`
+	SafesearchEnabled        bool             `json:"safesearch_enabled"` // deprecated
+	SafeSearch               SafeSearchConfig `json:"safe_search"`
+	UseGlobalBlockedServices bool             `json:"use_global_blocked_services"`
+	BlockedServicesSchedule  Schedule         `json:"blocked_services_schedule"`
+	BlockedServices          []string         `json:"blocked_services"`
+	Upstreams                []string         `json:"upstreams"`
+	Tags                     []string         `json:"tags"`
+	IgnoreQuerylog           bool             `json:"ignore_querylog"`
+	IgnoreStatistics         bool             `json:"ignore_statistics"`
+	UpstreamsCacheEnabled    bool             `json:"upstreams_cache_enabled"`
+	UpstreamsCacheSize       uint             `json:"upstreams_cache_size"`
 }
 
 // ClientAuto
@@ -106,24 +112,32 @@ type RewriteEntry struct {
 
 // DNSConfig
 type DNSConfig struct {
-	BootstrapDns           []string `json:"bootstrap_dns"`
-	UpstreamDns            []string `json:"upstream_dns"`
-	UpstreamDnsFile        string   `json:"upstream_dns_file"`
-	RateLimit              uint     `json:"ratelimit"`
-	BlockingMode           string   `json:"blocking_mode"`
-	BlockingIpv4           string   `json:"blocking_ipv4"`
-	BlockingIpv6           string   `json:"blocking_ipv6"`
-	EDnsCsEnabled          bool     `json:"edns_cs_enabled"`
-	DisableIpv6            bool     `json:"disable_ipv6"`
-	DnsSecEnabled          bool     `json:"dnssec_enabled"`
-	CacheSize              uint     `json:"cache_size"`
-	CacheTtlMin            uint     `json:"cache_ttl_min"`
-	CacheTtlMax            uint     `json:"cache_ttl_max"`
-	CacheOptimistic        bool     `json:"cache_optimistic"`
-	UpstreamMode           string   `json:"upstream_mode"`
-	UsePrivatePtrResolvers bool     `json:"use_private_ptr_resolvers"`
-	ResolveClients         bool     `json:"resolve_clients"`
-	LocalPtrUpstreams      []string `json:"local_ptr_upstreams"`
+	BootstrapDns                 []string `json:"bootstrap_dns"`
+	UpstreamDns                  []string `json:"upstream_dns"`
+	FallbackDns                  []string `json:"fallback_dns"`
+	UpstreamDnsFile              string   `json:"upstream_dns_file"`
+	ProtectionEnabled            bool     `json:"protection_enabled"`
+	RateLimit                    uint     `json:"ratelimit"`
+	RateLimitSubnetSubnetLenIpv4 uint     `json:"ratelimit_subnet_len_ipv4"`
+	RateLimitSubnetSubnetLenIpv6 uint     `json:"ratelimit_subnet_len_ipv6"`
+	RateLimitWhitelist           []string `json:"ratelimit_whitelist"`
+	BlockingMode                 string   `json:"blocking_mode"`
+	BlockingIpv4                 string   `json:"blocking_ipv4"`
+	BlockingIpv6                 string   `json:"blocking_ipv6"`
+	BlockedResponseTtl           uint     `json:"blocked_response_ttl"`
+	EDnsCsEnabled                bool     `json:"edns_cs_enabled"`
+	EDnsCsUseCustom              bool     `json:"edns_cs_use_custom"`
+	EDnsCsCustomIp               string   `json:"edns_cs_custom_ip"`
+	DisableIpv6                  bool     `json:"disable_ipv6"`
+	DnsSecEnabled                bool     `json:"dnssec_enabled"`
+	CacheSize                    uint     `json:"cache_size"`
+	CacheTtlMin                  uint     `json:"cache_ttl_min"`
+	CacheTtlMax                  uint     `json:"cache_ttl_max"`
+	CacheOptimistic              bool     `json:"cache_optimistic"`
+	UpstreamMode                 string   `json:"upstream_mode"`
+	UsePrivatePtrResolvers       bool     `json:"use_private_ptr_resolvers"`
+	ResolveClients               bool     `json:"resolve_clients"`
+	LocalPtrUpstreams            []string `json:"local_ptr_upstreams"`
 }
 
 // DNSInfo
@@ -269,4 +283,28 @@ type TlsConfig struct {
 	KeyType           string   `json:"key_type"`
 	WarningValidation string   `json:"warning_validation"`
 	ValidPair         bool     `json:"valid_pair"`
+}
+
+// Schedule
+type Schedule struct {
+	TimeZone  string   `json:"time_zone,omitempty"`
+	Sunday    DayRange `json:"sun,omitempty"`
+	Monday    DayRange `json:"mon,omitempty"`
+	Tuesday   DayRange `json:"tue,omitempty"`
+	Wednesday DayRange `json:"wed,omitempty"`
+	Thursday  DayRange `json:"thu,omitempty"`
+	Friday    DayRange `json:"fri,omitempty"`
+	Saturday  DayRange `json:"sat,omitempty"`
+}
+
+// DayRange
+type DayRange struct {
+	Start uint `json:"start,omitempty"`
+	End   uint `json:"end,omitempty"`
+}
+
+// BlockedServicesSchedule
+type BlockedServicesSchedule struct {
+	Schedule Schedule `json:"schedule,omitempty"`
+	Ids      []string `json:"ids"`
 }
