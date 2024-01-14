@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-// GetClient - Returns a client based on an identifier
-func (c *ADG) GetClient(identifier string) (*Client, error) {
+// GetAllClients - Returns all clients
+func (c *ADG) GetAllClients() (*AllClients, error) {
 	// initialize request
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/clients", c.HostURL), nil)
 	if err != nil {
@@ -24,6 +24,17 @@ func (c *ADG) GetClient(identifier string) (*Client, error) {
 	// convert response to an AllClients object
 	var allClients AllClients
 	err = json.Unmarshal(body, &allClients)
+	if err != nil {
+		return nil, err
+	}
+
+	return &allClients, nil
+}
+
+// GetClient - Returns a client based on an identifier
+func (c *ADG) GetClient(identifier string) (*Client, error) {
+	// retrieve all clients
+	allClients, err := c.GetAllClients()
 	if err != nil {
 		return nil, err
 	}
