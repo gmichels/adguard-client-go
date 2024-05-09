@@ -283,6 +283,7 @@ type TlsConfig struct {
 	KeyType           string   `json:"key_type"`
 	WarningValidation string   `json:"warning_validation"`
 	ValidPair         bool     `json:"valid_pair"`
+	ServePlainDns     bool     `json:"serve_plain_dns"`
 }
 
 // Schedule
