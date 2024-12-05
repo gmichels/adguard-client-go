@@ -31,7 +31,7 @@ func (c *ADG) GetTlsConfig() (*TlsConfig, error) {
 	return &tlsConfig, nil
 }
 
-// SetAccess - Sets the access list
+// SetTlsConfig - Sets the TLS configuration
 func (c *ADG) SetTlsConfig(tlsConfig TlsConfig) (*TlsConfig, error) {
 	// convert provided TLS config to JSON
 	rb, err := json.Marshal(tlsConfig)
@@ -51,9 +51,12 @@ func (c *ADG) SetTlsConfig(tlsConfig TlsConfig) (*TlsConfig, error) {
 		return nil, err
 	}
 
-	// appease Go
-	_ = body
+	// convert response to TlsConfig object
+	var responseTlsConfig TlsConfig
+	err = json.Unmarshal(body, &responseTlsConfig)
+	if err != nil {
+		return nil, err
+	}
 
-	// return the same access list that was passed
-	return &tlsConfig, nil
+	return &responseTlsConfig, nil
 }
