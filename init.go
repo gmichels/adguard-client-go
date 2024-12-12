@@ -1,6 +1,7 @@
 package adguard
 
 import (
+	"crypto/tls"
 	"fmt"
 	"io"
 	"net/http"
@@ -21,7 +22,7 @@ type AuthStruct struct {
 }
 
 // NewClient
-func NewClient(host, username, password, scheme *string, timeout *int) (*ADG, error) {
+func NewClient(host, username, password, scheme *string, timeout *int, enableInsecureSkipVerify ...*bool) (*ADG, error) {
 	// sanity checks
 	if *host == "" {
 		return nil, fmt.Errorf("required parameter `host`")
@@ -38,10 +39,19 @@ func NewClient(host, username, password, scheme *string, timeout *int) (*ADG, er
 	if *timeout == 0 {
 		*timeout = 10
 	}
+	// default for insecureSkipVerify
+	insecureSkipVerify := false
+	if len(enableInsecureSkipVerify) > 0 {
+		insecureSkipVerify = *enableInsecureSkipVerify[0]
+	}
+	// create custom transport based on insecureSkipVerify
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureSkipVerify},
+	}
 
 	// instantiate client
 	c := ADG{
-		HTTPClient: &http.Client{Timeout: time.Duration(*timeout) * time.Second},
+		HTTPClient: &http.Client{Timeout: time.Duration(*timeout) * time.Second, Transport: tr},
 		HostURL:    fmt.Sprintf("%s://%s/control", *scheme, *host),
 	}
 	// instantiate auth
