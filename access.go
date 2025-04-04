@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-// GetAccess - Returns the current access list
-func (c *ADG) GetAccess() (*AccessList, error) {
+// ListAccess - List (dis)allowed clients, blocked hosts, etc
+func (c *ADG) ListAccess() (*AccessList, error) {
 	// initialize request
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/access/list", c.HostURL), nil)
 	if err != nil {
@@ -31,7 +31,7 @@ func (c *ADG) GetAccess() (*AccessList, error) {
 	return &accessList, nil
 }
 
-// SetAccess - Sets the access list
+// SetAccess - Set (dis)allowed clients, blocked hosts, etc
 func (c *ADG) SetAccess(accessList AccessList) (*AccessList, error) {
 	// convert provided access list to JSON
 	rb, err := json.Marshal(accessList)
