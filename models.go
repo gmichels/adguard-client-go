@@ -1,11 +1,17 @@
 package adguard
 
-// AllClients
-type AllClients struct {
-	Clients       []Client     `json:"clients"`
-	ClientAuto    []ClientAuto `json:"auto_clients"`
-	SupportedTags []string     `json:"supported_tags"`
+// Clients
+type Clients struct {
+	Clients       ClientsArray     `json:"clients"`
+	ClientAuto    ClientsAutoArray `json:"auto_clients"`
+	SupportedTags []string         `json:"supported_tags"`
 }
+
+// ClientsArray
+type ClientsArray []Client
+
+// ClientsAutoArray
+type ClientsAutoArray []ClientAuto
 
 // Client
 type Client struct {
@@ -30,10 +36,10 @@ type Client struct {
 
 // ClientAuto
 type ClientAuto struct {
-	Name      string            `json:"name"`
-	Ip        string            `json:"ip"`
-	Source    string            `json:"source"`
-	WhoisInfo map[string]string `json:"whois_info"`
+	Name      string    `json:"name"`
+	Ip        string    `json:"ip"`
+	Source    string    `json:"source"`
+	WhoisInfo WhoisInfo `json:"whois_info"`
 }
 
 // ClientUpdate
@@ -45,6 +51,42 @@ type ClientUpdate struct {
 // ClientDelete
 type ClientDelete struct {
 	Name string `json:"name"`
+}
+
+// ClientSearchRequest
+type ClientSearchRequest struct {
+	Clients []ClientSearchRequestItem `json:"clients"`
+}
+
+// ClientSearchRequestItem
+type ClientSearchRequestItem struct {
+	Id string `json:"id"`
+}
+
+// ClientFindResponse
+type ClientFindResponse []ClientFindEntry
+
+// ClientFindEntry
+type ClientFindEntry map[string]ClientFindSubEntry
+
+// ClientFindSubEntry
+type ClientFindSubEntry struct {
+	Name                     string           `json:"name"`
+	Ids                      []string         `json:"ids"`
+	UseGlobalSettings        bool             `json:"use_global_settings"`
+	FilteringEnabled         bool             `json:"filtering_enabled"`
+	ParentalEnabled          bool             `json:"parental_enabled"`
+	SafebrowsingEnabled      bool             `json:"safebrowsing_enabled"`
+	SafesearchEnabled        bool             `json:"safesearch_enabled"` // deprecated
+	SafeSearch               SafeSearchConfig `json:"safe_search"`
+	UseGlobalBlockedServices bool             `json:"use_global_blocked_services"`
+	BlockedServices          []string         `json:"blocked_services"`
+	Upstreams                []string         `json:"upstreams"`
+	WhoisInfo                WhoisInfo        `json:"whois_info"`
+	Disallowed               bool             `json:"disallowed"`
+	DisallowedRule           string           `json:"disallowed_rule"`
+	IgnoreQuerylog           bool             `json:"ignore_querylog"`
+	IgnoreStatistics         bool             `json:"ignore_statistics"`
 }
 
 // FilterStatus
@@ -310,3 +352,5 @@ type BlockedServicesSchedule struct {
 	Schedule Schedule `json:"schedule,omitempty"`
 	Ids      []string `json:"ids"`
 }
+
+type WhoisInfo map[string]string

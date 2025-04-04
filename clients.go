@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-// GetAllClients - Returns all clients
-func (c *ADG) GetAllClients() (*AllClients, error) {
+// GetClients - Get information about configured clients
+func (c *ADG) GetClients() (*Clients, error) {
 	// initialize request
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/clients", c.HostURL), nil)
 	if err != nil {
@@ -21,37 +21,56 @@ func (c *ADG) GetAllClients() (*AllClients, error) {
 		return nil, err
 	}
 
-	// convert response to an AllClients object
-	var allClients AllClients
-	err = json.Unmarshal(body, &allClients)
+	// convert response to a Clients object
+	var clients Clients
+	err = json.Unmarshal(body, &clients)
 	if err != nil {
 		return nil, err
 	}
 
-	return &allClients, nil
+	return &clients, nil
 }
 
-// GetClient - Returns a client based on an identifier
-func (c *ADG) GetClient(identifier string) (*Client, error) {
-	// retrieve all clients
-	allClients, err := c.GetAllClients()
+// SearchClient - Get information about clients by their IP addresses, CIDR, MAC addresses, or ClientIDs
+func (c *ADG) SearchClient(identifier string) (*ClientFindResponse, error) {
+	// create search request object
+	clients := []ClientSearchRequestItem{
+		{
+			Id: identifier,
+		},
+	}
+
+	// convert provided clients to JSON
+	rb, err := json.Marshal(clients)
 	if err != nil {
 		return nil, err
 	}
 
-	// go through the clients in the response until we find the one we want
-	for _, clientInfo := range allClients.Clients {
-		if clientInfo.Name == identifier {
-			return &clientInfo, nil
-		}
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/clients/search", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return nil, err
 	}
 
-	// when no matches are found
-	return nil, nil
+	// perform request
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// convert response to a ClientFindResponse object
+	var clientFindResponse ClientFindResponse
+	err = json.Unmarshal(body, &clientFindResponse)
+	if err != nil {
+		return nil, err
+	}
+
+	// return the client find response
+	return &clientFindResponse, nil
 }
 
-// CreateClient - Create a client
-func (c *ADG) CreateClient(client Client) (*Client, error) {
+// AddClient - Add a new client
+func (c *ADG) AddClient(client Client) (*Client, error) {
 	// convert provided client to JSON
 	rb, err := json.Marshal(client)
 	if err != nil {
@@ -73,11 +92,11 @@ func (c *ADG) CreateClient(client Client) (*Client, error) {
 	// appease Go
 	_ = body
 
-	// return the same client that was passed
+	// return the same client that was passed as upstream doesn't return anything
 	return &client, nil
 }
 
-// UpdateClient - Update a client
+// UpdateClient - Update client information
 func (c *ADG) UpdateClient(clientUpdate ClientUpdate) (*Client, error) {
 	// convert provided update client to JSON
 	rb, err := json.Marshal(clientUpdate)
@@ -100,11 +119,11 @@ func (c *ADG) UpdateClient(clientUpdate ClientUpdate) (*Client, error) {
 	// appease Go
 	_ = body
 
-	// return the client data that was passed
+	// return the same client that was passed as upstream doesn't return anything
 	return &clientUpdate.Data, nil
 }
 
-// DeleteClient - Deletes a client
+// DeleteClient - Remove a client
 func (c *ADG) DeleteClient(clientDelete ClientDelete) error {
 	// convert provided delete client to JSON
 	rb, err := json.Marshal(clientDelete)
