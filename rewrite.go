@@ -31,8 +31,8 @@ func (c *ADG) GetAllRewrites() (*[]RewriteEntry, error) {
 	return &allRewrites, nil
 }
 
-// GetRewrite - Return a DNS rewrite rule based on the domain
-func (c *ADG) GetRewrite(domain string) (*RewriteEntry, error) {
+// GetRewrite - Return a DNS rewrite rule based on the domain and answer
+func (c *ADG) GetRewrite(domain, answer string) (*RewriteEntry, error) {
 	// retrieve all DNS rewrite rules
 	allRewrites, err := c.GetAllRewrites()
 	if err != nil {
@@ -41,7 +41,7 @@ func (c *ADG) GetRewrite(domain string) (*RewriteEntry, error) {
 
 	// loop over the results until we find the one we want
 	for _, rewrite := range *allRewrites {
-		if rewrite.Domain == domain {
+		if rewrite.Domain == domain && rewrite.Answer == answer {
 			return &rewrite, nil
 		}
 	}
@@ -80,7 +80,7 @@ func (c *ADG) CreateRewrite(rewrite RewriteEntry) (*RewriteEntry, error) {
 // UpdateRewrite - Update a DNS rewrite rule
 func (c *ADG) UpdateRewrite(rewrite RewriteEntry) (*RewriteEntry, error) {
 	// there is no real update endpoint in ADG, need to delete and re-create
-	err := c.DeleteRewrite(rewrite.Domain)
+	err := c.DeleteRewrite(rewrite.Domain, rewrite.Answer)
 	if err != nil {
 		return nil, err
 	}
@@ -94,14 +94,14 @@ func (c *ADG) UpdateRewrite(rewrite RewriteEntry) (*RewriteEntry, error) {
 	return &rewrite, nil
 }
 
-// DeleteRewrite - Delete a DNS rewrite rule based on the domain
-func (c *ADG) DeleteRewrite(domain string) error {
+// DeleteRewrite - Delete a DNS rewrite rule based on the domain and answer
+func (c *ADG) DeleteRewrite(domain, answer string) error {
 	// confirm the DNS rewrite rule entry exists
-	rewrite, err := c.GetRewrite(domain)
+	rewrite, err := c.GetRewrite(domain, answer)
 	if err != nil {
 		return err
 	} else if rewrite == nil {
-		return fmt.Errorf("unable to find a DNS rewrite rule for `%s`", domain)
+		return fmt.Errorf("unable to find a DNS rewrite rule for domain `%s` and answer `%s`", domain, answer)
 	}
 
 	// convert DNS rewrite to JSON
