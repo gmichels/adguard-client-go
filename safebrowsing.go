@@ -11,7 +11,7 @@ import (
 // SafeBrowsingEnable - Enable safebrowsing
 func (c *ADG) SafeBrowsingEnable() error {
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/safebrowsing/enable", c.HostURL), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/safebrowsing/enable", c.HostURL), nil)
 	if err != nil {
 		return err
 	}
@@ -29,7 +29,7 @@ func (c *ADG) SafeBrowsingEnable() error {
 // SafeBrowsingDisable - Disable safebrowsing
 func (c *ADG) SafeBrowsingDisable() error {
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/safebrowsing/disable", c.HostURL), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/safebrowsing/disable", c.HostURL), nil)
 	if err != nil {
 		return err
 	}
@@ -47,7 +47,7 @@ func (c *ADG) SafeBrowsingDisable() error {
 // SafeBrowsingStatus - Get safebrowsing status
 func (c *ADG) SafeBrowsingStatus() (*models.Enabled, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/safebrowsing/status", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/safebrowsing/status", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}

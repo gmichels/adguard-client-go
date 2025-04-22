@@ -12,7 +12,7 @@ import (
 // Stats - Get DNS server statistics
 func (c *ADG) Stats() (*models.Stats, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/stats", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/stats", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +37,7 @@ func (c *ADG) Stats() (*models.Stats, error) {
 // StatsReset - Reset all statistics to zeroes
 func (c *ADG) StatsReset() error {
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/stats_reset", c.HostURL), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/stats_reset", c.HostURL), nil)
 	if err != nil {
 		return err
 	}
@@ -55,7 +55,7 @@ func (c *ADG) StatsReset() error {
 // StatsConfig - Get statistics parameters
 func (c *ADG) StatsConfig() (*models.GetStatsConfigResponse, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/stats/config", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/stats/config", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +86,7 @@ func (c *ADG) StatsConfigUpdate(statsConfig models.GetStatsConfigResponse) error
 	}
 
 	// initialize request
-	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/stats/config/update", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/control/stats/config/update", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}

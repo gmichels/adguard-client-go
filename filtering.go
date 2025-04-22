@@ -12,7 +12,7 @@ import (
 // FilteringStatus - Get filtering parameters
 func (c *ADG) FilteringStatus() (*models.FilterStatus, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/filtering/status", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/filtering/status", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (c *ADG) FilteringConfig(filterConfig models.FilterConfig) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/filtering/config", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/filtering/config", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -67,7 +67,7 @@ func (c *ADG) FilteringAddUrl(filterData models.AddUrlRequest) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/filtering/add_url", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/filtering/add_url", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -91,7 +91,7 @@ func (c *ADG) FilteringRemoveUrl(filterDelete models.RemoveUrlRequest) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/filtering/remove_url", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/filtering/remove_url", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -115,7 +115,7 @@ func (c *ADG) FilteringSetUrl(filterUpdate models.FilterSetUrl) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/filtering/set_url", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/filtering/set_url", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -139,7 +139,7 @@ func (c *ADG) FilteringRefresh(filterRefreshRequest models.FilterRefreshRequest)
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/filtering/refresh", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/filtering/refresh", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -170,7 +170,7 @@ func (c *ADG) FilteringSetRules(rules models.SetRulesRequest) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/filtering/set_rules", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/filtering/set_rules", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -197,7 +197,7 @@ func (c *ADG) FilteringCheckHost(name *string, client *string, qtype *string) (*
 	}
 
 	// initialize request with query parameters
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/filtering/check_host%s", c.HostURL, queryParams), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/filtering/check_host%s", c.HostURL, queryParams), nil)
 	if err != nil {
 		return nil, err
 	}

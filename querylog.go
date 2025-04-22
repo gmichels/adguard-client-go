@@ -30,7 +30,7 @@ func (c *ADG) Querylog(olderThan *string, offset *int, limit *int, search *strin
 	}
 
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/querylog", c.HostURL, queryParams), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/querylog%s", c.HostURL, queryParams), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func (c *ADG) Querylog(olderThan *string, offset *int, limit *int, search *strin
 // QuerylogClear - Clear the query log
 func (c *ADG) QuerylogClear() error {
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/querylog/clear", c.HostURL), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/querylog/clear", c.HostURL), nil)
 	if err != nil {
 		return err
 	}
@@ -72,7 +72,7 @@ func (c *ADG) QuerylogClear() error {
 // QuerylogConfig - Get query log parameters
 func (c *ADG) QuerylogConfig() (*models.GetQueryLogConfigResponse, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/querylog/config", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/querylog/config", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *ADG) QuerylogConfigUpdate(getQueryLogConfigResponse models.GetQueryLogC
 	}
 
 	// initialize request
-	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/querylog/config/update", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/control/querylog/config/update", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}

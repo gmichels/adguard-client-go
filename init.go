@@ -52,7 +52,7 @@ func NewClient(host, username, password, scheme *string, timeout *int, enableIns
 	// instantiate client
 	c := ADG{
 		HTTPClient: &http.Client{Timeout: time.Duration(*timeout) * time.Second, Transport: tr},
-		HostURL:    fmt.Sprintf("%s://%s/control", *scheme, *host),
+		HostURL:    fmt.Sprintf("%s://%s", *scheme, *host),
 	}
 	// instantiate auth
 	c.Auth = AuthStruct{

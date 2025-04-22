@@ -12,7 +12,7 @@ import (
 // Status - Get DNS server current status and general settings
 func (c *ADG) Status() (*models.ServerStatus, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/status", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/status", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +37,7 @@ func (c *ADG) Status() (*models.ServerStatus, error) {
 // DnsInfo - Get genedal DNS parameters
 func (c *ADG) DnsInfo() (*models.DNSInfo, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/dns_info", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/dns_info", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (c *ADG) DnsConfig(dnsConfig models.DNSConfig) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dns_config", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dns_config", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -92,7 +92,7 @@ func (c *ADG) Protection(setProtectionRequest models.SetProtectionRequest) error
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/protection", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/protection", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -110,7 +110,7 @@ func (c *ADG) Protection(setProtectionRequest models.SetProtectionRequest) error
 // CacheClear - Clear DNS cache
 func (c *ADG) CacheClear() error {
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/cache_clear", c.HostURL), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/cache_clear", c.HostURL), nil)
 	if err != nil {
 		return err
 	}
@@ -134,7 +134,7 @@ func (c *ADG) TestUpstreamDns(upstreamsConfig models.UpstreamsConfig) (*models.U
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/test_upstream_dns", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/test_upstream_dns", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +165,7 @@ func (c *ADG) VersionJson(getVersionRequest models.GetVersionRequest) (*models.V
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/version.json", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/version.json", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +190,7 @@ func (c *ADG) VersionJson(getVersionRequest models.GetVersionRequest) (*models.V
 // Update - Begin auto-upgrade procedure
 func (c *ADG) Update() error {
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/update", c.HostURL), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/update", c.HostURL), nil)
 	if err != nil {
 		return err
 	}
@@ -214,7 +214,7 @@ func (c *ADG) Login(login models.Login) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/login", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/login", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -232,7 +232,7 @@ func (c *ADG) Login(login models.Login) error {
 // Logout - Perform administrator logout
 func (c *ADG) Logout() error {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/logout", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/logout", c.HostURL), nil)
 	if err != nil {
 		return err
 	}
@@ -256,7 +256,7 @@ func (c *ADG) ProfileUpdate(profileInfo models.ProfileInfo) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/profile/update", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/control/profile/update", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -274,7 +274,7 @@ func (c *ADG) ProfileUpdate(profileInfo models.ProfileInfo) error {
 // Profile
 func (c *ADG) Profile() (*models.ProfileInfo, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/profile", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/profile", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}

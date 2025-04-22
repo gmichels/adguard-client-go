@@ -12,7 +12,7 @@ import (
 // RewriteList - Get list of Rewrite rules
 func (c *ADG) RewriteList() (*models.RewriteList, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/rewrite/list", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/rewrite/list", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (c *ADG) RewriteAdd(rewriteEntry models.RewriteEntry) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/rewrite/add", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/rewrite/add", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -67,7 +67,7 @@ func (c *ADG) RewriteDelete(rewriteEntry models.RewriteEntry) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/rewrite/delete", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/rewrite/delete", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -91,7 +91,7 @@ func (c *ADG) RewriteUpdate(rewriteUpdate models.RewriteUpdate) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/rewrite/update", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/control/rewrite/update", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}

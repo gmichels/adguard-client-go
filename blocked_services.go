@@ -14,7 +14,7 @@ import (
 // BlockedServicesAll - Get available services to use for blocking
 func (c *ADG) BlockedServicesAll() (*models.BlockedServicesAll, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/blocked_services/all", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/blocked_services/all", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func (c *ADG) BlockedServicesAll() (*models.BlockedServicesAll, error) {
 // BlockedServicesGet - Get blocked services
 func (c *ADG) BlockedServicesGet() (*models.BlockedServicesSchedule, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/blocked_services/get", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/blocked_services/get", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +70,7 @@ func (c *ADG) BlockedServicesUpdate(blockedServicesSchedule models.BlockedServic
 	}
 
 	// initialize request
-	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/blocked_services/update", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/control/blocked_services/update", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}

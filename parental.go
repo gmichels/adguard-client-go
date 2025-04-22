@@ -11,7 +11,7 @@ import (
 // ParentalEnable - Enable parental filtering
 func (c *ADG) ParentalEnable() error {
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/parental/enable", c.HostURL), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/parental/enable", c.HostURL), nil)
 	if err != nil {
 		return err
 	}
@@ -29,7 +29,7 @@ func (c *ADG) ParentalEnable() error {
 // ParentalDisable - Disable parental filtering
 func (c *ADG) ParentalDisable() error {
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/parental/disable", c.HostURL), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/parental/disable", c.HostURL), nil)
 	if err != nil {
 		return err
 	}
@@ -47,7 +47,7 @@ func (c *ADG) ParentalDisable() error {
 // ParentalStatus - Get parental filtering status
 func (c *ADG) ParentalStatus() (*models.ParentalStatus, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/parental/status", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/parental/status", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}

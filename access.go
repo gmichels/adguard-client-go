@@ -12,7 +12,7 @@ import (
 // AccessList - List (dis)allowed clients, blocked hosts, etc
 func (c *ADG) AccessList() (*models.AccessList, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/access/list", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/access/list", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (c *ADG) AccessSet(accessList models.AccessList) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/access/set", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/access/set", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}

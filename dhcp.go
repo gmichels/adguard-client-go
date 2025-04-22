@@ -14,7 +14,7 @@ import (
 // DhcpStatus - Gets the current DHCP settings and status
 func (c *ADG) DhcpStatus() (*models.DhcpStatus, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/dhcp/status", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/dhcp/status", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func (c *ADG) DhcpStatus() (*models.DhcpStatus, error) {
 // DhcpInterfaces - Gets the available DHCP interfaces
 func (c *ADG) DhcpInterfaces() (*models.NetInterfaces, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/dhcp/interfaces", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/dhcp/interfaces", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +70,7 @@ func (c *ADG) DhcpSetConfig(dhcpConfig models.DhcpConfig) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/set_config", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/set_config", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -94,7 +94,7 @@ func (c *ADG) DhcpFindActiveDhcp(dhcpFindActiveReq models.DhcpFindActiveReq) (*m
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/find_active_dhcp", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/find_active_dhcp", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +125,7 @@ func (c *ADG) DhcpAddStaticLease(dhcpStaticLease models.DhcpStaticLease) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/add_static_lease", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/add_static_lease", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -149,7 +149,7 @@ func (c *ADG) DhcpRemoveStaticLease(dhcpStaticLease models.DhcpStaticLease) erro
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/remove_static_lease", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/remove_static_lease", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -173,7 +173,7 @@ func (c *ADG) DhcpUpdateStaticLease(dhcpStaticLease models.DhcpStaticLease) erro
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/update_static_lease", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/update_static_lease", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -191,7 +191,7 @@ func (c *ADG) DhcpUpdateStaticLease(dhcpStaticLease models.DhcpStaticLease) erro
 // DhcpReset - Reset DHCP configuration
 func (c *ADG) DhcpReset() error {
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/reset", c.HostURL), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/reset", c.HostURL), nil)
 	if err != nil {
 		return err
 	}
@@ -209,7 +209,7 @@ func (c *ADG) DhcpReset() error {
 // DhcpResetLeases - Reset DHCP leases
 func (c *ADG) DhcpResetLeases() error {
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/reset_leases", c.HostURL), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/reset_leases", c.HostURL), nil)
 	if err != nil {
 		return err
 	}

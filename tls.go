@@ -12,7 +12,7 @@ import (
 // TlsStatus - Returns TLS configuration and its status
 func (c *ADG) TlsStatus() (*models.TlsConfig, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/tls/status", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/tls/status", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (c *ADG) TlsConfigure(tlsConfig models.TlsConfig) (*models.TlsConfig, error
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/tls/configure", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/tls/configure", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func (c *ADG) TlsValidate(tlsConfig models.TlsConfig) (*models.TlsConfig, error)
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/tls/validate", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/tls/validate", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}

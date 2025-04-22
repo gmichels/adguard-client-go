@@ -18,7 +18,7 @@ func (c *ADG) SafeSearchSettings(safeSearchConfig models.SafeSearchConfig) error
 	}
 
 	// initialize request
-	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/safesearch/settings", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/control/safesearch/settings", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -36,7 +36,7 @@ func (c *ADG) SafeSearchSettings(safeSearchConfig models.SafeSearchConfig) error
 // SafeSearchStatus - Get safesearch status
 func (c *ADG) SafeSearchStatus() (*models.SafeSearchConfig, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/safesearch/status", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/safesearch/status", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}

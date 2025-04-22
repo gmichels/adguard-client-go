@@ -12,7 +12,7 @@ import (
 // Clients - Get information about configured clients
 func (c *ADG) Clients() (*models.Clients, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/clients", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/clients", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (c *ADG) ClientsAdd(client models.Client) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/clients/add", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/clients/add", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -67,7 +67,7 @@ func (c *ADG) ClientsDelete(clientDelete models.ClientDelete) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/clients/delete", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/clients/delete", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -91,7 +91,7 @@ func (c *ADG) ClientsUpdate(clientUpdate models.ClientUpdate) error {
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/clients/update", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/clients/update", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
@@ -122,7 +122,7 @@ func (c *ADG) ClientsSearch(identifier string) (*models.ClientFindResponse, erro
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/clients/search", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/clients/search", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
