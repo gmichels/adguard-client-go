@@ -6,6 +6,6 @@
 [![Status](https://github.com/gmichels/adguard-client-go/workflows/Release/badge.svg)](https://github.com/gmichels/adguard-client-go/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/gmichels/adguard-client-go)](https://goreportcard.com/report/github.com/gmichels/adguard-client-go)
 
-Updated to version 0.107.54 of the [upstream API](https://github.com/AdguardTeam/AdGuardHome/blob/v0.107.54/openapi/openapi.yaml).
+Updated to version 0.107.60 of the [upstream API](https://github.com/AdguardTeam/AdGuardHome/blob/v0.107.60/openapi/openapi.yaml).
 
 This was written primarily for use in my [Terraform provider for AdGuard Home](https://github.com/gmichels/terraform-provider-adguard).
