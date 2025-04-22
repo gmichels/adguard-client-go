@@ -13,20 +13,26 @@ import (
 func (c *ADG) Querylog(olderThan *string, offset *int, limit *int, search *string, responseStatus *string) (*models.QueryLog, error) {
 	// create query parameters dynamically
 	queryParams := ""
+	queryParamsList := []string{}
+
 	if olderThan != nil && *olderThan != "" {
-		queryParams += fmt.Sprintf("?older_than=%s", *olderThan)
+		queryParamsList = append(queryParamsList, fmt.Sprintf("older_than=%s", *olderThan))
 	}
 	if offset != nil && *offset != 0 {
-		queryParams += fmt.Sprintf("&offset=%d", *offset)
+		queryParamsList = append(queryParamsList, fmt.Sprintf("offset=%d", *offset))
 	}
 	if limit != nil && *limit != 0 {
-		queryParams += fmt.Sprintf("&limit=%d", *limit)
+		queryParamsList = append(queryParamsList, fmt.Sprintf("limit=%d", *limit))
 	}
 	if search != nil && *search != "" {
-		queryParams += fmt.Sprintf("&search=%s", *search)
+		queryParamsList = append(queryParamsList, fmt.Sprintf("search=%s", *search))
 	}
 	if responseStatus != nil && *responseStatus != "" {
-		queryParams += fmt.Sprintf("&response_status=%s", *responseStatus)
+		queryParamsList = append(queryParamsList, fmt.Sprintf("response_status=%s", *responseStatus))
+	}
+
+	if len(queryParamsList) > 0 {
+		queryParams = "?" + strings.Join(queryParamsList, "&")
 	}
 
 	// initialize request
