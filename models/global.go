@@ -34,7 +34,7 @@ type DNSConfig struct {
 	BlockingIpv4                 string   `json:"blocking_ipv4"`
 	BlockingIpv6                 string   `json:"blocking_ipv6"`
 	BlockedResponseTtl           uint     `json:"blocked_response_ttl" description:"TTL for blocked responses."`
-	ProtectionDisabledUntil      string   `json:"protection_disabled_until" description:"Protection is pause until this time. Nullable."`
+	ProtectionDisabledUntil      string   `json:"protection_disabled_until,omitempty" description:"Protection is pause until this time. Nullable."`
 	EDnsCsEnabled                bool     `json:"edns_cs_enabled"`
 	EDnsCsUseCustom              bool     `json:"edns_cs_use_custom"`
 	EDnsCsCustomIp               string   `json:"edns_cs_custom_ip"`

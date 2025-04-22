@@ -26,14 +26,14 @@ type WhoisInfo map[string]string
 
 // Client - Client information
 type Client struct {
-	// Deprecated: SafesearchEnabled, use SafeSearch instead
 	Name                     string           `json:"name" description:"Name"`
 	Ids                      []string         `json:"ids" description:"IP, CIDR, MAC, or ClientID."`
 	UseGlobalSettings        bool             `json:"use_global_settings"`
 	FilteringEnabled         bool             `json:"filtering_enabled"`
 	ParentalEnabled          bool             `json:"parental_enabled"`
 	SafebrowsingEnabled      bool             `json:"safebrowsing_enabled"`
-	SafesearchEnabled        bool             `json:"safesearch_enabled"` // deprecated
+	// Deprecated: SafesearchEnabled, use SafeSearch instead
+	SafesearchEnabled        bool             `json:"safesearch_enabled"`
 	SafeSearch               SafeSearchConfig `json:"safe_search"`
 	UseGlobalBlockedServices bool             `json:"use_global_blocked_services"`
 	BlockedServicesSchedule  Schedule         `json:"blocked_services_schedule"`
