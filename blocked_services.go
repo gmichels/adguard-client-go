@@ -7,8 +7,6 @@ import (
 	"strings"
 
 	"github.com/gmichels/adguard-client-go/models"
-	// custom json module to allow for omitting zero value structs
-	// "github.com/clarketm/json"
 )
 
 // BlockedServicesAll - Get available services to use for blocking
