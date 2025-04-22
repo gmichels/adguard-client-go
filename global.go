@@ -157,15 +157,15 @@ func (c *ADG) TestUpstreamDns(upstreamsConfig models.UpstreamsConfig) (*models.U
 }
 
 // VersionJson - Gets information about the latest available version of AdGuard
-func (c *ADG) VersionJson(upstreamsConfig models.UpstreamsConfig) (*models.UpstreamsConfigResponse, error) {
+func (c *ADG) VersionJson(getVersionRequest models.GetVersionRequest) (*models.VersionInfo, error) {
 	// convert provided object to JSON
-	rb, err := json.Marshal(upstreamsConfig)
+	rb, err := json.Marshal(getVersionRequest)
 	if err != nil {
 		return nil, err
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/test_upstream_dns", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/version.json", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -177,12 +177,121 @@ func (c *ADG) VersionJson(upstreamsConfig models.UpstreamsConfig) (*models.Upstr
 	}
 
 	// convert response to object
-	var upstreamsConfigResponse models.UpstreamsConfigResponse
-	err = json.Unmarshal(body, &upstreamsConfigResponse)
+	var versionInfo models.VersionInfo
+	err = json.Unmarshal(body, &versionInfo)
 	if err != nil {
 		return nil, err
 	}
 
 	// return the object
-	return &upstreamsConfigResponse, nil
+	return &versionInfo, nil
+}
+
+// Update - Begin auto-upgrade procedure
+func (c *ADG) Update() error {
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/update", c.HostURL), nil)
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// Login - Perform administrator login
+func (c *ADG) Login(login models.Login) error {
+	// convert provided object to JSON
+	rb, err := json.Marshal(login)
+	if err != nil {
+		return err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/login", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// Logout - Perform administrator logout
+func (c *ADG) Logout() error {
+	// initialize request
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/logout", c.HostURL), nil)
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// ProfileUpdate - Updates current user info
+func (c *ADG) ProfileUpdate(profileInfo models.ProfileInfo) error {
+	// convert provided object to JSON
+	rb, err := json.Marshal(profileInfo)
+	if err != nil {
+		return err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/profile/update", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// Profile
+func (c *ADG) Profile() (*models.ProfileInfo, error) {
+	// initialize request
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/profile", c.HostURL), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	// perform request
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// convert response to object
+	var profileInfo models.ProfileInfo
+	err = json.Unmarshal(body, &profileInfo)
+	if err != nil {
+		return nil, err
+	}
+
+	// return the object
+	return &profileInfo, nil
 }

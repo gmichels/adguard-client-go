@@ -53,15 +53,15 @@ type DNSConfig struct {
 
 // SetProtectionRequest - Protection state configuration
 type SetProtectionRequest struct {
-	Enabled bool `json:"enabled"`
+	Enabled  bool   `json:"enabled"`
 	Duration uint64 `json:"duration,omitempty" description:"Duration of a pause, in milliseconds. Enabled should be false."`
 }
 
 // UpstreamsConfig - Upstream configuration to be tested
 type UpstreamsConfig struct {
-	BootstrapDns []string `json:"bootstrap_dns" description:"Bootstrap DNS servers, port is optional after colon."`
-	UpstreamDns	[]string `json:"upstream_dns" description:"Upstream DNS servers, port is optional after colon."`
-	FallbackDns []string `json:"fallback_dns,omitempty" description:"Fallback DNS servers, port is optional after colon."`
+	BootstrapDns    []string `json:"bootstrap_dns" description:"Bootstrap DNS servers, port is optional after colon."`
+	UpstreamDns     []string `json:"upstream_dns" description:"Upstream DNS servers, port is optional after colon."`
+	FallbackDns     []string `json:"fallback_dns,omitempty" description:"Fallback DNS servers, port is optional after colon."`
 	PrivateUpstream []string `json:"private_upstream" description:"Local PTR resolvers, port is optional after colon."`
 }
 
@@ -75,9 +75,22 @@ type GetVersionRequest struct {
 
 // VersionInfo - Information about the latest available version of AdGuard Home
 type VersionInfo struct {
-	Disabled bool   `json:"disabled" description:"If true then other fields don't appear."`
-	NewVersion string `json:"new_version,omitempty"`
-	Announcement string `json:"announcement,omitempty"`
+	Disabled        bool   `json:"disabled" description:"If true then other fields don't appear."`
+	NewVersion      string `json:"new_version,omitempty"`
+	Announcement    string `json:"announcement,omitempty"`
 	AnnouncementUrl string `json:"announcement_url,omitempty"`
-	CanAutoupdate bool `json:"can_autoupdate,omitempty"`
+	CanAutoupdate   bool   `json:"can_autoupdate,omitempty"`
+}
+
+// Login - Login request data
+type Login struct {
+	Name     string `json:"name" description:"User name"`
+	Password string `json:"password" description:"Password"`
+}
+
+// ProfileInfo - Information about the current user
+type ProfileInfo struct {
+	Name     string `json:"name"`
+	Language string `json:"language"`
+	Theme    string `json:"theme" description:"Interface theme"`
 }
