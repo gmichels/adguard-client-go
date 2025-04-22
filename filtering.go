@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/gmichels/adguard-client-go/models"
 )
 
 // FilteringStatus - Get filtering parameters
-func (c *ADG) FilteringStatus() (*FilterStatus, error) {
+func (c *ADG) FilteringStatus() (*models.FilterStatus, error) {
 	// initialize request
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/filtering/status", c.HostURL), nil)
 	if err != nil {
@@ -21,8 +23,8 @@ func (c *ADG) FilteringStatus() (*FilterStatus, error) {
 		return nil, err
 	}
 
-	// convert response to an object
-	var allFilters FilterStatus
+	// convert response to object
+	var allFilters models.FilterStatus
 	err = json.Unmarshal(body, &allFilters)
 	if err != nil {
 		return nil, err
@@ -33,7 +35,7 @@ func (c *ADG) FilteringStatus() (*FilterStatus, error) {
 }
 
 // FilteringConfig - Set filtering parameters
-func (c *ADG) FilteringConfig(filterConfig FilterConfig) error {
+func (c *ADG) FilteringConfig(filterConfig models.FilterConfig) error {
 	// convert provided object to JSON
 	rb, err := json.Marshal(filterConfig)
 	if err != nil {
@@ -57,7 +59,7 @@ func (c *ADG) FilteringConfig(filterConfig FilterConfig) error {
 }
 
 // FilteringAddUrl - Add filter URL or an absolute file path
-func (c *ADG) FilteringAddUrl(filterData AddUrlRequest) error {
+func (c *ADG) FilteringAddUrl(filterData models.AddUrlRequest) error {
 	// convert provided object to JSON
 	rb, err := json.Marshal(filterData)
 	if err != nil {
@@ -81,7 +83,7 @@ func (c *ADG) FilteringAddUrl(filterData AddUrlRequest) error {
 }
 
 // FilteringRemoveUrl - Remove filter URL
-func (c *ADG) FilteringRemoveUrl(filterDelete RemoveUrlRequest) error {
+func (c *ADG) FilteringRemoveUrl(filterDelete models.RemoveUrlRequest) error {
 	// convert provided object to JSON
 	rb, err := json.Marshal(filterDelete)
 	if err != nil {
@@ -105,7 +107,7 @@ func (c *ADG) FilteringRemoveUrl(filterDelete RemoveUrlRequest) error {
 }
 
 // FilteringSetUrl - Set URL parameters
-func (c *ADG) FilteringSetUrl(filterUpdate FilterSetUrl) error {
+func (c *ADG) FilteringSetUrl(filterUpdate models.FilterSetUrl) error {
 	// convert provided object to JSON
 	rb, err := json.Marshal(filterUpdate)
 	if err != nil {
@@ -129,7 +131,7 @@ func (c *ADG) FilteringSetUrl(filterUpdate FilterSetUrl) error {
 }
 
 // FilteringRefresh - Set URL parameters
-func (c *ADG) FilteringRefresh(filterRefreshRequest FilterRefreshRequest) (*FilterRefreshResponse, error) {
+func (c *ADG) FilteringRefresh(filterRefreshRequest models.FilterRefreshRequest) (*models.FilterRefreshResponse, error) {
 	// convert provided object to JSON
 	rb, err := json.Marshal(filterRefreshRequest)
 	if err != nil {
@@ -148,8 +150,8 @@ func (c *ADG) FilteringRefresh(filterRefreshRequest FilterRefreshRequest) (*Filt
 		return nil, err
 	}
 
-	// convert response to an object
-	var filterRefreshResponse FilterRefreshResponse
+	// convert response to object
+	var filterRefreshResponse models.FilterRefreshResponse
 	err = json.Unmarshal(body, &filterRefreshResponse)
 	if err != nil {
 		return nil, err
@@ -160,7 +162,7 @@ func (c *ADG) FilteringRefresh(filterRefreshRequest FilterRefreshRequest) (*Filt
 }
 
 // FilteringSetRules - Set user-defined filter rules
-func (c *ADG) FilteringSetRules(rules SetRulesRequest) error {
+func (c *ADG) FilteringSetRules(rules models.SetRulesRequest) error {
 	// convert provided object to JSON
 	rb, err := json.Marshal(rules)
 	if err != nil {
@@ -184,9 +186,9 @@ func (c *ADG) FilteringSetRules(rules SetRulesRequest) error {
 }
 
 // FilteringCheckHost - Check if host name is filtered
-func (c *ADG) FilteringCheckHost(name string, client *string, qtype *string) (*FilterCheckHostResponse, error) {
+func (c *ADG) FilteringCheckHost(name *string, client *string, qtype *string) (*models.FilterCheckHostResponse, error) {
 	// create query parameters dynamically
-	queryParams := fmt.Sprintf("?name=%s", name)
+	queryParams := fmt.Sprintf("?name=%s", *name)
 	if client != nil && *client != "" {
 		queryParams += fmt.Sprintf("&client=%s", *client)
 	}
@@ -206,13 +208,13 @@ func (c *ADG) FilteringCheckHost(name string, client *string, qtype *string) (*F
 		return nil, err
 	}
 
-	// convert response to an object
-	var filterCheckHostResponse FilterCheckHostResponse
+	// convert response to object
+	var filterCheckHostResponse models.FilterCheckHostResponse
 	err = json.Unmarshal(body, &filterCheckHostResponse)
 	if err != nil {
 		return nil, err
 	}
 
-	// Return the object
+	// return the object
 	return &filterCheckHostResponse, nil
 }

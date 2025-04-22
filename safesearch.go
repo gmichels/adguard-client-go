@@ -5,10 +5,36 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/gmichels/adguard-client-go/models"
 )
 
-// GetSafeSearchStatus - Retrieve safe search configuration
-func (c *ADG) GetSafeSearchConfig() (*SafeSearchConfig, error) {
+// SafeSearchSettings - Update safesearch settings
+func (c *ADG) SafeSearchSettings(safeSearchConfig models.SafeSearchConfig) error {
+	// convert provided object to JSON
+	rb, err := json.Marshal(safeSearchConfig)
+	if err != nil {
+		return err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/safesearch/settings", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// SafeSearchStatus - Get safesearch status
+func (c *ADG) SafeSearchStatus() (*models.SafeSearchConfig, error) {
 	// initialize request
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/safesearch/status", c.HostURL), nil)
 	if err != nil {
@@ -21,39 +47,13 @@ func (c *ADG) GetSafeSearchConfig() (*SafeSearchConfig, error) {
 		return nil, err
 	}
 
-	// convert response to a SafeSerchConfig object
-	var safeSearchConfig SafeSearchConfig
+	// convert response to object
+	var safeSearchConfig models.SafeSearchConfig
 	err = json.Unmarshal(body, &safeSearchConfig)
 	if err != nil {
 		return nil, err
 	}
 
-	return &safeSearchConfig, nil
-}
-
-// SetSafeSearchConfig - Set safe search configuration
-func (c *ADG) SetSafeSearchConfig(safeSearchConfig SafeSearchConfig) (*SafeSearchConfig, error) {
-	// convert provided safe search config to JSON
-	rb, err := json.Marshal(safeSearchConfig)
-	if err != nil {
-		return nil, err
-	}
-
-	// initialize request
-	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/safesearch/settings", c.HostURL), strings.NewReader(string(rb)))
-	if err != nil {
-		return nil, err
-	}
-
-	// perform request
-	body, err := c.doRequest(req)
-	if err != nil {
-		return nil, err
-	}
-
-	// appease Go
-	_ = body
-
-	// return the same safe search configuration that was passed
+	// return the object
 	return &safeSearchConfig, nil
 }

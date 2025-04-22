@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/gmichels/adguard-client-go/models"
 )
 
-// ListAccess - List (dis)allowed clients, blocked hosts, etc
-func (c *ADG) ListAccess() (*AccessList, error) {
+// AccessList - List (dis)allowed clients, blocked hosts, etc
+func (c *ADG) AccessList() (*models.AccessList, error) {
 	// initialize request
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/access/list", c.HostURL), nil)
 	if err != nil {
@@ -21,8 +23,8 @@ func (c *ADG) ListAccess() (*AccessList, error) {
 		return nil, err
 	}
 
-	// convert response to AccessList object
-	var accessList AccessList
+	// convert response to object
+	var accessList models.AccessList
 	err = json.Unmarshal(body, &accessList)
 	if err != nil {
 		return nil, err
@@ -31,29 +33,26 @@ func (c *ADG) ListAccess() (*AccessList, error) {
 	return &accessList, nil
 }
 
-// SetAccess - Set (dis)allowed clients, blocked hosts, etc
-func (c *ADG) SetAccess(accessList AccessList) (*AccessList, error) {
-	// convert provided access list to JSON
+// AccessSet - Set (dis)allowed clients, blocked hosts, etc
+func (c *ADG) AccessSet(accessList models.AccessList) error {
+	// convert provided object to JSON
 	rb, err := json.Marshal(accessList)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// initialize request
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/access/set", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// perform request
-	body, err := c.doRequest(req)
+	_, err = c.doRequest(req)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	// appease Go
-	_ = body
-
-	// return the same access list that was passed
-	return &accessList, nil
+	// return nothing
+	return nil
 }

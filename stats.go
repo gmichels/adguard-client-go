@@ -5,10 +5,55 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/gmichels/adguard-client-go/models"
 )
 
-// GetStatsConfig - Returns statistics configuration parameters
-func (c *ADG) GetStatsConfig() (*GetStatsConfigResponse, error) {
+// Stats - Get DNS server statistics
+func (c *ADG) Stats() (*models.Stats, error) {
+	// initialize request
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/stats", c.HostURL), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	// perform request
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// convert response to object
+	var stats models.Stats
+	err = json.Unmarshal(body, &stats)
+	if err != nil {
+		return nil, err
+	}
+
+	// return the object
+	return &stats, nil
+}
+
+// StatsReset - Reset all statistics to zeroes
+func (c *ADG) StatsReset() error {
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/stats_reset", c.HostURL), nil)
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// StatsConfig - Get statistics parameters
+func (c *ADG) StatsConfig() (*models.GetStatsConfigResponse, error) {
 	// initialize request
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/stats/config", c.HostURL), nil)
 	if err != nil {
@@ -21,39 +66,37 @@ func (c *ADG) GetStatsConfig() (*GetStatsConfigResponse, error) {
 		return nil, err
 	}
 
-	// convert response to GetStatsConfigResponse object
-	var statsConfig GetStatsConfigResponse
+	// convert response to object
+	var statsConfig models.GetStatsConfigResponse
 	err = json.Unmarshal(body, &statsConfig)
 	if err != nil {
 		return nil, err
 	}
 
+	// return the object
 	return &statsConfig, nil
 }
 
-// SetStatsConfig - Sets statistics configuration parameters
-func (c *ADG) SetStatsConfig(statsConfig GetStatsConfigResponse) (*GetStatsConfigResponse, error) {
-	// convert provided statistics config to JSON
+// StatsConfigUpdate - Sets statistics parameters
+func (c *ADG) StatsConfigUpdate(statsConfig models.GetStatsConfigResponse) error {
+	// convert provided object to JSON
 	rb, err := json.Marshal(statsConfig)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// initialize request
 	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/stats/config/update", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// perform request
-	body, err := c.doRequest(req)
+	_, err = c.doRequest(req)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	// appease Go
-	_ = body
-
-	// return the same statistics config that was passed
-	return &statsConfig, nil
+	// return nothing
+	return nil
 }
