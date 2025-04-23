@@ -1,18 +1,18 @@
 package adguard
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
-	// custom json module to allow for omitting zero value structs
-	"github.com/clarketm/json"
+	"github.com/gmichels/adguard-client-go/models"
 )
 
-// GetDhcpStatus - Returns the current DHCP status
-func (c *ADG) GetDhcpStatus() (*DhcpStatus, error) {
+// DhcpStatus - Gets the current DHCP settings and status
+func (c *ADG) DhcpStatus() (*models.DhcpStatus, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/dhcp/status", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/dhcp/status", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -23,20 +23,21 @@ func (c *ADG) GetDhcpStatus() (*DhcpStatus, error) {
 		return nil, err
 	}
 
-	// convert response to DhcpStatus object
-	var dhcpStatus DhcpStatus
+	// convert response to object
+	var dhcpStatus models.DhcpStatus
 	err = json.Unmarshal(body, &dhcpStatus)
 	if err != nil {
 		return nil, err
 	}
 
+	// return the object
 	return &dhcpStatus, nil
 }
 
-// GetDhcpStatus - Returns the available DHCP interfaces
-func (c *ADG) GetDhcpInterfaces() (*NetInterfaces, error) {
+// DhcpInterfaces - Gets the available DHCP interfaces
+func (c *ADG) DhcpInterfaces() (*models.NetInterfaces, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/dhcp/interfaces", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/dhcp/interfaces", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -47,114 +48,175 @@ func (c *ADG) GetDhcpInterfaces() (*NetInterfaces, error) {
 		return nil, err
 	}
 
-	// convert response to NetInterfaces object
-	var netInterfaces NetInterfaces
+	// convert response to object
+	var netInterfaces models.NetInterfaces
 	err = json.Unmarshal(body, &netInterfaces)
 	if err != nil {
 		return nil, err
 	}
 
+	// return the object
 	return &netInterfaces, nil
 }
 
-// SetDhcpConfig - Sets DHCP server configuration
-func (c *ADG) SetDhcpConfig(dhcpConfig DhcpConfig) (*DhcpConfig, error) {
-	// convert provided DHCP config to JSON
+// DhcpSetConfig - Updates the current DHCP server configuration
+func (c *ADG) DhcpSetConfig(dhcpConfig models.DhcpConfig) error {
+	// convert provided object to JSON
 	rb, err := json.Marshal(dhcpConfig)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/set_config", c.HostURL), strings.NewReader(string(rb)))
-	if err != nil {
-		return nil, err
-	}
-
-	// perform request
-	body, err := c.doRequest(req)
-	if err != nil {
-		return nil, err
-	}
-
-	// appease Go
-	_ = body
-
-	// return the same DHCP config that was passed
-	return &dhcpConfig, nil
-}
-
-// ManageDhcpStaticLease - Add ot remove a DHCP static lease
-func (c *ADG) ManageDhcpStaticLease(add bool, dhcpStaticLease DhcpStaticLease) (*DhcpStaticLease, error) {
-	// convert provided DHCP static lease to JSON
-	rb, err := json.Marshal(dhcpStaticLease)
-	if err != nil {
-		return nil, err
-	}
-
-	// default to remove operation
-	operation := "remove"
-	if add {
-		// flip to add operation
-		operation = "add"
-	}
-
-	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/%s_static_lease", c.HostURL, operation), strings.NewReader(string(rb)))
-	if err != nil {
-		return nil, err
-	}
-
-	// perform request
-	body, err := c.doRequest(req)
-	if err != nil {
-		return nil, err
-	}
-
-	// appease Go
-	_ = body
-
-	// return the same DHCP static lease that was passed
-	return &dhcpStaticLease, nil
-}
-
-// ResetDhcpConfig - reset all DHCP configuration to defaults
-func (c *ADG) ResetDhcpConfig() error {
-	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/reset", c.HostURL), strings.NewReader(string([]byte(`{}`))))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/set_config", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
 
 	// perform request
-	body, err := c.doRequest(req)
+	_, err = c.doRequest(req)
 	if err != nil {
 		return err
 	}
-
-	// appease Go
-	_ = body
 
 	// return nothing
 	return nil
 }
 
-// ResetDhcpStaticLeases - reset all DHCP static leases
-func (c *ADG) ResetDhcpStaticLeases() error {
-	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/dhcp/reset_leases", c.HostURL), strings.NewReader(string([]byte(`{}`))))
+// DhcpFindActiveDhcp - Searches for an active DHCP server on the network
+func (c *ADG) DhcpFindActiveDhcp(dhcpFindActiveReq models.DhcpFindActiveReq) (*models.DhcpSearchResult, error) {
+	// convert provided object to JSON
+	rb, err := json.Marshal(dhcpFindActiveReq)
 	if err != nil {
-		return err
+		return nil, err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/find_active_dhcp", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return nil, err
 	}
 
 	// perform request
 	body, err := c.doRequest(req)
 	if err != nil {
+		return nil, err
+	}
+
+	// convert response to object
+	var dhcpSearchResult models.DhcpSearchResult
+	err = json.Unmarshal(body, &dhcpSearchResult)
+	if err != nil {
+		return nil, err
+	}
+
+	// return the object
+	return &dhcpSearchResult, nil
+}
+
+// DhcpAddStaticLease - Adds a static lease
+func (c *ADG) DhcpAddStaticLease(dhcpStaticLease models.DhcpStaticLease) error {
+	// convert provided object to JSON
+	rb, err := json.Marshal(dhcpStaticLease)
+	if err != nil {
 		return err
 	}
 
-	// appease Go
-	_ = body
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/add_static_lease", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// DhcpRemoveStaticLease - Removes a static lease
+func (c *ADG) DhcpRemoveStaticLease(dhcpStaticLease models.DhcpStaticLease) error {
+	// convert provided object to JSON
+	rb, err := json.Marshal(dhcpStaticLease)
+	if err != nil {
+		return err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/remove_static_lease", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// DhcpUpdateStaticLease - Updates a static lease
+func (c *ADG) DhcpUpdateStaticLease(dhcpStaticLease models.DhcpStaticLease) error {
+	// convert provided object to JSON
+	rb, err := json.Marshal(dhcpStaticLease)
+	if err != nil {
+		return err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/update_static_lease", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// DhcpReset - Reset DHCP configuration
+func (c *ADG) DhcpReset() error {
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/reset", c.HostURL), nil)
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// DhcpResetLeases - Reset DHCP leases
+func (c *ADG) DhcpResetLeases() error {
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/dhcp/reset_leases", c.HostURL), nil)
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
 
 	// return nothing
 	return nil

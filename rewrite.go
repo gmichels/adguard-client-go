@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/gmichels/adguard-client-go/models"
 )
 
-// GetAllRewrites - Returns all DNS rewrite rules
-func (c *ADG) GetAllRewrites() (*[]RewriteEntry, error) {
+// RewriteList - Get list of Rewrite rules
+func (c *ADG) RewriteList() (*models.RewriteList, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/rewrite/list", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/rewrite/list", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -21,110 +23,85 @@ func (c *ADG) GetAllRewrites() (*[]RewriteEntry, error) {
 		return nil, err
 	}
 
-	// convert response to a list of RewriteEntry objects
-	var allRewrites []RewriteEntry
-	err = json.Unmarshal(body, &allRewrites)
+	// convert response to object
+	var rewriteList models.RewriteList
+	err = json.Unmarshal(body, &rewriteList)
 	if err != nil {
 		return nil, err
 	}
 
-	return &allRewrites, nil
+	// return the object
+	return &rewriteList, nil
 }
 
-// GetRewrite - Return a DNS rewrite rule based on the domain and answer
-func (c *ADG) GetRewrite(domain, answer string) (*RewriteEntry, error) {
-	// retrieve all DNS rewrite rules
-	allRewrites, err := c.GetAllRewrites()
-	if err != nil {
-		return nil, err
-	}
-
-	// loop over the results until we find the one we want
-	for _, rewrite := range *allRewrites {
-		if rewrite.Domain == domain && rewrite.Answer == answer {
-			return &rewrite, nil
-		}
-	}
-
-	// when no matches are found
-	return nil, nil
-}
-
-// CreateRewrite - Create a DNS rewrite rule
-func (c *ADG) CreateRewrite(rewrite RewriteEntry) (*RewriteEntry, error) {
-	// convert provided rewrite rule to JSON
-	rb, err := json.Marshal(rewrite)
-	if err != nil {
-		return nil, err
-	}
-
-	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/rewrite/add", c.HostURL), strings.NewReader(string(rb)))
-	if err != nil {
-		return nil, err
-	}
-
-	// perform request
-	body, err := c.doRequest(req)
-	if err != nil {
-		return nil, err
-	}
-
-	// appease Go
-	_ = body
-
-	// return the same rewrite rule that was passed
-	return &rewrite, nil
-}
-
-// UpdateRewrite - Update a DNS rewrite rule
-func (c *ADG) UpdateRewrite(rewrite RewriteEntry) (*RewriteEntry, error) {
-	// there is no real update endpoint in ADG, need to delete and re-create
-	err := c.DeleteRewrite(rewrite.Domain, rewrite.Answer)
-	if err != nil {
-		return nil, err
-	}
-
-	_, err = c.CreateRewrite(rewrite)
-	if err != nil {
-		return nil, err
-	}
-
-	// return the rewrite rule that was passed
-	return &rewrite, nil
-}
-
-// DeleteRewrite - Delete a DNS rewrite rule based on the domain and answer
-func (c *ADG) DeleteRewrite(domain, answer string) error {
-	// confirm the DNS rewrite rule entry exists
-	rewrite, err := c.GetRewrite(domain, answer)
-	if err != nil {
-		return err
-	} else if rewrite == nil {
-		return fmt.Errorf("unable to find a DNS rewrite rule for domain `%s` and answer `%s`", domain, answer)
-	}
-
-	// convert DNS rewrite to JSON
-	rb, err := json.Marshal(rewrite)
+// RewriteAdd - Add a new Rewrite rule
+func (c *ADG) RewriteAdd(rewriteEntry models.RewriteEntry) error {
+	// convert provided object to JSON
+	rb, err := json.Marshal(rewriteEntry)
 	if err != nil {
 		return err
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/rewrite/delete", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/rewrite/add", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
 
 	// perform request
-	body, err := c.doRequest(req)
+	_, err = c.doRequest(req)
 	if err != nil {
 		return err
 	}
 
-	// appease Go
-	_ = body
+	// return nothing
+	return nil
+}
 
-	// no need to return anything
+// RewriteDelete - Remove a Rewrite rule
+func (c *ADG) RewriteDelete(rewriteEntry models.RewriteEntry) error {
+	// convert provided object to JSON
+	rb, err := json.Marshal(rewriteEntry)
+	if err != nil {
+		return err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/rewrite/delete", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// RewriteUpdate - Update a Rewrite rule
+func (c *ADG) RewriteUpdate(rewriteUpdate models.RewriteUpdate) error {
+	// convert provided object to JSON
+	rb, err := json.Marshal(rewriteUpdate)
+	if err != nil {
+		return err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/control/rewrite/update", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
 	return nil
 }

@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/gmichels/adguard-client-go/models"
 )
 
-// GetAllClients - Returns all clients
-func (c *ADG) GetAllClients() (*AllClients, error) {
+// Clients - Get information about configured clients
+func (c *ADG) Clients() (*models.Clients, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/clients", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/clients", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -21,112 +23,131 @@ func (c *ADG) GetAllClients() (*AllClients, error) {
 		return nil, err
 	}
 
-	// convert response to an AllClients object
-	var allClients AllClients
-	err = json.Unmarshal(body, &allClients)
+	// convert response to object
+	var clients models.Clients
+	err = json.Unmarshal(body, &clients)
 	if err != nil {
 		return nil, err
 	}
 
-	return &allClients, nil
+	// return the object
+	return &clients, nil
 }
 
-// GetClient - Returns a client based on an identifier
-func (c *ADG) GetClient(identifier string) (*Client, error) {
-	// retrieve all clients
-	allClients, err := c.GetAllClients()
-	if err != nil {
-		return nil, err
-	}
-
-	// go through the clients in the response until we find the one we want
-	for _, clientInfo := range allClients.Clients {
-		if clientInfo.Name == identifier {
-			return &clientInfo, nil
-		}
-	}
-
-	// when no matches are found
-	return nil, nil
-}
-
-// CreateClient - Create a client
-func (c *ADG) CreateClient(client Client) (*Client, error) {
-	// convert provided client to JSON
+// ClientsAdd - Add a new client
+func (c *ADG) ClientsAdd(client models.Client) error {
+	// convert provided object to JSON
 	rb, err := json.Marshal(client)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/clients/add", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/clients/add", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// perform request
-	body, err := c.doRequest(req)
+	_, err = c.doRequest(req)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	// appease Go
-	_ = body
-
-	// return the same client that was passed
-	return &client, nil
+	// return nothing
+	return nil
 }
 
-// UpdateClient - Update a client
-func (c *ADG) UpdateClient(clientUpdate ClientUpdate) (*Client, error) {
-	// convert provided update client to JSON
-	rb, err := json.Marshal(clientUpdate)
-	if err != nil {
-		return nil, err
-	}
-
-	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/clients/update", c.HostURL), strings.NewReader(string(rb)))
-	if err != nil {
-		return nil, err
-	}
-
-	// perform request
-	body, err := c.doRequest(req)
-	if err != nil {
-		return nil, err
-	}
-
-	// appease Go
-	_ = body
-
-	// return the client data that was passed
-	return &clientUpdate.Data, nil
-}
-
-// DeleteClient - Deletes a client
-func (c *ADG) DeleteClient(clientDelete ClientDelete) error {
-	// convert provided delete client to JSON
+// ClientsDelete - Remove a client
+func (c *ADG) ClientsDelete(clientDelete models.ClientDelete) error {
+	// convert provided object to JSON
 	rb, err := json.Marshal(clientDelete)
 	if err != nil {
 		return err
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/clients/delete", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/clients/delete", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return err
 	}
 
 	// perform request
-	body, err := c.doRequest(req)
+	_, err = c.doRequest(req)
 	if err != nil {
 		return err
 	}
 
-	// appease Go
-	_ = body
-
-	// no need to return anything
+	// return nothing
 	return nil
+}
+
+// ClientsUpdate - Update client information
+func (c *ADG) ClientsUpdate(clientUpdate models.ClientUpdate) error {
+	// convert provided object to JSON
+	rb, err := json.Marshal(clientUpdate)
+	if err != nil {
+		return err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/clients/update", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return err
+	}
+
+	// perform request
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	// return nothing
+	return nil
+}
+
+// ClientsSearch - Get information about clients by their IP addresses, CIDR, MAC addresses, or ClientIDs
+func (c *ADG) ClientsSearch(identifiers []string) (*models.ClientsFindResponse, error) {
+	// initialize object
+	clients := []models.ClientSearchRequestItem{}
+
+	// go through identifiers and append individual objects
+	for _, identifier := range identifiers {
+		clients = append(clients, models.ClientSearchRequestItem{
+			Id: identifier,
+		})
+	}
+
+	// initialize request object
+	clientsSearchRequest := models.ClientsSearchRequest{
+		Clients: clients,
+	}
+
+	// convert object to JSON
+	rb, err := json.Marshal(clientsSearchRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/clients/search", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return nil, err
+	}
+
+	// perform request
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// convert response to object
+	var clientsFindResponse models.ClientsFindResponse
+	err = json.Unmarshal(body, &clientsFindResponse)
+	if err != nil {
+		return nil, err
+	}
+
+	// return the object
+	return &clientsFindResponse, nil
 }

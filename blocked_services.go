@@ -1,18 +1,18 @@
 package adguard
 
 import (
-	// custom json module to allow for omitting zero value structs
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
-	"github.com/clarketm/json"
+	"github.com/gmichels/adguard-client-go/models"
 )
 
-// GetBlockedServicesList - Returns the list of all available services to be blocked
-func (c *ADG) GetBlockedServicesList() (*BlockedServicesAll, error) {
+// BlockedServicesAll - Get available services to use for blocking
+func (c *ADG) BlockedServicesAll() (*models.BlockedServicesAll, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/blocked_services/all", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/blocked_services/all", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -23,20 +23,21 @@ func (c *ADG) GetBlockedServicesList() (*BlockedServicesAll, error) {
 		return nil, err
 	}
 
-	// convert response to BlockedServicesAll object
-	var blockedServicesAll BlockedServicesAll
+	// convert response to object
+	var blockedServicesAll models.BlockedServicesAll
 	err = json.Unmarshal(body, &blockedServicesAll)
 	if err != nil {
 		return nil, err
 	}
 
+	// return the object
 	return &blockedServicesAll, nil
 }
 
-// GetBlockedServices - Returns the services that are blocked globally
-func (c *ADG) GetBlockedServices() (*BlockedServicesSchedule, error) {
+// BlockedServicesGet - Get blocked services
+func (c *ADG) BlockedServicesGet() (*models.BlockedServicesSchedule, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/blocked_services/get", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/blocked_services/get", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -47,39 +48,37 @@ func (c *ADG) GetBlockedServices() (*BlockedServicesSchedule, error) {
 		return nil, err
 	}
 
-	// convert response to BlockedServicesSchedule object
-	var blockedServicesSchedule BlockedServicesSchedule
+	// convert response to object
+	var blockedServicesSchedule models.BlockedServicesSchedule
 	err = json.Unmarshal(body, &blockedServicesSchedule)
 	if err != nil {
 		return nil, err
 	}
 
+	// return the object
 	return &blockedServicesSchedule, nil
 }
 
-// UpdateBlockedServices - Update blocked services
-func (c *ADG) SetBlockedServices(blockedServicesSchedule BlockedServicesSchedule) (*BlockedServicesSchedule, error) {
-	// convert provided blocked services to JSON
+// BlockedServicesUpdate - Update blocked services
+func (c *ADG) BlockedServicesUpdate(blockedServicesSchedule models.BlockedServicesSchedule) error {
+	// convert provided object to JSON
 	rb, err := json.Marshal(blockedServicesSchedule)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// initialize request
-	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/blocked_services/update", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/control/blocked_services/update", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// perform request
-	body, err := c.doRequest(req)
+	_, err = c.doRequest(req)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	// appease Go
-	_ = body
-
-	// return the same blocked services that were passed
-	return &blockedServicesSchedule, nil
+	// return nothing
+	return nil
 }

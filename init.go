@@ -52,7 +52,7 @@ func NewClient(host, username, password, scheme *string, timeout *int, enableIns
 	// instantiate client
 	c := ADG{
 		HTTPClient: &http.Client{Timeout: time.Duration(*timeout) * time.Second, Transport: tr},
-		HostURL:    fmt.Sprintf("%s://%s/control", *scheme, *host),
+		HostURL:    fmt.Sprintf("%s://%s", *scheme, *host),
 	}
 	// instantiate auth
 	c.Auth = AuthStruct{
@@ -66,7 +66,11 @@ func NewClient(host, username, password, scheme *string, timeout *int, enableIns
 func (c *ADG) doRequest(req *http.Request) ([]byte, error) {
 	// add auth info to request
 	req.SetBasicAuth(c.Auth.Username, c.Auth.Password)
-	req.Header.Set("Content-Type", "application/json")
+
+	// set headers
+	if req.Body != nil {
+		req.Header.Set("Content-Type", "application/json")
+	}
 
 	// perform request
 	res, err := c.HTTPClient.Do(req)

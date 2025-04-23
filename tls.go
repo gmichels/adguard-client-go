@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/gmichels/adguard-client-go/models"
 )
 
-// GetTlsConfig - Returns TLS configuration and status
-func (c *ADG) GetTlsConfig() (*TlsConfig, error) {
+// TlsStatus - Returns TLS configuration and its status
+func (c *ADG) TlsStatus() (*models.TlsConfig, error) {
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/tls/status", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/tls/status", c.HostURL), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -21,26 +23,27 @@ func (c *ADG) GetTlsConfig() (*TlsConfig, error) {
 		return nil, err
 	}
 
-	// convert response to AccessList object
-	var tlsConfig TlsConfig
+	// convert response to object
+	var tlsConfig models.TlsConfig
 	err = json.Unmarshal(body, &tlsConfig)
 	if err != nil {
 		return nil, err
 	}
 
+	// return the object
 	return &tlsConfig, nil
 }
 
-// SetTlsConfig - Sets the TLS configuration
-func (c *ADG) SetTlsConfig(tlsConfig TlsConfig) (*TlsConfig, error) {
-	// convert provided TLS config to JSON
+// TlsConfigure - Updates current TLS configuration
+func (c *ADG) TlsConfigure(tlsConfig models.TlsConfig) (*models.TlsConfig, error) {
+	// convert provided object to JSON
 	rb, err := json.Marshal(tlsConfig)
 	if err != nil {
 		return nil, err
 	}
 
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/tls/configure", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/tls/configure", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}
@@ -51,12 +54,44 @@ func (c *ADG) SetTlsConfig(tlsConfig TlsConfig) (*TlsConfig, error) {
 		return nil, err
 	}
 
-	// convert response to TlsConfig object
-	var responseTlsConfig TlsConfig
+	// convert response to object
+	var responseTlsConfig models.TlsConfig
 	err = json.Unmarshal(body, &responseTlsConfig)
 	if err != nil {
 		return nil, err
 	}
 
+	// return the object
+	return &responseTlsConfig, nil
+}
+
+// TlsValidate - Checks if the current TLS configuration is valid
+func (c *ADG) TlsValidate(tlsConfig models.TlsConfig) (*models.TlsConfig, error) {
+	// convert provided object to JSON
+	rb, err := json.Marshal(tlsConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	// initialize request
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/tls/validate", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return nil, err
+	}
+
+	// perform request
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// convert response to object
+	var responseTlsConfig models.TlsConfig
+	err = json.Unmarshal(body, &responseTlsConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	// return the object
 	return &responseTlsConfig, nil
 }
