@@ -26,12 +26,12 @@ type WhoisInfo map[string]string
 
 // Client - Client information
 type Client struct {
-	Name                     string           `json:"name" description:"Name"`
-	Ids                      []string         `json:"ids" description:"IP, CIDR, MAC, or ClientID."`
-	UseGlobalSettings        bool             `json:"use_global_settings"`
-	FilteringEnabled         bool             `json:"filtering_enabled"`
-	ParentalEnabled          bool             `json:"parental_enabled"`
-	SafebrowsingEnabled      bool             `json:"safebrowsing_enabled"`
+	Name                string   `json:"name" description:"Name"`
+	Ids                 []string `json:"ids" description:"IP, CIDR, MAC, or ClientID."`
+	UseGlobalSettings   bool     `json:"use_global_settings"`
+	FilteringEnabled    bool     `json:"filtering_enabled"`
+	ParentalEnabled     bool     `json:"parental_enabled"`
+	SafebrowsingEnabled bool     `json:"safebrowsing_enabled"`
 	// Deprecated: SafesearchEnabled, use SafeSearch instead
 	SafesearchEnabled        bool             `json:"safesearch_enabled"`
 	SafeSearch               SafeSearchConfig `json:"safe_search"`
@@ -57,8 +57,8 @@ type ClientUpdate struct {
 	Data Client `json:"data"`
 }
 
-// ClientSearchRequest - Client search request
-type ClientSearchRequest struct {
+// ClientsSearchRequest - Client search request
+type ClientsSearchRequest struct {
 	Clients []ClientSearchRequestItem `json:"clients"`
 }
 
@@ -67,21 +67,21 @@ type ClientSearchRequestItem struct {
 	Id string `json:"id" description:"Client IP address, CIDR, MAC address, or ClientID"`
 }
 
-// ClientFindResponse - Client search results
-type ClientFindResponse []ClientFindEntry
+// ClientsFindResponse - Client search results
+type ClientsFindResponse []ClientFindEntry
 
 // ClientFindEntry
 type ClientFindEntry map[string]ClientFindSubEntry
 
 // ClientFindSubEntry - Client information
 type ClientFindSubEntry struct {
+	Name                string   `json:"name" description:"Name"`
+	Ids                 []string `json:"ids" decription:"IP, CIDR, MAC, or ClientID."`
+	UseGlobalSettings   bool     `json:"use_global_settings"`
+	FilteringEnabled    bool     `json:"filtering_enabled"`
+	ParentalEnabled     bool     `json:"parental_enabled"`
+	SafebrowsingEnabled bool     `json:"safebrowsing_enabled"`
 	// Deprecated: SafesearchEnabled, use SafeSearch instead
-	Name                     string           `json:"name" description:"Name"`
-	Ids                      []string         `json:"ids" decription:"IP, CIDR, MAC, or ClientID."`
-	UseGlobalSettings        bool             `json:"use_global_settings"`
-	FilteringEnabled         bool             `json:"filtering_enabled"`
-	ParentalEnabled          bool             `json:"parental_enabled"`
-	SafebrowsingEnabled      bool             `json:"safebrowsing_enabled"`
 	SafesearchEnabled        bool             `json:"safesearch_enabled"` // deprecated
 	SafeSearch               SafeSearchConfig `json:"safe_search"`
 	UseGlobalBlockedServices bool             `json:"use_global_blocked_services"`
