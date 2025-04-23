@@ -44,7 +44,7 @@ func TestTlsConfigure(t *testing.T) {
 	// assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	assert.Equal(t, false, result.Enabled)
+	assert.False(t, result.Enabled)
 	assert.Equal(t, "Test AdGuard Home Modified", result.ServerName)
 }
 

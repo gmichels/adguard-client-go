@@ -18,11 +18,11 @@ func TestAccessList(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure no allowed clients are returned
-	assert.Equal(t, len(result.AllowedClients), 0)
+	assert.Len(t, result.AllowedClients, 0)
 	// ensure 2 disallowed clients are returned
-	assert.Equal(t, len(result.DisallowedClients), 2)
+	assert.Len(t, result.DisallowedClients, 2)
 	// ensure 3 blocked hosts are returned
-	assert.Equal(t, len(result.BlockedHosts), 3)
+	assert.Len(t, (result.BlockedHosts), 3)
 }
 
 // Test AccessSet

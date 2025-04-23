@@ -18,15 +18,15 @@ func TestFilteringStatus(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure filtering is enabled
-	assert.Equal(t, true, result.Enabled)
+	assert.True(t, result.Enabled)
 	// ensure the interval is set to 24
 	assert.Equal(t, uint(24), result.Interval)
 	// ensure there are 2 filters
-	assert.Equal(t, 2, len(result.Filters))
+	assert.Len(t, result.Filters, 2)
 	// ensure there is 1 whitelist filter
-	assert.Equal(t, 1, len(result.WhitelistFilters))
+	assert.Len(t, result.WhitelistFilters, 1)
 	// ensure there are 7 user rules
-	assert.Equal(t, 7, len(result.UserRules))
+	assert.Len(t, result.UserRules, 7)
 }
 
 // Test FilteringConfig
@@ -48,7 +48,7 @@ func TestFilteringConfig(t *testing.T) {
 	// verify the changes by calling FilteringStatus
 	result, err := adg.FilteringStatus()
 	assert.NoError(t, err)
-	assert.Equal(t, false, result.Enabled)
+	assert.False(t, result.Enabled)
 }
 
 // Test FilteringAddUrl

@@ -17,7 +17,8 @@ func TestClients(t *testing.T) {
 	// assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	assert.GreaterOrEqual(t, len(result.Clients), 0) // Ensure at least 0 clients are returned
+	// ensure 1 client is returned
+	assert.Len(t, result.Clients, 1)
 }
 
 // Test ClientsAdd
@@ -85,7 +86,7 @@ func TestClientsSearch(t *testing.T) {
 	// assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	assert.Equal(t, 1, len(*result))
+	assert.Len(t, *result, 1)
 	assert.Equal(t, "Test Client to Search", (*result)[0]["test-client-search"].Name)
 
 	// cleanup: delete the client after the test

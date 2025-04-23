@@ -21,7 +21,7 @@ func TestSafeBrowsingEnable(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure safebrowsing is enabled
-	assert.Equal(t, true, result.Enabled)
+	assert.True(t, result.Enabled)
 }
 
 // Test SafeBrowsingDisable
@@ -39,7 +39,7 @@ func TestSafeBrowsingDisable(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure safebrowsing is disabled
-	assert.Equal(t, false, result.Enabled)
+	assert.False(t, result.Enabled)
 }
 
 // Test SafeBrowsingStatus

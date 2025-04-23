@@ -18,7 +18,7 @@ func TestRewriteList(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure at least 1 rewrite rule is returned
-	assert.Equal(t, len(*result), 1)
+	assert.Len(t, *result, 1)
 }
 
 // Test RewriteAdd

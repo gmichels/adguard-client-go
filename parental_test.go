@@ -21,7 +21,7 @@ func TestParentalEnable(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure parental filtering is enabled
-	assert.Equal(t, true, result.Enabled)
+	assert.True(t, result.Enabled)
 }
 
 // Test ParentalDisable
@@ -39,7 +39,7 @@ func TestParentalDisable(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure parental filtering is disabled
-	assert.Equal(t, false, result.Enabled)
+	assert.False(t, result.Enabled)
 }
 
 // Test ParentalStatus

@@ -18,13 +18,13 @@ func TestDhcpStatus(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure DHCP is disabled by default
-	assert.Equal(t, false, result.Enabled)
+	assert.False(t, result.Enabled)
 	// ensure the default interface is lo0
 	assert.Equal(t, "lo0", result.InterfaceName)
 	// ensure there is a DHCP range
 	assert.Equal(t, "192.168.200.50", result.V4.RangeEnd)
 	// Ensure 3 leases are present
-	assert.Equal(t, 3, len(result.Leases))
+	assert.Len(t, result.Leases, 3)
 }
 
 // Test DhcpInterfaces
@@ -67,7 +67,7 @@ func TestDhcpSetConfig(t *testing.T) {
 	// verify the changes by calling DhcpStatus
 	result, err := adg.DhcpStatus()
 	assert.NoError(t, err)
-	assert.Equal(t, true, result.Enabled)
+	assert.True(t, result.Enabled)
 	assert.Equal(t, "eth0", result.InterfaceName)
 }
 
@@ -171,7 +171,7 @@ func TestDhcpReset(t *testing.T) {
 	result, err := adg.DhcpStatus()
 	assert.NoError(t, err)
 	// ensure DHCP is disabled after reset
-	assert.Equal(t, false, result.Enabled)
+	assert.False(t, result.Enabled)
 }
 
 // Test DhcpResetLeases

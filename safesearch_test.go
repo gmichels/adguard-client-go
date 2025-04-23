@@ -33,14 +33,14 @@ func TestSafeSearchSettings(t *testing.T) {
 	result, err := adg.SafeSearchStatus()
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	assert.Equal(t, true, result.Enabled)
-	assert.Equal(t, true, result.Bing)
-	assert.Equal(t, false, result.Duckduckgo)
-	assert.Equal(t, true, result.Ecosia)
-	assert.Equal(t, true, result.Google)
-	assert.Equal(t, false, result.Pixabay)
-	assert.Equal(t, true, result.Yandex)
-	assert.Equal(t, true, result.Youtube)
+	assert.True(t, result.Enabled)
+	assert.True(t, result.Bing)
+	assert.False(t, result.Duckduckgo)
+	assert.True(t, result.Ecosia)
+	assert.True(t, result.Google)
+	assert.False(t, result.Pixabay)
+	assert.True(t, result.Yandex)
+	assert.True(t, result.Youtube)
 }
 
 // Test SafeSearchStatus

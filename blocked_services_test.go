@@ -32,7 +32,7 @@ func TestBlockedServicesGet(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure 3 blocked service IDs are returned
-	assert.Equal(t, len(result.Ids), 3)
+	assert.Len(t, result.Ids, 3)
 	// ensure the schedule is not empty
 	assert.Equal(t, result.Schedule.Monday.Start, uint(0))
 	assert.Equal(t, result.Schedule.Monday.End, uint(86340000))

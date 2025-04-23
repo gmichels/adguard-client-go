@@ -20,7 +20,7 @@ func TestQuerylog(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure 2 query log entries are returned
-	assert.Equal(t, len(result.Data), 2)
+	assert.Len(t, result.Data, 2)
 	// ensure the first entry has the expected information
 	assert.Equal(t, result.Data[0].Question.Name, "example.org")
 }
@@ -53,7 +53,7 @@ func TestQuerylogClear(t *testing.T) {
 	result, err := adg.Querylog(nil, nil, nil, nil, nil)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	assert.Equal(t, len(result.Data), 0)
+	assert.Len(t, result.Data, 0)
 }
 
 // Test QuerylogConfig
@@ -67,11 +67,11 @@ func TestQuerylogConfig(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure query logging is enabled
-	assert.Equal(t, true, result.Enabled)
+	assert.True(t, result.Enabled)
 	// ensure the interval is 4 hours
 	assert.GreaterOrEqual(t, result.Interval, uint64(14400000))
 	// ensure the ignored list has 3 entries
-	assert.Equal(t, len(result.Ignored), 3)
+	assert.Len(t, result.Ignored, 3)
 }
 
 // Test QuerylogConfigUpdate
@@ -95,9 +95,9 @@ func TestQuerylogConfigUpdate(t *testing.T) {
 	// verify the changes by calling QuerylogConfig
 	result, err := adg.QuerylogConfig()
 	assert.NoError(t, err)
-	assert.Equal(t, false, result.Enabled)
+	assert.False(t, result.Enabled)
 	assert.Equal(t, uint64(28800000), result.Interval)
-	assert.Equal(t, true, result.AnonymizeClientIp)
+	assert.True(t, result.AnonymizeClientIp)
 	assert.Contains(t, result.Ignored, "example.org")
 	assert.Contains(t, result.Ignored, "test.org")
 }

@@ -82,7 +82,7 @@ func TestStatsConfigUpdate(t *testing.T) {
 	// verify the changes by calling StatsConfig
 	result, err := adg.StatsConfig()
 	assert.NoError(t, err)
-	assert.Equal(t, false, result.Enabled)
+	assert.False(t, result.Enabled)
 	assert.Equal(t, uint64(3600000), result.Interval)
 	assert.Contains(t, result.Ignored, "example.com")
 	assert.Contains(t, result.Ignored, "test.com")

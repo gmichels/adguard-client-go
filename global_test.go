@@ -18,9 +18,9 @@ func TestStatus(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure protection is enabled
-	assert.Equal(t, true, result.ProtectionEnabled)
+	assert.True(t, result.ProtectionEnabled)
 	// ensure 6 DNS addresses are returned
-	assert.Equal(t, 6, len(result.DnsAddresses))
+	assert.Len(t, result.DnsAddresses, 6)
 }
 
 // Test DnsInfo
@@ -34,7 +34,7 @@ func TestDnsInfo(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure DNS protection is enabled
-	assert.Equal(t, true, result.ProtectionEnabled)
+	assert.True(t, result.ProtectionEnabled)
 	// ensure at least one upstream DNS is configured
 	assert.GreaterOrEqual(t, len(result.UpstreamDns), 1)
 }
@@ -82,7 +82,7 @@ func TestProtection(t *testing.T) {
 	// verify the changes by calling Status
 	result, err := adg.Status()
 	assert.NoError(t, err)
-	assert.Equal(t, true, result.ProtectionEnabled)
+	assert.True(t, result.ProtectionEnabled)
 }
 
 // Test CacheClear
@@ -129,7 +129,7 @@ func TestVersionJson(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure version checking is disabled
-	assert.Equal(t, true, result.Disabled)
+	assert.True(t, result.Disabled)
 }
 
 // Test Update
