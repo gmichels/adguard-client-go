@@ -230,34 +230,6 @@ clients:
       use_global_blocked_services: false
       ignore_querylog: false
       ignore_statistics: true
-    - safe_search:
-        enabled: false
-        bing: false
-        duckduckgo: false
-        ecosia: false
-        google: false
-        pixabay: false
-        yandex: false
-        youtube: false
-      blocked_services:
-        schedule:
-          time_zone: UTC
-        ids: []
-      name: Updated Client Name
-      ids:
-        - test-client-updated
-      tags: []
-      upstreams: []
-      uid: 019662ff-86d2-7ba4-bbc1-85e96036e1fa
-      upstreams_cache_size: 0
-      upstreams_cache_enabled: false
-      use_global_settings: false
-      filtering_enabled: false
-      parental_enabled: false
-      safebrowsing_enabled: false
-      use_global_blocked_services: false
-      ignore_querylog: false
-      ignore_statistics: false
 log:
   enabled: true
   file: ""
