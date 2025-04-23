@@ -60,7 +60,7 @@ func (c *ADG) Querylog(olderThan *string, offset *int, limit *int, search *strin
 // QuerylogClear - Clear the query log
 func (c *ADG) QuerylogClear() error {
 	// initialize request
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/querylog/clear", c.HostURL), nil)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/querylog_clear", c.HostURL), nil)
 	if err != nil {
 		return err
 	}
