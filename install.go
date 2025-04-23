@@ -42,7 +42,7 @@ func (c *ADG) InstallCheckConfig(checkConfigRequest models.CheckConfigRequest) (
 	}
 
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/install/check_config", c.HostURL), strings.NewReader(string(rb)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/control/install/check_config", c.HostURL), strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
 	}

@@ -2,10 +2,10 @@ package models
 
 // AddressesInfo - AdGuard Home addresses configuration
 type AddressesInfo struct {
-	DnsPort    uint16                   `json:"dns_port"`
-	Interfaces map[string]NetInterfaces `json:"interfaces"`
-	Version    string                   `json:"version"`
-	WebPort    uint16                   `json:"web_port"`
+	DnsPort    uint16        `json:"dns_port"`
+	Interfaces NetInterfaces `json:"interfaces"`
+	Version    string        `json:"version"`
+	WebPort    uint16        `json:"web_port"`
 }
 
 // CheckConfigRequest - Configuration to be checked
