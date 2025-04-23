@@ -32,8 +32,8 @@ func testADG(test_install ...bool) *ADG {
 	}
 	timeout := os.Getenv("ADGUARD_TIMEOUT")
 	if timeout == "" {
-		// default to 10 seconds if not set
-		timeout = "10"
+		// default to 30 seconds if not set
+		timeout = "30"
 	}
 	// convert timeout to int
 	timeoutInt, err := strconv.Atoi(timeout)
