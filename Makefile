@@ -7,11 +7,17 @@ testacc: ## Run acceptance tests using the docker-compose file
 	@echo "==============Running install tests"
 	rm -f ./docker/conf/AdGuardHome.yaml
 	docker compose -f ./docker/docker-compose.yaml up -d
-	go test -v -run=TestInstall -timeout 10m
+	go test -coverprofile=coverage_install.out -v -run=TestInstall -timeout 10m
 	docker compose -f ./docker/docker-compose.yaml down
 	git checkout HEAD -- ./docker
 	@echo "==============Running functional tests"
 	docker compose -f ./docker/docker-compose.yaml up -d
-	go test -v -skip=TestInstall -timeout 10m
+	go test -coverprofile=coverage_rest.out -v -skip=TestInstall -timeout 10m
 	docker compose -f ./docker/docker-compose.yaml down
 	git checkout HEAD -- ./docker
+	@echo "Merging coverage files"
+	grep install.go coverage_install.out > coverage_install.tmp.out
+	grep -v install.go coverage_rest.out > coverage.out
+	cat coverage_install.tmp.out >> coverage.out
+	@echo "Generating coverage report"
+	go tool cover -html=coverage.out -o coverage.html
