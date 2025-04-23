@@ -69,11 +69,11 @@ type SetRulesRequest struct {
 
 // FilterCheckHostResponse - Check Host Result
 type FilterCheckHostResponse struct {
-	Reason      string     `json:"reason" description:"Request filtering status."`
-	Rules       ResultRule `json:"rules" description:"Applied rules."`
-	ServiceName string     `json:"service_name" description:"Set if reason=FilteredBlockedService"`
-	Cname       string     `json:"cname" description:"Set if reason=Rewrite"`
-	IpAddrs     []string   `json:"ip_addrs" description:"Set if reason=Rewrite"`
+	Reason      string       `json:"reason" description:"Request filtering status."`
+	Rules       []ResultRule `json:"rules" description:"Applied rules."`
+	ServiceName string       `json:"service_name" description:"Set if reason=FilteredBlockedService"`
+	Cname       string       `json:"cname" description:"Set if reason=Rewrite"`
+	IpAddrs     []string     `json:"ip_addrs" description:"Set if reason=Rewrite"`
 }
 
 // ResultRule - Applied rule.
