@@ -82,14 +82,11 @@ func TestClientsSearch(t *testing.T) {
 	// search for the client
 	result, err := adg.ClientsSearch([]string{"test-client-search"})
 
-	// dereference the result to get the actual data
-	r := *result
-
 	// assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	assert.Equal(t, 1, len(r))
-	assert.Equal(t, "Test Client to Search", r[0]["test-client-search"].Name)
+	assert.Equal(t, 1, len(*result))
+	assert.Equal(t, "Test Client to Search", (*result)[0]["test-client-search"].Name)
 
 	// cleanup: delete the client after the test
 	_ = adg.ClientsDelete(models.ClientDelete{Name: "Test Client to Search"})
