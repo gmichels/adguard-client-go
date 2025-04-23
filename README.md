@@ -5,6 +5,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/gmichels/adguard-client-go/blob/main/LICENSE)
 [![Status](https://github.com/gmichels/adguard-client-go/workflows/Release/badge.svg)](https://github.com/gmichels/adguard-client-go/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/gmichels/adguard-client-go)](https://goreportcard.com/report/github.com/gmichels/adguard-client-go)
+[![Go Coverage](https://github.com/gmichels/adguard-client-go/wiki/coverage.svg)](https://raw.githack.com/wiki/gmichels/adguard-client-go/coverage.html)
 
 Updated to version 0.107.60 of the [upstream API](https://github.com/AdguardTeam/AdGuardHome/blob/v0.107.60/openapi/openapi.yaml).
 
