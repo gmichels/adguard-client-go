@@ -9,7 +9,7 @@ import (
 
 // Test RewriteList
 func TestRewriteList(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.RewriteList()
@@ -23,7 +23,7 @@ func TestRewriteList(t *testing.T) {
 
 // Test RewriteAdd
 func TestRewriteAdd(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new rewrite rule
 	rewriteEntry := models.RewriteEntry{
@@ -40,7 +40,7 @@ func TestRewriteAdd(t *testing.T) {
 
 // Test RewriteDelete
 func TestRewriteDelete(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// add a rewrite rule to delete
 	rewriteEntry := models.RewriteEntry{
@@ -58,7 +58,7 @@ func TestRewriteDelete(t *testing.T) {
 
 // Test RewriteUpdate
 func TestRewriteUpdate(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// add a rewrite rule to update
 	rewriteEntry := models.RewriteEntry{

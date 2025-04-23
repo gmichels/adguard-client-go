@@ -5,8 +5,8 @@ import (
 	"strconv"
 )
 
-// createADG - Helper function to create an ADG instance
-func createADG() *ADG {
+// testADG - Helper function to create a test ADG instance
+func testADG(test_install ...bool) *ADG {
 	// use an environment variable for the backend URL
 	host := os.Getenv("ADGUARD_HOST")
 	if host == "" {
@@ -39,6 +39,12 @@ func createADG() *ADG {
 	timeoutInt, err := strconv.Atoi(timeout)
 	if err != nil {
 		panic("Invalid timeout value, must be an integer")
+	}
+
+	// if test_install is true, adjust the port as
+	// it's for the first time setup
+	if len(test_install) > 0 && test_install[0] {
+		host = "localhost:3000"
 	}
 
 	// create a new ADG instance

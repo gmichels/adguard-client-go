@@ -9,7 +9,7 @@ import (
 
 // Test TlsStatus
 func TestTlsStatus(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.TlsStatus()
@@ -27,7 +27,7 @@ func TestTlsStatus(t *testing.T) {
 
 // Test TlsConfigure
 func TestTlsConfigure(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new TLS configuration
 	tlsConfig := models.TlsConfig{
@@ -50,7 +50,7 @@ func TestTlsConfigure(t *testing.T) {
 
 // Test TlsValidate
 func TestTlsValidate(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a TLS configuration to validate
 	tlsConfig := models.TlsConfig{

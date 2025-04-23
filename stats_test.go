@@ -9,7 +9,7 @@ import (
 
 // Test Stats
 func TestStats(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.Stats()
@@ -25,7 +25,7 @@ func TestStats(t *testing.T) {
 
 // Test StatsReset
 func TestStatsReset(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	err := adg.StatsReset()
@@ -44,7 +44,7 @@ func TestStatsReset(t *testing.T) {
 
 // Test StatsConfig
 func TestStatsConfig(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.StatsConfig()
@@ -64,7 +64,7 @@ func TestStatsConfig(t *testing.T) {
 
 // Test StatsConfigUpdate
 func TestStatsConfigUpdate(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new statistics configuration
 	statsConfig := models.GetStatsConfigResponse{

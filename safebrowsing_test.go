@@ -8,7 +8,7 @@ import (
 
 // Test SafeBrowsingEnable
 func TestSafeBrowsingEnable(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	err := adg.SafeBrowsingEnable()
@@ -26,7 +26,7 @@ func TestSafeBrowsingEnable(t *testing.T) {
 
 // Test SafeBrowsingDisable
 func TestSafeBrowsingDisable(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	err := adg.SafeBrowsingDisable()
@@ -44,7 +44,7 @@ func TestSafeBrowsingDisable(t *testing.T) {
 
 // Test SafeBrowsingStatus
 func TestSafeBrowsingStatus(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.SafeBrowsingStatus()

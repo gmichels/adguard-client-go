@@ -9,7 +9,7 @@ import (
 
 // Test Clients
 func TestClients(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.Clients()
@@ -23,7 +23,7 @@ func TestClients(t *testing.T) {
 
 // Test ClientsAdd
 func TestClientsAdd(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new client
 	client := models.Client{Name: "Test Client Add", Ids: []string{"test-client-add"}}
@@ -40,7 +40,7 @@ func TestClientsAdd(t *testing.T) {
 
 // Test ClientsDelete
 func TestClientsDelete(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// add a client to delete
 	client := models.Client{Ids: []string{"test-client-delete"}, Name: "Test Client to Delete"}
@@ -55,7 +55,7 @@ func TestClientsDelete(t *testing.T) {
 
 // Test ClientsUpdate
 func TestClientsUpdate(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// add a client to update
 	client := models.Client{Ids: []string{"test-client-update"}, Name: "Test Client to Update"}
@@ -74,7 +74,7 @@ func TestClientsUpdate(t *testing.T) {
 
 // Test ClientsSearch
 func TestClientsSearch(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// add a client to search
 	client := models.Client{Ids: []string{"test-client-search"}, Name: "Test Client to Search"}

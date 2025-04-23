@@ -9,7 +9,7 @@ import (
 
 // Test Status
 func TestStatus(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.Status()
@@ -25,7 +25,7 @@ func TestStatus(t *testing.T) {
 
 // Test DnsInfo
 func TestDnsInfo(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.DnsInfo()
@@ -41,7 +41,7 @@ func TestDnsInfo(t *testing.T) {
 
 // Test DnsConfig
 func TestDnsConfig(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// ceate a new DNS configuration
 	dnsConfig := models.DNSConfig{
@@ -66,7 +66,7 @@ func TestDnsConfig(t *testing.T) {
 
 // Test Protection
 func TestProtection(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a protection request
 	protectionRequest := models.SetProtectionRequest{
@@ -87,7 +87,7 @@ func TestProtection(t *testing.T) {
 
 // Test CacheClear
 func TestCacheClear(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	err := adg.CacheClear()
@@ -98,7 +98,7 @@ func TestCacheClear(t *testing.T) {
 
 // Test TestUpstreamDns
 func TestTestUpstreamDns(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create an upstream configuration
 	upstreamsConfig := models.UpstreamsConfig{
@@ -115,7 +115,7 @@ func TestTestUpstreamDns(t *testing.T) {
 
 // Test VersionJson
 func TestVersionJson(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a version request
 	versionRequest := models.GetVersionRequest{
@@ -134,7 +134,7 @@ func TestVersionJson(t *testing.T) {
 
 // Test Update
 func TestUpdate(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	err := adg.Update()
@@ -147,7 +147,7 @@ func TestUpdate(t *testing.T) {
 
 // Test Login
 func TestLogin(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a login request
 	login := models.Login{
@@ -164,7 +164,7 @@ func TestLogin(t *testing.T) {
 
 // Test Logout
 func TestLogout(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	err := adg.Logout()
@@ -175,7 +175,7 @@ func TestLogout(t *testing.T) {
 
 // Test Profile
 func TestProfile(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.Profile()
@@ -189,7 +189,7 @@ func TestProfile(t *testing.T) {
 
 // Test ProfileUpdate
 func TestProfileUpdate(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a profile update request
 	profileInfo := models.ProfileInfo{

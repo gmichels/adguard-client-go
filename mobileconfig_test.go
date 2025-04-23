@@ -8,7 +8,7 @@ import (
 
 // Test AppleDohMobileconfig
 func TestAppleDohMobileconfig(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method with valid parameters
 	host := "example.com"
@@ -28,7 +28,7 @@ func TestAppleDohMobileconfig(t *testing.T) {
 
 // Test AppleDohMobileconfig with nil parameters
 func TestAppleDohMobileconfigNilParams(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method with nil parameters
 	result, err := adg.AppleDohMobileconfig(nil, nil)
@@ -41,7 +41,7 @@ func TestAppleDohMobileconfigNilParams(t *testing.T) {
 
 // Test AppleDotMobileconfig
 func TestAppleDotMobileconfig(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method with valid parameters
 	host := "example.com"
@@ -61,7 +61,7 @@ func TestAppleDotMobileconfig(t *testing.T) {
 
 // Test AppleDotMobileconfig with nil parameters
 func TestAppleDotMobileconfigNilParams(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method with nil parameters
 	result, err := adg.AppleDotMobileconfig(nil, nil)

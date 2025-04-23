@@ -9,7 +9,7 @@ import (
 
 // Test DhcpStatus
 func TestDhcpStatus(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.DhcpStatus()
@@ -29,7 +29,7 @@ func TestDhcpStatus(t *testing.T) {
 
 // Test DhcpInterfaces
 func TestDhcpInterfaces(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.DhcpInterfaces()
@@ -43,7 +43,7 @@ func TestDhcpInterfaces(t *testing.T) {
 
 // Test DhcpSetConfig
 func TestDhcpSetConfig(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new DHCP configuration
 	dhcpConfig := models.DhcpConfig{
@@ -73,7 +73,7 @@ func TestDhcpSetConfig(t *testing.T) {
 
 // Test DhcpFindActiveDhcp
 func TestDhcpFindActiveDhcp(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a request to find active DHCP servers
 	dhcpFindActiveReq := models.DhcpFindActiveReq{
@@ -92,7 +92,7 @@ func TestDhcpFindActiveDhcp(t *testing.T) {
 
 // Test DhcpAddStaticLease
 func TestDhcpAddStaticLease(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new static lease
 	staticLease := models.DhcpStaticLease{
@@ -113,7 +113,7 @@ func TestDhcpAddStaticLease(t *testing.T) {
 
 // Test DhcpRemoveStaticLease
 func TestDhcpRemoveStaticLease(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// add a static lease to remove
 	staticLease := models.DhcpStaticLease{
@@ -132,7 +132,7 @@ func TestDhcpRemoveStaticLease(t *testing.T) {
 
 // Test DhcpUpdateStaticLease
 func TestDhcpUpdateStaticLease(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// add a static lease to update
 	staticLease := models.DhcpStaticLease{
@@ -159,7 +159,7 @@ func TestDhcpUpdateStaticLease(t *testing.T) {
 
 // Test DhcpReset
 func TestDhcpReset(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// aall the method
 	err := adg.DhcpReset()
@@ -176,7 +176,7 @@ func TestDhcpReset(t *testing.T) {
 
 // Test DhcpResetLeases
 func TestDhcpResetLeases(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	err := adg.DhcpResetLeases()

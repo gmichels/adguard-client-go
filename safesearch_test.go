@@ -9,7 +9,7 @@ import (
 
 // Test SafeSearchSettings
 func TestSafeSearchSettings(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new SafeSearch configuration
 	safeSearchConfig := models.SafeSearchConfig{
@@ -45,7 +45,7 @@ func TestSafeSearchSettings(t *testing.T) {
 
 // Test SafeSearchStatus
 func TestSafeSearchStatus(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.SafeSearchStatus()

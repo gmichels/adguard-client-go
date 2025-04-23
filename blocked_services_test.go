@@ -9,7 +9,7 @@ import (
 
 // Test BlockedServicesAll
 func TestBlockedServicesAll(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.BlockedServicesAll()
@@ -23,7 +23,7 @@ func TestBlockedServicesAll(t *testing.T) {
 
 // Test BlockedServicesGet
 func TestBlockedServicesGet(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.BlockedServicesGet()
@@ -40,7 +40,7 @@ func TestBlockedServicesGet(t *testing.T) {
 
 // Test BlockedServicesUpdate
 func TestBlockedServicesUpdate(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new blocked services schedule
 	blockedServicesSchedule := models.BlockedServicesSchedule{

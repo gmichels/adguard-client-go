@@ -9,7 +9,7 @@ import (
 
 // Test AccessList
 func TestAccessList(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.AccessList()
@@ -27,7 +27,7 @@ func TestAccessList(t *testing.T) {
 
 // Test AccessSet
 func TestAccessSet(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new access list
 	accessList := models.AccessList{

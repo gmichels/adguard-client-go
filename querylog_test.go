@@ -9,7 +9,7 @@ import (
 
 // Test Querylog
 func TestQuerylog(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method with valid parameters
 	limit := 10
@@ -27,7 +27,7 @@ func TestQuerylog(t *testing.T) {
 
 // Test Querylog with nil parameters
 func TestQuerylogNilParams(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method with nil parameters
 	result, err := adg.Querylog(nil, nil, nil, nil, nil)
@@ -41,7 +41,7 @@ func TestQuerylogNilParams(t *testing.T) {
 
 // Test QuerylogClear
 func TestQuerylogClear(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	err := adg.QuerylogClear()
@@ -58,7 +58,7 @@ func TestQuerylogClear(t *testing.T) {
 
 // Test QuerylogConfig
 func TestQuerylogConfig(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.QuerylogConfig()
@@ -76,7 +76,7 @@ func TestQuerylogConfig(t *testing.T) {
 
 // Test QuerylogConfigUpdate
 func TestQuerylogConfigUpdate(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new query log configuration
 	queryLogConfig := models.GetQueryLogConfigResponse{

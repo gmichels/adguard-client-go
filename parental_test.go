@@ -8,7 +8,7 @@ import (
 
 // Test ParentalEnable
 func TestParentalEnable(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	err := adg.ParentalEnable()
@@ -26,7 +26,7 @@ func TestParentalEnable(t *testing.T) {
 
 // Test ParentalDisable
 func TestParentalDisable(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	err := adg.ParentalDisable()
@@ -44,7 +44,7 @@ func TestParentalDisable(t *testing.T) {
 
 // Test ParentalStatus
 func TestParentalStatus(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.ParentalStatus()

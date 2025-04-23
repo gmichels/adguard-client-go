@@ -9,7 +9,7 @@ import (
 
 // Test FilteringStatus
 func TestFilteringStatus(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// call the method
 	result, err := adg.FilteringStatus()
@@ -31,7 +31,7 @@ func TestFilteringStatus(t *testing.T) {
 
 // Test FilteringConfig
 func TestFilteringConfig(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new filtering configuration
 	filterConfig := models.FilterConfig{
@@ -53,7 +53,7 @@ func TestFilteringConfig(t *testing.T) {
 
 // Test FilteringAddUrl
 func TestFilteringAddUrl(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a new filter URL
 	filterData := models.AddUrlRequest{
@@ -76,7 +76,7 @@ func TestFilteringAddUrl(t *testing.T) {
 
 // Test FilteringRemoveUrl
 func TestFilteringRemoveUrl(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// add a filter URL to remove
 	filterData := models.AddUrlRequest{
@@ -97,7 +97,7 @@ func TestFilteringRemoveUrl(t *testing.T) {
 
 // Test FilteringSetRules
 func TestFilteringSetRules(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create new custom rules
 	rules := models.SetRulesRequest{
@@ -113,7 +113,7 @@ func TestFilteringSetRules(t *testing.T) {
 
 // Test FilteringCheckHost
 func TestFilteringCheckHost(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// Call the method
 	name := "example.com"
@@ -132,7 +132,7 @@ func TestFilteringCheckHost(t *testing.T) {
 
 // Test FilteringRefresh
 func TestFilteringRefresh(t *testing.T) {
-	adg := createADG()
+	adg := testADG()
 
 	// create a refresh request
 	refreshRequest := models.FilterRefreshRequest{
