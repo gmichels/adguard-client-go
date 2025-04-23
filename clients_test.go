@@ -61,14 +61,14 @@ func TestClientsUpdate(t *testing.T) {
 	_ = adg.ClientsAdd(client)
 
 	// update the client
-	clientUpdate := models.ClientUpdate{Name: "Test Client to Update", Data: models.Client{Ids: []string{"test-client-updated"}, Name: "Updated Client Name"}}
+	clientUpdate := models.ClientUpdate{Name: "Test Client to Update", Data: models.Client{Ids: []string{"updated-test-client"}, Name: "Updated Client Name"}}
 	err := adg.ClientsUpdate(clientUpdate)
 
 	// assertions
 	assert.NoError(t, err)
 
 	// cleanup: delete the client after the test
-	_ = adg.ClientsDelete(models.ClientDelete{Name: "test-client-updated"})
+	_ = adg.ClientsDelete(models.ClientDelete{Name: "Updated Client Name"})
 }
 
 // Test ClientsSearch
