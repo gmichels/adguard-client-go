@@ -107,16 +107,24 @@ func (c *ADG) ClientsUpdate(clientUpdate models.ClientUpdate) error {
 }
 
 // ClientsSearch - Get information about clients by their IP addresses, CIDR, MAC addresses, or ClientIDs
-func (c *ADG) ClientsSearch(identifier string) (*models.ClientFindResponse, error) {
-	// create object
-	clients := []models.ClientSearchRequestItem{
-		{
+func (c *ADG) ClientsSearch(identifiers []string) (*models.ClientsFindResponse, error) {
+	// initialize object
+	clients := []models.ClientSearchRequestItem{}
+
+	// go through identifiers and append individual objects
+	for _, identifier := range identifiers {
+		clients = append(clients, models.ClientSearchRequestItem{
 			Id: identifier,
-		},
+		})
+	}
+
+	// initialize request object
+	clientsSearchRequest := models.ClientsSearchRequest{
+		Clients: clients,
 	}
 
 	// convert object to JSON
-	rb, err := json.Marshal(clients)
+	rb, err := json.Marshal(clientsSearchRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -134,12 +142,12 @@ func (c *ADG) ClientsSearch(identifier string) (*models.ClientFindResponse, erro
 	}
 
 	// convert response to object
-	var clientFindResponse models.ClientFindResponse
-	err = json.Unmarshal(body, &clientFindResponse)
+	var clientsFindResponse models.ClientsFindResponse
+	err = json.Unmarshal(body, &clientsFindResponse)
 	if err != nil {
 		return nil, err
 	}
 
 	// return the object
-	return &clientFindResponse, nil
+	return &clientsFindResponse, nil
 }
