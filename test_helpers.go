@@ -58,12 +58,31 @@ func testADG(test_install ...bool) *ADG {
 	return adg
 }
 
+// testADGWithNewRequestError - Helper function to create a test ADG instance with an initialization error
+func testADGWithNewRequestError() *ADG {
+	adg := testADG()
+	// invalid URL to trigger an error
+	adg.HostURL = "http://%invalid-url"
+
+	return adg
+}
+
+// testADGWithDoRequestError - Helper function to create a test ADG instance with a request error
+func testADGWithDoRequestError() *ADG {
+	adg := testADG()
+	// set an invalid password to trigger a 403 error
+	adg.Auth.Password = "wrongpassword"
+
+	return adg
+}
+
+// testADGWithInvalidJSON - Helper function to create a test ADG instance with an invalid JSON response
 func testADGWithInvalidJSON(t *testing.T) (*ADG, *httptest.Server) {
 	t.Helper()
 
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("{")) // Intentionally invalid JSON
+		w.Write([]byte("{")) // intentionally invalid JSON
 	})
 
 	server := httptest.NewServer(handler)

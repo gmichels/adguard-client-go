@@ -19,3 +19,11 @@ testacc: ## Run acceptance tests using the docker-compose file
 	grep install.go coverage_install.out > coverage_install.tmp.out
 	grep -v install.go coverage_rest.out > coverage.out
 	cat coverage_install.tmp.out >> coverage.out
+
+htmlcoverage: ## Generate HTML coverage report
+	go tool cover -html=coverage.out
+	@echo "HTML coverage report generated at coverage.html"
+
+cleanup: ## Cleanup leftovers after failed tests
+	docker compose -f ./docker/docker-compose.yaml down
+	git checkout HEAD -- ./docker

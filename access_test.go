@@ -26,11 +26,8 @@ func TestAccessList(t *testing.T) {
 }
 
 // Test AccessList - Error initializing request
-func TestAccessList_InitRequestError(t *testing.T) {
-	adg := testADG()
-
-	// simulate an invalid HostURL to trigger an error during request initialization
-	adg.HostURL = "http://%invalid-url"
+func TestAccessList_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
 
 	// Call the method
 	result, err := adg.AccessList()
@@ -43,8 +40,7 @@ func TestAccessList_InitRequestError(t *testing.T) {
 
 // Test AccessList - Error performing request
 func TestAccessList_DoRequestError(t *testing.T) {
-	adg := testADG()
-	adg.Auth.Password = "wrongpassword"
+	adg := testADGWithDoRequestError()
 
 	// Call the method
 	result, err := adg.AccessList()
@@ -56,7 +52,7 @@ func TestAccessList_DoRequestError(t *testing.T) {
 }
 
 // Test AccessList - Error unmarshaling response
-func TestAccessList_UnmarshalError(t *testing.T) {
+func TestAccessList_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
@@ -100,4 +96,42 @@ func TestAccessSet(t *testing.T) {
 		BlockedHosts:      []string{},
 	}
 	_ = adg.AccessSet(cleanupAccessList)
+}
+
+// Test AccessSet - Error initializing request
+func TestAccessSet_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// create a new access list
+	accessList := models.AccessList{
+		AllowedClients:    []string{"192.168.1.100"},
+		DisallowedClients: []string{"192.168.1.200"},
+		BlockedHosts:      []string{"example.com"},
+	}
+
+	// call the method
+	err := adg.AccessSet(accessList)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test AccessSet - Error performing request
+func TestAccessSet_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// create a new access list
+	accessList := models.AccessList{
+		AllowedClients:    []string{"192.168.1.100"},
+		DisallowedClients: []string{"192.168.1.200"},
+		BlockedHosts:      []string{"example.com"},
+	}
+
+	// call the method
+	err := adg.AccessSet(accessList)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
