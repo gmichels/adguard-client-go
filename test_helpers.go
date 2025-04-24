@@ -1,8 +1,11 @@
 package adguard
 
 import (
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"strconv"
+	"testing"
 )
 
 // testADG - Helper function to create a test ADG instance
@@ -53,4 +56,21 @@ func testADG(test_install ...bool) *ADG {
 		panic(err)
 	}
 	return adg
+}
+
+func testADGWithInvalidJSON(t *testing.T) (*ADG, *httptest.Server) {
+	t.Helper()
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("{")) // Intentionally invalid JSON
+	})
+
+	server := httptest.NewServer(handler)
+
+	adg := testADG()
+	adg.HostURL = server.URL
+	adg.HTTPClient = server.Client()
+
+	return adg, server
 }
