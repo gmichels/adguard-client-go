@@ -25,6 +25,50 @@ func TestAccessList(t *testing.T) {
 	assert.Len(t, (result.BlockedHosts), 3)
 }
 
+// Test AccessList - Error initializing request
+func TestAccessList_InitRequestError(t *testing.T) {
+	adg := testADG()
+
+	// simulate an invalid HostURL to trigger an error during request initialization
+	adg.HostURL = "http://%invalid-url"
+
+	// Call the method
+	result, err := adg.AccessList()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test AccessList - Error performing request
+func TestAccessList_DoRequestError(t *testing.T) {
+	adg := testADG()
+	adg.Auth.Password = "wrongpassword"
+
+	// Call the method
+	result, err := adg.AccessList()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
+// Test AccessList - Error unmarshaling response
+func TestAccessList_UnmarshalError(t *testing.T) {
+	adg, server := testADGWithInvalidJSON(t)
+	defer server.Close()
+
+	// Call the method
+	result, err := adg.AccessList()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "unexpected end of JSON input")
+}
+
 // Test AccessSet
 func TestAccessSet(t *testing.T) {
 	adg := testADG()
