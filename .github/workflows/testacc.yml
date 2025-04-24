@@ -2,13 +2,10 @@ name: Acceptance Tests
 
 on:
   pull_request:
-    types: ["opened", "synchronize"]
     paths:
       - "**.go"
       - go.mod
-      - ".github/workflows/testacc.yaml"
-  # allow this workflow to be called from other workflows
-  workflow_call:
+      - ".github/workflows/testacc.yml"
 
 env:
   GOPROXY: https://proxy.golang.org,direct
