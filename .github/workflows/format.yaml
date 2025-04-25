@@ -39,19 +39,19 @@ jobs:
       - name: Commit and push changes
         env:
           HAS_CHANGES: ${{ steps.check_changes.outputs.HAS_CHANGES }}
-        if: env.HAS_CHANGES == 'false'
+        if: env.HAS_CHANGES == 'true'
         run: |
-          # # configure user
-          # git config --global user.name "GitHub Actions"
-          # git config --global user.email "github-actions@github.com"
+          # configure user
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
 
-          # # stage any file changes to be committed
-          # git add .
+          # stage any file changes to be committed
+          git add .
 
-          # # make commit with staged changes
-          # git commit -m 'Formatting changes'
+          # make commit with staged changes
+          git commit -m 'Formatting changes'
 
-          # # push the commit back up to source GitHub repository
-          # git push
+          # push the commit back up to source GitHub repository
+          git push
 
           echo "::warning title=FORMAT-CHANGES::Formatting changes made, please review and merge them"
