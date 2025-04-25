@@ -247,13 +247,13 @@ func TestFilteringSetUrl(t *testing.T) {
 
 	// Create a new filter URL configuration
 	filterSetUrl := models.FilterSetUrl{
-			Data: models.FilterSetUrlData{
-					Enabled: true,
-					Name:    "Test Filter to Set",
-					Url:     "https://example.com/filter.txt",
-			},
-			Url:       "https://example.com/filter.txt",
-			Whitelist: false,
+		Data: models.FilterSetUrlData{
+			Enabled: true,
+			Name:    "Test Filter to Set",
+			Url:     "https://example.com/filter.txt",
+		},
+		Url:       "https://example.com/filter.txt",
+		Whitelist: false,
 	}
 
 	// Call the method
@@ -269,13 +269,13 @@ func TestFilteringSetUrl_NewRequestError(t *testing.T) {
 
 	// Create a new filter URL configuration
 	filterSetUrl := models.FilterSetUrl{
-			Data: models.FilterSetUrlData{
-					Enabled: true,
-					Name:    "Test Filter to Set",
-					Url:     "https://example.com/filter.txt",
-			},
-			Url:       "https://example.com/filter.txt",
-			Whitelist: false,
+		Data: models.FilterSetUrlData{
+			Enabled: true,
+			Name:    "Test Filter to Set",
+			Url:     "https://example.com/filter.txt",
+		},
+		Url:       "https://example.com/filter.txt",
+		Whitelist: false,
 	}
 
 	// Call the method
@@ -292,13 +292,13 @@ func TestFilteringSetUrl_DoRequestError(t *testing.T) {
 
 	// Create a new filter URL configuration
 	filterSetUrl := models.FilterSetUrl{
-			Data: models.FilterSetUrlData{
-					Enabled: true,
-					Name:    "Test Filter to Set",
-					Url:     "https://example.com/filter.txt",
-			},
-			Url:       "https://example.com/filter.txt",
-			Whitelist: false,
+		Data: models.FilterSetUrlData{
+			Enabled: true,
+			Name:    "Test Filter to Set",
+			Url:     "https://example.com/filter.txt",
+		},
+		Url:       "https://example.com/filter.txt",
+		Whitelist: false,
 	}
 
 	// Call the method
@@ -316,13 +316,13 @@ func TestFilteringSetUrl_InvalidJSONError(t *testing.T) {
 
 	// Create a new filter URL configuration
 	filterSetUrl := models.FilterSetUrl{
-			Data: models.FilterSetUrlData{
-					Enabled: true,
-					Name:    "Test Filter to Set",
-					Url:     "https://example.com/filter.txt",
-			},
-			Url:       "https://example.com/filter.txt",
-			Whitelist: false,
+		Data: models.FilterSetUrlData{
+			Enabled: true,
+			Name:    "Test Filter to Set",
+			Url:     "https://example.com/filter.txt",
+		},
+		Url:       "https://example.com/filter.txt",
+		Whitelist: false,
 	}
 
 	// Call the method
@@ -332,7 +332,6 @@ func TestFilteringSetUrl_InvalidJSONError(t *testing.T) {
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
 }
-
 
 // Test FilteringSetRules
 func TestFilteringSetRules(t *testing.T) {
