@@ -241,6 +241,99 @@ func TestFilteringRemoveUrl_DoRequestError(t *testing.T) {
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
 
+// Test FilteringSetUrl
+func TestFilteringSetUrl(t *testing.T) {
+	adg := testADG()
+
+	// Create a new filter URL configuration
+	filterSetUrl := models.FilterSetUrl{
+			Data: models.FilterSetUrlData{
+					Enabled: true,
+					Name:    "Test Filter to Set",
+					Url:     "https://example.com/filter.txt",
+			},
+			Url:       "https://example.com/filter.txt",
+			Whitelist: false,
+	}
+
+	// Call the method
+	err := adg.FilteringSetUrl(filterSetUrl)
+
+	// Assertions
+	assert.NoError(t, err)
+}
+
+// Test FilteringSetUrl - Error initializing request
+func TestFilteringSetUrl_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Create a new filter URL configuration
+	filterSetUrl := models.FilterSetUrl{
+			Data: models.FilterSetUrlData{
+					Enabled: true,
+					Name:    "Test Filter to Set",
+					Url:     "https://example.com/filter.txt",
+			},
+			Url:       "https://example.com/filter.txt",
+			Whitelist: false,
+	}
+
+	// Call the method
+	err := adg.FilteringSetUrl(filterSetUrl)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test FilteringSetUrl - Error performing request
+func TestFilteringSetUrl_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Create a new filter URL configuration
+	filterSetUrl := models.FilterSetUrl{
+			Data: models.FilterSetUrlData{
+					Enabled: true,
+					Name:    "Test Filter to Set",
+					Url:     "https://example.com/filter.txt",
+			},
+			Url:       "https://example.com/filter.txt",
+			Whitelist: false,
+	}
+
+	// Call the method
+	err := adg.FilteringSetUrl(filterSetUrl)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
+// Test FilteringSetUrl - Error unmarshaling response
+func TestFilteringSetUrl_InvalidJSONError(t *testing.T) {
+	adg, server := testADGWithInvalidJSON(t)
+	defer server.Close()
+
+	// Create a new filter URL configuration
+	filterSetUrl := models.FilterSetUrl{
+			Data: models.FilterSetUrlData{
+					Enabled: true,
+					Name:    "Test Filter to Set",
+					Url:     "https://example.com/filter.txt",
+			},
+			Url:       "https://example.com/filter.txt",
+			Whitelist: false,
+	}
+
+	// Call the method
+	err := adg.FilteringSetUrl(filterSetUrl)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "unexpected end of JSON input")
+}
+
+
 // Test FilteringSetRules
 func TestFilteringSetRules(t *testing.T) {
 	adg := testADG()
