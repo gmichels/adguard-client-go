@@ -77,9 +77,8 @@ func testADGWithDoRequestError(test_install ...bool) *ADG {
 		adg.HostURL = "http://localhost:8000"
 	} else {
 
-
-	// set an invalid password to trigger a 403 error
-	adg.Auth.Password = "wrongpassword"
+		// set an invalid password to trigger a 403 error
+		adg.Auth.Password = "wrongpassword"
 	}
 	return adg
 }
