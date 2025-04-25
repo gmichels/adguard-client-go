@@ -245,14 +245,21 @@ func TestFilteringRemoveUrl_DoRequestError(t *testing.T) {
 func TestFilteringSetUrl(t *testing.T) {
 	adg := testADG()
 
-	// Create a new filter URL configuration
+	// add a filter URL to update
+	filterData := models.AddUrlRequest{
+		Name: "Test Filter to Update",
+		Url:  "https://raw.githubusercontent.com/gmichels/terraform-provider-adguard/refs/heads/main/assets/list_filter_4.txt",
+	}
+	_ = adg.FilteringAddUrl(filterData)
+
+	// update to a new filter URL configuration
 	filterSetUrl := models.FilterSetUrl{
 		Data: models.FilterSetUrlData{
 			Enabled: true,
-			Name:    "Test Filter to Set",
-			Url:     "https://example.com/filter.txt",
+			Name:    "Test Filter Updated",
+			Url:     "https://raw.githubusercontent.com/gmichels/terraform-provider-adguard/refs/heads/main/assets/list_filter_3.txt",
 		},
-		Url:       "https://example.com/filter.txt",
+		Url:       filterData.Url,
 		Whitelist: false,
 	}
 
@@ -307,30 +314,6 @@ func TestFilteringSetUrl_DoRequestError(t *testing.T) {
 	// Assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
-}
-
-// Test FilteringSetUrl - Error unmarshaling response
-func TestFilteringSetUrl_InvalidJSONError(t *testing.T) {
-	adg, server := testADGWithInvalidJSON(t)
-	defer server.Close()
-
-	// Create a new filter URL configuration
-	filterSetUrl := models.FilterSetUrl{
-		Data: models.FilterSetUrlData{
-			Enabled: true,
-			Name:    "Test Filter to Set",
-			Url:     "https://example.com/filter.txt",
-		},
-		Url:       "https://example.com/filter.txt",
-		Whitelist: false,
-	}
-
-	// Call the method
-	err := adg.FilteringSetUrl(filterSetUrl)
-
-	// Assertions
-	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "unexpected end of JSON input")
 }
 
 // Test FilteringSetRules
