@@ -31,10 +31,10 @@ func TestDhcpStatus(t *testing.T) {
 func TestDhcpStatus_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.DhcpStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -44,10 +44,10 @@ func TestDhcpStatus_NewRequestError(t *testing.T) {
 func TestDhcpStatus_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.DhcpStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -58,10 +58,10 @@ func TestDhcpStatus_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.DhcpStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -85,10 +85,10 @@ func TestDhcpInterfaces(t *testing.T) {
 func TestDhcpInterfaces_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.DhcpInterfaces()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -98,10 +98,10 @@ func TestDhcpInterfaces_NewRequestError(t *testing.T) {
 func TestDhcpInterfaces_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.DhcpInterfaces()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -112,10 +112,10 @@ func TestDhcpInterfaces_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.DhcpInterfaces()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -155,7 +155,7 @@ func TestDhcpSetConfig(t *testing.T) {
 func TestDhcpSetConfig_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a new DHCP configuration
+	// create a new DHCP configuration
 	dhcpConfig := models.DhcpConfig{
 		Enabled:       true,
 		InterfaceName: "eth0",
@@ -168,10 +168,10 @@ func TestDhcpSetConfig_NewRequestError(t *testing.T) {
 		},
 	}
 
-	// Call the method
+	// call the method
 	err := adg.DhcpSetConfig(dhcpConfig)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -180,7 +180,7 @@ func TestDhcpSetConfig_NewRequestError(t *testing.T) {
 func TestDhcpSetConfig_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a new DHCP configuration
+	// create a new DHCP configuration
 	dhcpConfig := models.DhcpConfig{
 		Enabled:       true,
 		InterfaceName: "eth0",
@@ -193,10 +193,10 @@ func TestDhcpSetConfig_DoRequestError(t *testing.T) {
 		},
 	}
 
-	// Call the method
+	// call the method
 	err := adg.DhcpSetConfig(dhcpConfig)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -224,15 +224,15 @@ func TestDhcpFindActiveDhcp(t *testing.T) {
 func TestDhcpFindActiveDhcp_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a request to find active DHCP servers
+	// create a request to find active DHCP servers
 	dhcpFindActiveReq := models.DhcpFindActiveReq{
 		Interface: "eth0",
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.DhcpFindActiveDhcp(dhcpFindActiveReq)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -242,15 +242,15 @@ func TestDhcpFindActiveDhcp_NewRequestError(t *testing.T) {
 func TestDhcpFindActiveDhcp_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a request to find active DHCP servers
+	// create a request to find active DHCP servers
 	dhcpFindActiveReq := models.DhcpFindActiveReq{
 		Interface: "eth0",
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.DhcpFindActiveDhcp(dhcpFindActiveReq)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -261,15 +261,15 @@ func TestDhcpFindActiveDhcp_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Create a request to find active DHCP servers
+	// create a request to find active DHCP servers
 	dhcpFindActiveReq := models.DhcpFindActiveReq{
 		Interface: "eth0",
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.DhcpFindActiveDhcp(dhcpFindActiveReq)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -300,17 +300,17 @@ func TestDhcpAddStaticLease(t *testing.T) {
 func TestDhcpAddStaticLease_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a new static lease
+	// create a new static lease
 	staticLease := models.DhcpStaticLease{
 		Mac:      "00:11:22:33:44:55",
 		Ip:       "192.168.1.150",
 		Hostname: "test-static-lease",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.DhcpAddStaticLease(staticLease)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -319,17 +319,17 @@ func TestDhcpAddStaticLease_NewRequestError(t *testing.T) {
 func TestDhcpAddStaticLease_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a new static lease
+	// create a new static lease
 	staticLease := models.DhcpStaticLease{
 		Mac:      "00:11:22:33:44:55",
 		Ip:       "192.168.1.150",
 		Hostname: "test-static-lease",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.DhcpAddStaticLease(staticLease)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -357,17 +357,17 @@ func TestDhcpRemoveStaticLease(t *testing.T) {
 func TestDhcpRemoveStaticLease_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a static lease to remove
+	// create a static lease to remove
 	staticLease := models.DhcpStaticLease{
 		Mac:      "00:11:22:33:44:55",
 		Ip:       "192.168.1.150",
 		Hostname: "test-static-lease",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.DhcpRemoveStaticLease(staticLease)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -376,17 +376,17 @@ func TestDhcpRemoveStaticLease_NewRequestError(t *testing.T) {
 func TestDhcpRemoveStaticLease_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a static lease to remove
+	// create a static lease to remove
 	staticLease := models.DhcpStaticLease{
 		Mac:      "00:11:22:33:44:55",
 		Ip:       "192.168.1.150",
 		Hostname: "test-static-lease",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.DhcpRemoveStaticLease(staticLease)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -422,17 +422,17 @@ func TestDhcpUpdateStaticLease(t *testing.T) {
 func TestDhcpUpdateStaticLease_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a static lease to update
+	// create a static lease to update
 	updatedLease := models.DhcpStaticLease{
 		Mac:      "00:11:22:33:44:55",
 		Ip:       "192.168.1.151",
 		Hostname: "updated-static-lease",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.DhcpUpdateStaticLease(updatedLease)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -441,17 +441,17 @@ func TestDhcpUpdateStaticLease_NewRequestError(t *testing.T) {
 func TestDhcpUpdateStaticLease_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a static lease to update
+	// create a static lease to update
 	updatedLease := models.DhcpStaticLease{
 		Mac:      "00:11:22:33:44:55",
 		Ip:       "192.168.1.151",
 		Hostname: "updated-static-lease",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.DhcpUpdateStaticLease(updatedLease)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -477,10 +477,10 @@ func TestDhcpReset(t *testing.T) {
 func TestDhcpReset_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.DhcpReset()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -489,10 +489,10 @@ func TestDhcpReset_NewRequestError(t *testing.T) {
 func TestDhcpReset_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.DhcpReset()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -512,10 +512,10 @@ func TestDhcpResetLeases(t *testing.T) {
 func TestDhcpResetLeases_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.DhcpResetLeases()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -524,10 +524,10 @@ func TestDhcpResetLeases_NewRequestError(t *testing.T) {
 func TestDhcpResetLeases_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.DhcpResetLeases()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }

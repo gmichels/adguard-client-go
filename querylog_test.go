@@ -8,16 +8,15 @@ import (
 )
 
 // Test Querylog
-// Test Querylog
 func TestQuerylog(t *testing.T) {
 	adg := testADG()
 
-	// Case 1: Valid parameters
+	// case 1: Valid parameters
 	limit := 10
 	responseStatus := "rewritten"
 	result, err := adg.Querylog(nil, nil, &limit, nil, &responseStatus)
 
-	// Assertions
+	// assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure 2 query log entries are returned
@@ -25,28 +24,28 @@ func TestQuerylog(t *testing.T) {
 	// ensure the first entry has the expected information
 	assert.Equal(t, result.Data[0].Question.Name, "example.org")
 
-	// Case 2: Missing `limit`
+	// case 2: Missing `limit`
 	result, err = adg.Querylog(nil, nil, nil, nil, &responseStatus)
 
-	// Assertions
+	// assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure at least 1 query log entry is returned
 	assert.GreaterOrEqual(t, len(result.Data), 1)
 
-	// Case 3: Missing `responseStatus`
+	// case 3: Missing `responseStatus`
 	result, err = adg.Querylog(nil, nil, &limit, nil, nil)
 
-	// Assertions
+	// assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure at least 1 query log entry is returned
 	assert.GreaterOrEqual(t, len(result.Data), 1)
 
-	// Case 4: Missing both `limit` and `responseStatus`
+	// case 4: Missing both `limit` and `responseStatus`
 	result, err = adg.Querylog(nil, nil, nil, nil, nil)
 
-	// Assertions
+	// assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure at least 1 query log entry is returned
@@ -71,12 +70,12 @@ func TestQuerylogNilParams(t *testing.T) {
 func TestQuerylog_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method with valid parameters
+	// call the method with valid parameters
 	limit := 10
 	responseStatus := "rewritten"
 	result, err := adg.Querylog(nil, nil, &limit, nil, &responseStatus)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -86,12 +85,12 @@ func TestQuerylog_NewRequestError(t *testing.T) {
 func TestQuerylog_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method with valid parameters
+	// call the method with valid parameters
 	limit := 10
 	responseStatus := "rewritten"
 	result, err := adg.Querylog(nil, nil, &limit, nil, &responseStatus)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -102,12 +101,12 @@ func TestQuerylog_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method with valid parameters
+	// call the method with valid parameters
 	limit := 10
 	responseStatus := "rewritten"
 	result, err := adg.Querylog(nil, nil, &limit, nil, &responseStatus)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -134,10 +133,10 @@ func TestQuerylogClear(t *testing.T) {
 func TestQuerylogClear_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.QuerylogClear()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -146,10 +145,10 @@ func TestQuerylogClear_NewRequestError(t *testing.T) {
 func TestQuerylogClear_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.QuerylogClear()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -176,10 +175,10 @@ func TestQuerylogConfig(t *testing.T) {
 func TestQuerylogConfig_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.QuerylogConfig()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -189,10 +188,10 @@ func TestQuerylogConfig_NewRequestError(t *testing.T) {
 func TestQuerylogConfig_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.QuerylogConfig()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -203,10 +202,10 @@ func TestQuerylogConfig_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.QuerylogConfig()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -244,7 +243,7 @@ func TestQuerylogConfigUpdate(t *testing.T) {
 func TestQuerylogConfigUpdate_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a new query log configuration
+	// create a new query log configuration
 	queryLogConfig := models.GetQueryLogConfigResponse{
 		Enabled:           false,
 		Interval:          28800000,
@@ -252,10 +251,10 @@ func TestQuerylogConfigUpdate_NewRequestError(t *testing.T) {
 		Ignored:           []string{"example.org", "test.org"},
 	}
 
-	// Call the method
+	// call the method
 	err := adg.QuerylogConfigUpdate(queryLogConfig)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -264,7 +263,7 @@ func TestQuerylogConfigUpdate_NewRequestError(t *testing.T) {
 func TestQuerylogConfigUpdate_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a new query log configuration
+	// create a new query log configuration
 	queryLogConfig := models.GetQueryLogConfigResponse{
 		Enabled:           false,
 		Interval:          28800000,
@@ -272,10 +271,10 @@ func TestQuerylogConfigUpdate_DoRequestError(t *testing.T) {
 		Ignored:           []string{"example.org", "test.org"},
 	}
 
-	// Call the method
+	// call the method
 	err := adg.QuerylogConfigUpdate(queryLogConfig)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }

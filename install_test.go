@@ -30,10 +30,10 @@ func TestInstallGetAddresses(t *testing.T) {
 func TestInstallGetAddresses_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.InstallGetAddresses()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -43,10 +43,10 @@ func TestInstallGetAddresses_NewRequestError(t *testing.T) {
 func TestInstallGetAddresses_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError(true)
 
-	// Call the method
+	// call the method
 	result, err := adg.InstallGetAddresses()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "connect: connection refused")
@@ -57,10 +57,10 @@ func TestInstallGetAddresses_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.InstallGetAddresses()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -97,7 +97,7 @@ func TestInstallCheckConfig(t *testing.T) {
 func TestInstallCheckConfig_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a configuration request
+	// create a configuration request
 	checkConfigRequest := models.CheckConfigRequest{
 		Dns: models.CheckConfigRequestInfo{
 			Ip:      "192.168.1.1",
@@ -112,10 +112,10 @@ func TestInstallCheckConfig_NewRequestError(t *testing.T) {
 		SetStaticIp: true,
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.InstallCheckConfig(checkConfigRequest)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -125,7 +125,7 @@ func TestInstallCheckConfig_NewRequestError(t *testing.T) {
 func TestInstallCheckConfig_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError(true)
 
-	// Create a configuration request
+	// create a configuration request
 	checkConfigRequest := models.CheckConfigRequest{
 		Dns: models.CheckConfigRequestInfo{
 			Ip:      "192.168.1.1",
@@ -140,10 +140,10 @@ func TestInstallCheckConfig_DoRequestError(t *testing.T) {
 		SetStaticIp: true,
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.InstallCheckConfig(checkConfigRequest)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "connect: connection refused")
@@ -154,7 +154,7 @@ func TestInstallCheckConfig_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Create a configuration request
+	// create a configuration request
 	checkConfigRequest := models.CheckConfigRequest{
 		Dns: models.CheckConfigRequestInfo{
 			Ip:      "192.168.1.1",
@@ -169,10 +169,10 @@ func TestInstallCheckConfig_InvalidJSONError(t *testing.T) {
 		SetStaticIp: true,
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.InstallCheckConfig(checkConfigRequest)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -182,7 +182,7 @@ func TestInstallCheckConfig_InvalidJSONError(t *testing.T) {
 func TestInstallConfigure(t *testing.T) {
 	adg := testADG(true)
 
-	// Create an initial configuration
+	// create an initial configuration
 	initialConfiguration := models.InitialConfiguration{
 		Dns: models.AddressInfo{
 			Ip:   "0.0.0.0",
@@ -207,7 +207,7 @@ func TestInstallConfigure(t *testing.T) {
 func TestInstallConfigure_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create an initial configuration
+	// create an initial configuration
 	initialConfiguration := models.InitialConfiguration{
 		Dns: models.AddressInfo{
 			Ip:   "192.168.1.1",
@@ -221,10 +221,10 @@ func TestInstallConfigure_NewRequestError(t *testing.T) {
 		Password: "password",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.InstallConfigure(initialConfiguration)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -233,7 +233,7 @@ func TestInstallConfigure_NewRequestError(t *testing.T) {
 func TestInstallConfigure_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError(true)
 
-	// Create an initial configuration
+	// create an initial configuration
 	initialConfiguration := models.InitialConfiguration{
 		Dns: models.AddressInfo{
 			Ip:   "192.168.1.1",
@@ -247,10 +247,10 @@ func TestInstallConfigure_DoRequestError(t *testing.T) {
 		Password: "password",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.InstallConfigure(initialConfiguration)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "connect: connection refused")
 }

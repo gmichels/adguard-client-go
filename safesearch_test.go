@@ -47,7 +47,7 @@ func TestSafeSearchSettings(t *testing.T) {
 func TestSafeSearchSettings_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a new SafeSearch configuration
+	// create a new SafeSearch configuration
 	safeSearchConfig := models.SafeSearchConfig{
 		Enabled:    true,
 		Bing:       true,
@@ -59,10 +59,10 @@ func TestSafeSearchSettings_NewRequestError(t *testing.T) {
 		Youtube:    true,
 	}
 
-	// Call the method
+	// call the method
 	err := adg.SafeSearchSettings(safeSearchConfig)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -71,7 +71,7 @@ func TestSafeSearchSettings_NewRequestError(t *testing.T) {
 func TestSafeSearchSettings_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a new SafeSearch configuration
+	// create a new SafeSearch configuration
 	safeSearchConfig := models.SafeSearchConfig{
 		Enabled:    true,
 		Bing:       true,
@@ -83,10 +83,10 @@ func TestSafeSearchSettings_DoRequestError(t *testing.T) {
 		Youtube:    true,
 	}
 
-	// Call the method
+	// call the method
 	err := adg.SafeSearchSettings(safeSearchConfig)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -111,10 +111,10 @@ func TestSafeSearchStatus(t *testing.T) {
 func TestSafeSearchStatus_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.SafeSearchStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -124,10 +124,10 @@ func TestSafeSearchStatus_NewRequestError(t *testing.T) {
 func TestSafeSearchStatus_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.SafeSearchStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -138,10 +138,10 @@ func TestSafeSearchStatus_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.SafeSearchStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")

@@ -25,10 +25,10 @@ func TestClients(t *testing.T) {
 func TestClients_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.Clients()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -38,10 +38,10 @@ func TestClients_NewRequestError(t *testing.T) {
 func TestClients_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.Clients()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -52,10 +52,10 @@ func TestClients_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.Clients()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -82,13 +82,13 @@ func TestClientsAdd(t *testing.T) {
 func TestClientsAdd_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a new client
+	// create a new client
 	client := models.Client{Name: "Test Client Add", Ids: []string{"test-client-add"}}
 
-	// Call the method
+	// call the method
 	err := adg.ClientsAdd(client)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -97,13 +97,13 @@ func TestClientsAdd_NewRequestError(t *testing.T) {
 func TestClientsAdd_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a new client
+	// create a new client
 	client := models.Client{Name: "Test Client Add", Ids: []string{"test-client-add"}}
 
-	// Call the method
+	// call the method
 	err := adg.ClientsAdd(client)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -127,13 +127,13 @@ func TestClientsDelete(t *testing.T) {
 func TestClientsDelete_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a client delete request
+	// create a client delete request
 	clientDelete := models.ClientDelete{Name: "Test Client Delete"}
 
-	// Call the method
+	// call the method
 	err := adg.ClientsDelete(clientDelete)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -142,13 +142,13 @@ func TestClientsDelete_NewRequestError(t *testing.T) {
 func TestClientsDelete_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a client delete request
+	// create a client delete request
 	clientDelete := models.ClientDelete{Name: "Test Client Delete"}
 
-	// Call the method
+	// call the method
 	err := adg.ClientsDelete(clientDelete)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -176,16 +176,16 @@ func TestClientsUpdate(t *testing.T) {
 func TestClientsUpdate_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a client update request
+	// create a client update request
 	clientUpdate := models.ClientUpdate{
 		Name: "Test Client Update",
 		Data: models.Client{Ids: []string{"updated-client"}, Name: "Updated Client"},
 	}
 
-	// Call the method
+	// call the method
 	err := adg.ClientsUpdate(clientUpdate)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -194,16 +194,16 @@ func TestClientsUpdate_NewRequestError(t *testing.T) {
 func TestClientsUpdate_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a client update request
+	// create a client update request
 	clientUpdate := models.ClientUpdate{
 		Name: "Test Client Update",
 		Data: models.Client{Ids: []string{"updated-client"}, Name: "Updated Client"},
 	}
 
-	// Call the method
+	// call the method
 	err := adg.ClientsUpdate(clientUpdate)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -233,10 +233,10 @@ func TestClientsSearch(t *testing.T) {
 func TestClientsSearch_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.ClientsSearch([]string{"test-client-search"})
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -246,10 +246,10 @@ func TestClientsSearch_NewRequestError(t *testing.T) {
 func TestClientsSearch_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.ClientsSearch([]string{"test-client-search"})
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -260,10 +260,10 @@ func TestClientsSearch_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.ClientsSearch([]string{"test-client-search"})
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")

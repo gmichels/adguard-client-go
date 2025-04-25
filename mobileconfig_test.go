@@ -43,12 +43,12 @@ func TestAppleDohMobileconfigNilParams(t *testing.T) {
 func TestAppleDohMobileconfig_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method with valid parameters
+	// call the method with valid parameters
 	host := "example.com"
 	clientId := "test-client-id"
 	result, err := adg.AppleDohMobileconfig(&host, &clientId)
 
-	// Assertions
+	// assertions
 	assert.Empty(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -58,12 +58,12 @@ func TestAppleDohMobileconfig_NewRequestError(t *testing.T) {
 func TestAppleDohMobileconfig_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError(true)
 
-	// Call the method with valid parameters
+	// call the method with valid parameters
 	host := "example.com"
 	clientId := "test-client-id"
 	result, err := adg.AppleDohMobileconfig(&host, &clientId)
 
-	// Assertions
+	// assertions
 	assert.Empty(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "connect: connection refused")
@@ -106,12 +106,12 @@ func TestAppleDotMobileconfigNilParams(t *testing.T) {
 func TestAppleDotMobileconfig_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method with valid parameters
+	// call the method with valid parameters
 	host := "example.com"
 	clientId := "test-client-id"
 	result, err := adg.AppleDotMobileconfig(&host, &clientId)
 
-	// Assertions
+	// assertions
 	assert.Empty(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -121,12 +121,12 @@ func TestAppleDotMobileconfig_NewRequestError(t *testing.T) {
 func TestAppleDotMobileconfig_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError(true)
 
-	// Call the method with valid parameters
+	// call the method with valid parameters
 	host := "example.com"
 	clientId := "test-client-id"
 	result, err := adg.AppleDotMobileconfig(&host, &clientId)
 
-	// Assertions
+	// assertions
 	assert.Empty(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "connect: connection refused")

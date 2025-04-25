@@ -27,10 +27,10 @@ func TestStatus(t *testing.T) {
 func TestStatus_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.Status()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -40,10 +40,10 @@ func TestStatus_NewRequestError(t *testing.T) {
 func TestStatus_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.Status()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -54,10 +54,10 @@ func TestStatus_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.Status()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -83,10 +83,10 @@ func TestDnsInfo(t *testing.T) {
 func TestDnsInfo_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.DnsInfo()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -96,10 +96,10 @@ func TestDnsInfo_NewRequestError(t *testing.T) {
 func TestDnsInfo_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.DnsInfo()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -110,10 +110,10 @@ func TestDnsInfo_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.DnsInfo()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -148,17 +148,17 @@ func TestDnsConfig(t *testing.T) {
 func TestDnsConfig_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a new DNS configuration
+	// create a new DNS configuration
 	dnsConfig := models.DNSConfig{
 		UpstreamDns:     []string{"https://dns.google/dns-query"},
 		BlockingMode:    "refused",
 		UpstreamTimeout: 30,
 	}
 
-	// Call the method
+	// call the method
 	err := adg.DnsConfig(dnsConfig)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -167,17 +167,17 @@ func TestDnsConfig_NewRequestError(t *testing.T) {
 func TestDnsConfig_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a new DNS configuration
+	// create a new DNS configuration
 	dnsConfig := models.DNSConfig{
 		UpstreamDns:     []string{"https://dns.google/dns-query"},
 		BlockingMode:    "refused",
 		UpstreamTimeout: 30,
 	}
 
-	// Call the method
+	// call the method
 	err := adg.DnsConfig(dnsConfig)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -207,15 +207,15 @@ func TestProtection(t *testing.T) {
 func TestProtection_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a protection request
+	// create a protection request
 	protectionRequest := models.SetProtectionRequest{
 		Enabled: true,
 	}
 
-	// Call the method
+	// call the method
 	err := adg.Protection(protectionRequest)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -224,15 +224,15 @@ func TestProtection_NewRequestError(t *testing.T) {
 func TestProtection_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a protection request
+	// create a protection request
 	protectionRequest := models.SetProtectionRequest{
 		Enabled: true,
 	}
 
-	// Call the method
+	// call the method
 	err := adg.Protection(protectionRequest)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -252,10 +252,10 @@ func TestCacheClear(t *testing.T) {
 func TestCacheClear_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.CacheClear()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -264,10 +264,10 @@ func TestCacheClear_NewRequestError(t *testing.T) {
 func TestCacheClear_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.CacheClear()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -293,15 +293,15 @@ func TestTestUpstreamDns(t *testing.T) {
 func TestTestUpstreamDns_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create an upstream configuration
+	// create an upstream configuration
 	upstreamsConfig := models.UpstreamsConfig{
 		UpstreamDns: []string{"https://8.8.8.8/dns-query"},
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.TestUpstreamDns(upstreamsConfig)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -311,15 +311,15 @@ func TestTestUpstreamDns_NewRequestError(t *testing.T) {
 func TestTestUpstreamDns_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create an upstream configuration
+	// create an upstream configuration
 	upstreamsConfig := models.UpstreamsConfig{
 		UpstreamDns: []string{"https://8.8.8.8/dns-query"},
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.TestUpstreamDns(upstreamsConfig)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -330,15 +330,15 @@ func TestTestUpstreamDns_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Create an upstream configuration
+	// create an upstream configuration
 	upstreamsConfig := models.UpstreamsConfig{
 		UpstreamDns: []string{"https://8.8.8.8/dns-query"},
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.TestUpstreamDns(upstreamsConfig)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -367,15 +367,15 @@ func TestVersionJson(t *testing.T) {
 func TestVersionJson_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a version request
+	// create a version request
 	versionRequest := models.GetVersionRequest{
 		RecheckNow: true,
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.VersionJson(versionRequest)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -385,15 +385,15 @@ func TestVersionJson_NewRequestError(t *testing.T) {
 func TestVersionJson_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a version request
+	// create a version request
 	versionRequest := models.GetVersionRequest{
 		RecheckNow: true,
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.VersionJson(versionRequest)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -404,15 +404,15 @@ func TestVersionJson_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Create a version request
+	// create a version request
 	versionRequest := models.GetVersionRequest{
 		RecheckNow: true,
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.VersionJson(versionRequest)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -435,10 +435,10 @@ func TestUpdate(t *testing.T) {
 func TestUpdate_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.Update()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -447,10 +447,10 @@ func TestUpdate_NewRequestError(t *testing.T) {
 func TestUpdate_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.Update()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -476,16 +476,16 @@ func TestLogin(t *testing.T) {
 func TestLogin_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a login request
+	// create a login request
 	login := models.Login{
 		Name:     "admin",
 		Password: "SecretP@ssw0rd",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.Login(login)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -494,16 +494,16 @@ func TestLogin_NewRequestError(t *testing.T) {
 func TestLogin_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a login request
+	// create a login request
 	login := models.Login{
 		Name:     "admin",
 		Password: "wrongpassword",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.Login(login)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "status: 403")
 }
@@ -523,10 +523,10 @@ func TestLogout(t *testing.T) {
 func TestLogout_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.Logout()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -535,10 +535,10 @@ func TestLogout_NewRequestError(t *testing.T) {
 func TestLogout_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.Logout()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -561,10 +561,10 @@ func TestProfile(t *testing.T) {
 func TestProfile_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.Profile()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -574,10 +574,10 @@ func TestProfile_NewRequestError(t *testing.T) {
 func TestProfile_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.Profile()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -588,10 +588,10 @@ func TestProfile_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.Profile()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -624,17 +624,17 @@ func TestProfileUpdate(t *testing.T) {
 func TestProfileUpdate_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a profile update request
+	// create a profile update request
 	profileInfo := models.ProfileInfo{
 		Name:     "admin",
 		Language: "en",
 		Theme:    "dark",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.ProfileUpdate(profileInfo)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -643,17 +643,17 @@ func TestProfileUpdate_NewRequestError(t *testing.T) {
 func TestProfileUpdate_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a profile update request
+	// create a profile update request
 	profileInfo := models.ProfileInfo{
 		Name:     "admin",
 		Language: "en",
 		Theme:    "dark",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.ProfileUpdate(profileInfo)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }

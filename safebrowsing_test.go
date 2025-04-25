@@ -28,10 +28,10 @@ func TestSafeBrowsingEnable(t *testing.T) {
 func TestSafeBrowsingEnable_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.SafeBrowsingEnable()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -40,10 +40,10 @@ func TestSafeBrowsingEnable_NewRequestError(t *testing.T) {
 func TestSafeBrowsingEnable_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.SafeBrowsingEnable()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -70,10 +70,10 @@ func TestSafeBrowsingDisable(t *testing.T) {
 func TestSafeBrowsingDisable_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.SafeBrowsingDisable()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -82,10 +82,10 @@ func TestSafeBrowsingDisable_NewRequestError(t *testing.T) {
 func TestSafeBrowsingDisable_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.SafeBrowsingDisable()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -110,10 +110,10 @@ func TestSafeBrowsingStatus(t *testing.T) {
 func TestSafeBrowsingStatus_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.SafeBrowsingStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -123,10 +123,10 @@ func TestSafeBrowsingStatus_NewRequestError(t *testing.T) {
 func TestSafeBrowsingStatus_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.SafeBrowsingStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -137,10 +137,10 @@ func TestSafeBrowsingStatus_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.SafeBrowsingStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")

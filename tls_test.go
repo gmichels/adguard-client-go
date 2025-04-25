@@ -29,10 +29,10 @@ func TestTlsStatus(t *testing.T) {
 func TestTlsStatus_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.TlsStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -42,10 +42,10 @@ func TestTlsStatus_NewRequestError(t *testing.T) {
 func TestTlsStatus_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.TlsStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -56,10 +56,10 @@ func TestTlsStatus_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.TlsStatus()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -92,7 +92,7 @@ func TestTlsConfigure(t *testing.T) {
 func TestTlsConfigure_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a new TLS configuration
+	// create a new TLS configuration
 	tlsConfig := models.TlsConfig{
 		Enabled:         false,
 		ServerName:      "Test AdGuard Home Modified",
@@ -101,10 +101,10 @@ func TestTlsConfigure_NewRequestError(t *testing.T) {
 		ServePlainDns:   true,
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.TlsConfigure(tlsConfig)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -114,7 +114,7 @@ func TestTlsConfigure_NewRequestError(t *testing.T) {
 func TestTlsConfigure_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a new TLS configuration
+	// create a new TLS configuration
 	tlsConfig := models.TlsConfig{
 		Enabled:         false,
 		ServerName:      "Test AdGuard Home Modified",
@@ -123,10 +123,10 @@ func TestTlsConfigure_DoRequestError(t *testing.T) {
 		ServePlainDns:   true,
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.TlsConfigure(tlsConfig)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -137,7 +137,7 @@ func TestTlsConfigure_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Create a new TLS configuration
+	// create a new TLS configuration
 	tlsConfig := models.TlsConfig{
 		Enabled:         false,
 		ServerName:      "Test AdGuard Home Modified",
@@ -146,10 +146,10 @@ func TestTlsConfigure_InvalidJSONError(t *testing.T) {
 		ServePlainDns:   true,
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.TlsConfigure(tlsConfig)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -183,17 +183,17 @@ func TestTlsValidate(t *testing.T) {
 func TestTlsValidate_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a TLS configuration to validate
+	// create a TLS configuration to validate
 	tlsConfig := models.TlsConfig{
 		Enabled:         true,
 		CertificatePath: "/opt/adguardhome/ssl/server.crt",
 		PrivateKeyPath:  "/opt/adguardhome/ssl/server.key",
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.TlsValidate(tlsConfig)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -203,17 +203,17 @@ func TestTlsValidate_NewRequestError(t *testing.T) {
 func TestTlsValidate_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a TLS configuration to validate
+	// create a TLS configuration to validate
 	tlsConfig := models.TlsConfig{
 		Enabled:         true,
 		CertificatePath: "/opt/adguardhome/ssl/server.crt",
 		PrivateKeyPath:  "/opt/adguardhome/ssl/server.key",
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.TlsValidate(tlsConfig)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -224,17 +224,17 @@ func TestTlsValidate_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Create a TLS configuration to validate
+	// create a TLS configuration to validate
 	tlsConfig := models.TlsConfig{
 		Enabled:         true,
 		CertificatePath: "/opt/adguardhome/ssl/server.crt",
 		PrivateKeyPath:  "/opt/adguardhome/ssl/server.key",
 	}
 
-	// Call the method
+	// call the method
 	result, err := adg.TlsValidate(tlsConfig)
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")

@@ -25,10 +25,10 @@ func TestRewriteList(t *testing.T) {
 func TestRewriteList_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.RewriteList()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -38,10 +38,10 @@ func TestRewriteList_NewRequestError(t *testing.T) {
 func TestRewriteList_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.RewriteList()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -52,10 +52,10 @@ func TestRewriteList_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.RewriteList()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -82,16 +82,16 @@ func TestRewriteAdd(t *testing.T) {
 func TestRewriteAdd_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a new rewrite rule
+	// create a new rewrite rule
 	rewriteEntry := models.RewriteEntry{
 		Domain: "example.xyz",
 		Answer: "4.3.2.1",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.RewriteAdd(rewriteEntry)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -100,16 +100,16 @@ func TestRewriteAdd_NewRequestError(t *testing.T) {
 func TestRewriteAdd_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a new rewrite rule
+	// create a new rewrite rule
 	rewriteEntry := models.RewriteEntry{
 		Domain: "example.xyz",
 		Answer: "4.3.2.1",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.RewriteAdd(rewriteEntry)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -136,16 +136,16 @@ func TestRewriteDelete(t *testing.T) {
 func TestRewriteDelete_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a rewrite rule to delete
+	// create a rewrite rule to delete
 	rewriteEntry := models.RewriteEntry{
 		Domain: "example.abc",
 		Answer: "4.2.3.1",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.RewriteDelete(rewriteEntry)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -179,16 +179,16 @@ func TestRewriteUpdate(t *testing.T) {
 func TestRewriteDelete_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a rewrite rule to delete
+	// create a rewrite rule to delete
 	rewriteEntry := models.RewriteEntry{
 		Domain: "example.abc",
 		Answer: "4.2.3.1",
 	}
 
-	// Call the method
+	// call the method
 	err := adg.RewriteDelete(rewriteEntry)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -197,7 +197,7 @@ func TestRewriteDelete_NewRequestError(t *testing.T) {
 func TestRewriteUpdate_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a rewrite rule to update
+	// create a rewrite rule to update
 	rewriteUpdate := models.RewriteUpdate{
 		Target: models.RewriteEntry{
 			Domain: "example.io",
@@ -209,10 +209,10 @@ func TestRewriteUpdate_NewRequestError(t *testing.T) {
 		},
 	}
 
-	// Call the method
+	// call the method
 	err := adg.RewriteUpdate(rewriteUpdate)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -221,7 +221,7 @@ func TestRewriteUpdate_NewRequestError(t *testing.T) {
 func TestRewriteUpdate_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a rewrite rule to update
+	// create a rewrite rule to update
 	rewriteUpdate := models.RewriteUpdate{
 		Target: models.RewriteEntry{
 			Domain: "example.io",
@@ -233,10 +233,10 @@ func TestRewriteUpdate_DoRequestError(t *testing.T) {
 		},
 	}
 
-	// Call the method
+	// call the method
 	err := adg.RewriteUpdate(rewriteUpdate)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }

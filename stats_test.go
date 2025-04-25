@@ -27,10 +27,10 @@ func TestStats(t *testing.T) {
 func TestStats_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.Stats()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -40,10 +40,10 @@ func TestStats_NewRequestError(t *testing.T) {
 func TestStats_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.Stats()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -54,10 +54,10 @@ func TestStats_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.Stats()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -86,10 +86,10 @@ func TestStatsReset(t *testing.T) {
 func TestStatsReset_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.StatsReset()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -98,10 +98,10 @@ func TestStatsReset_NewRequestError(t *testing.T) {
 func TestStatsReset_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	err := adg.StatsReset()
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
@@ -130,10 +130,10 @@ func TestStatsConfig(t *testing.T) {
 func TestStatsConfig_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.StatsConfig()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
@@ -143,10 +143,10 @@ func TestStatsConfig_NewRequestError(t *testing.T) {
 func TestStatsConfig_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Call the method
+	// call the method
 	result, err := adg.StatsConfig()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
@@ -157,10 +157,10 @@ func TestStatsConfig_InvalidJSONError(t *testing.T) {
 	adg, server := testADGWithInvalidJSON(t)
 	defer server.Close()
 
-	// Call the method
+	// call the method
 	result, err := adg.StatsConfig()
 
-	// Assertions
+	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
@@ -196,17 +196,17 @@ func TestStatsConfigUpdate(t *testing.T) {
 func TestStatsConfigUpdate_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
-	// Create a new statistics configuration
+	// create a new statistics configuration
 	statsConfig := models.GetStatsConfigResponse{
 		Enabled:  false,
 		Interval: 3600000, // 1 hour in milliseconds
 		Ignored:  []string{"example.com", "test.com"},
 	}
 
-	// Call the method
+	// call the method
 	err := adg.StatsConfigUpdate(statsConfig)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
@@ -215,17 +215,17 @@ func TestStatsConfigUpdate_NewRequestError(t *testing.T) {
 func TestStatsConfigUpdate_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
-	// Create a new statistics configuration
+	// create a new statistics configuration
 	statsConfig := models.GetStatsConfigResponse{
 		Enabled:  false,
 		Interval: 3600000, // 1 hour in milliseconds
 		Ignored:  []string{"example.com", "test.com"},
 	}
 
-	// Call the method
+	// call the method
 	err := adg.StatsConfigUpdate(statsConfig)
 
-	// Assertions
+	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
