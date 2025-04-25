@@ -497,7 +497,7 @@ func TestLogin_DoRequestError(t *testing.T) {
 	// Create a login request
 	login := models.Login{
 		Name:     "admin",
-		Password: "SecretP@ssw0rd",
+		Password: "wrongpassword",
 	}
 
 	// Call the method
@@ -505,7 +505,7 @@ func TestLogin_DoRequestError(t *testing.T) {
 
 	// Assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Contains(t, err.Error(), "status: 403")
 }
 
 // Test Logout

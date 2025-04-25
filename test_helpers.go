@@ -68,11 +68,19 @@ func testADGWithNewRequestError() *ADG {
 }
 
 // testADGWithDoRequestError - Helper function to create a test ADG instance with a request error
-func testADGWithDoRequestError() *ADG {
+func testADGWithDoRequestError(test_install ...bool) *ADG {
 	adg := testADG()
+
+	// if test_install is true, adjust the port as
+	// it's for the first time setup
+	if len(test_install) > 0 && test_install[0] {
+		adg.HostURL = "http://localhost:8000"
+	} else {
+
+
 	// set an invalid password to trigger a 403 error
 	adg.Auth.Password = "wrongpassword"
-
+	}
 	return adg
 }
 

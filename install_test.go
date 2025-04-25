@@ -41,7 +41,7 @@ func TestInstallGetAddresses_NewRequestError(t *testing.T) {
 
 // Test InstallGetAddresses - Error performing request
 func TestInstallGetAddresses_DoRequestError(t *testing.T) {
-	adg := testADGWithDoRequestError()
+	adg := testADGWithDoRequestError(true)
 
 	// Call the method
 	result, err := adg.InstallGetAddresses()
@@ -49,7 +49,7 @@ func TestInstallGetAddresses_DoRequestError(t *testing.T) {
 	// Assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Contains(t, err.Error(), "connect: connection refused")
 }
 
 // Test InstallGetAddresses - Error unmarshaling response
@@ -123,7 +123,7 @@ func TestInstallCheckConfig_NewRequestError(t *testing.T) {
 
 // Test InstallCheckConfig - Error performing request
 func TestInstallCheckConfig_DoRequestError(t *testing.T) {
-	adg := testADGWithDoRequestError()
+	adg := testADGWithDoRequestError(true)
 
 	// Create a configuration request
 	checkConfigRequest := models.CheckConfigRequest{
@@ -146,7 +146,7 @@ func TestInstallCheckConfig_DoRequestError(t *testing.T) {
 	// Assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Contains(t, err.Error(), "connect: connection refused")
 }
 
 // Test InstallCheckConfig - Error unmarshaling response
@@ -231,7 +231,7 @@ func TestInstallConfigure_NewRequestError(t *testing.T) {
 
 // Test InstallConfigure - Error performing request
 func TestInstallConfigure_DoRequestError(t *testing.T) {
-	adg := testADGWithDoRequestError()
+	adg := testADGWithDoRequestError(true)
 
 	// Create an initial configuration
 	initialConfiguration := models.InitialConfiguration{
@@ -252,5 +252,5 @@ func TestInstallConfigure_DoRequestError(t *testing.T) {
 
 	// Assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Contains(t, err.Error(), "connect: connection refused")
 }

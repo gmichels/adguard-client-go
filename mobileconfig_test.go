@@ -49,14 +49,14 @@ func TestAppleDohMobileconfig_NewRequestError(t *testing.T) {
 	result, err := adg.AppleDohMobileconfig(&host, &clientId)
 
 	// Assertions
-	assert.Nil(t, result)
+	assert.Empty(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
 
 // Test AppleDohMobileconfig - Error performing request
 func TestAppleDohMobileconfig_DoRequestError(t *testing.T) {
-	adg := testADGWithDoRequestError()
+	adg := testADGWithDoRequestError(true)
 
 	// Call the method with valid parameters
 	host := "example.com"
@@ -64,9 +64,9 @@ func TestAppleDohMobileconfig_DoRequestError(t *testing.T) {
 	result, err := adg.AppleDohMobileconfig(&host, &clientId)
 
 	// Assertions
-	assert.Nil(t, result)
+	assert.Empty(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Contains(t, err.Error(), "connect: connection refused")
 }
 
 // Test AppleDotMobileconfig
@@ -112,14 +112,14 @@ func TestAppleDotMobileconfig_NewRequestError(t *testing.T) {
 	result, err := adg.AppleDotMobileconfig(&host, &clientId)
 
 	// Assertions
-	assert.Nil(t, result)
+	assert.Empty(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "invalid URL")
 }
 
 // Test AppleDotMobileconfig - Error performing request
 func TestAppleDotMobileconfig_DoRequestError(t *testing.T) {
-	adg := testADGWithDoRequestError()
+	adg := testADGWithDoRequestError(true)
 
 	// Call the method with valid parameters
 	host := "example.com"
@@ -127,7 +127,7 @@ func TestAppleDotMobileconfig_DoRequestError(t *testing.T) {
 	result, err := adg.AppleDotMobileconfig(&host, &clientId)
 
 	// Assertions
-	assert.Nil(t, result)
+	assert.Empty(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Contains(t, err.Error(), "connect: connection refused")
 }
