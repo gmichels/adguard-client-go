@@ -41,8 +41,7 @@ jobs:
           HAS_CHANGES: ${{ steps.check_changes.outputs.HAS_CHANGES }}
         if: env.HAS_CHANGES == 'false'
         run: |
-          echo has_changes: $HAS_CHANGES
-          # configure user
+          # # configure user
           # git config --global user.name "GitHub Actions"
           # git config --global user.email "github-actions@github.com"
 
@@ -54,3 +53,7 @@ jobs:
 
           # # push the commit back up to source GitHub repository
           # git push
+
+          # force failure
+          echo "::error Formatting changes made, please review and merge them"
+          exit 1
