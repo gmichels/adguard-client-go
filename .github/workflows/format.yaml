@@ -1,6 +1,9 @@
 name: Format Go code
 
 on:
+  pull_request:
+    paths:
+      - ".github/workflows/format.yml"
   # allow this workflow to be called from other workflows
   workflow_call:
 
@@ -36,8 +39,9 @@ jobs:
       - name: Commit and push changes
         env:
           HAS_CHANGES: ${{ steps.check_changes.outputs.HAS_CHANGES }}
-        if: env.HAS_CHANGES == 'true'
+        # if: env.HAS_CHANGES == 'true'
         run: |
+          echo has_changes: $HAS_CHANGES
           # configure user
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
