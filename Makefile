@@ -26,4 +26,5 @@ htmlcoverage: ## Generate HTML coverage report
 
 cleanup: ## Cleanup leftovers after failed tests
 	docker compose -f ./docker/docker-compose.yaml down
+	rm -fr ./docker
 	git checkout HEAD -- ./docker
