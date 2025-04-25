@@ -8,21 +8,49 @@ import (
 )
 
 // Test Querylog
+// Test Querylog
 func TestQuerylog(t *testing.T) {
 	adg := testADG()
 
-	// call the method with valid parameters
+	// Case 1: Valid parameters
 	limit := 10
 	responseStatus := "rewritten"
 	result, err := adg.Querylog(nil, nil, &limit, nil, &responseStatus)
 
-	// assertions
+	// Assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure 2 query log entries are returned
 	assert.Len(t, result.Data, 2)
 	// ensure the first entry has the expected information
 	assert.Equal(t, result.Data[0].Question.Name, "example.org")
+
+	// Case 2: Missing `limit`
+	result, err = adg.Querylog(nil, nil, nil, nil, &responseStatus)
+
+	// Assertions
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+	// ensure at least 1 query log entry is returned
+	assert.GreaterOrEqual(t, len(result.Data), 1)
+
+	// Case 3: Missing `responseStatus`
+	result, err = adg.Querylog(nil, nil, &limit, nil, nil)
+
+	// Assertions
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+	// ensure at least 1 query log entry is returned
+	assert.GreaterOrEqual(t, len(result.Data), 1)
+
+	// Case 4: Missing both `limit` and `responseStatus`
+	result, err = adg.Querylog(nil, nil, nil, nil, nil)
+
+	// Assertions
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+	// ensure at least 1 query log entry is returned
+	assert.GreaterOrEqual(t, len(result.Data), 1)
 }
 
 // Test Querylog with nil parameters
