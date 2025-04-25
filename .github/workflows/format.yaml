@@ -1,0 +1,59 @@
+name: Format Go code
+
+on:
+  pull_request:
+    paths:
+      - "**.go"
+      - go.mod
+      - ".github/workflows/format.yml"
+  # allow this workflow to be called from other workflows
+  workflow_call:
+
+permissions:
+  contents: write
+
+env:
+  GOPROXY: https://proxy.golang.org,direct
+  DEBIAN_FRONTEND: noninteractive
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: "go.mod"
+      - name: Format Go code
+        run: go fmt ./...
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if [[ -n "$(git diff --exit-code)" ]]; then
+            echo "Changes detected."
+            echo "HAS_CHANGES=true" >> $GITHUB_OUTPUT
+          else
+            echo "No changes detected."
+            echo "HAS_CHANGES=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Commit and push changes
+        env:
+          HAS_CHANGES: ${{ steps.check_changes.outputs.HAS_CHANGES }}
+        if: env.HAS_CHANGES == 'true'
+        run: |
+          # configure user
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+
+          # stage any file changes to be committed
+          git add .
+
+          # make commit with staged changes
+          git commit -m 'Formatting changes'
+
+          # push the commit back up to source GitHub repository
+          git push
+
+          echo "::warning title=FORMAT-CHANGES::Formatting changes made, please review and merge."

@@ -1,0 +1,29 @@
+name: Acceptance Tests
+
+on:
+  pull_request:
+    paths:
+      - "**.go"
+      - go.mod
+      - ".github/workflows/testacc.yml"
+
+env:
+  GOPROXY: https://proxy.golang.org,direct
+  DEBIAN_FRONTEND: noninteractive
+
+jobs:
+  testacc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: "go.mod"
+      - name: Run acceptance tests
+        run: make testacc
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          name: "coverage.out"
+          token: ${{ secrets.CODECOV_TOKEN }}
