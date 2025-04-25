@@ -56,4 +56,4 @@ jobs:
           # push the commit back up to source GitHub repository
           git push
 
-          echo "::warning title=FORMAT-CHANGES::Formatting changes made, aborting workflow."
+          echo "::warning title=FORMAT-CHANGES::Formatting changes made, please review and merge."
