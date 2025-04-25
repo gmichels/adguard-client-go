@@ -11,7 +11,7 @@ import (
 )
 
 // Test NewClient - Valid parameters
-func TestNewClient_ValidParameters(t *testing.T) {
+func TestInitNewClient_ValidParameters(t *testing.T) {
 	host := "localhost"
 	username := "admin"
 	password := "password"
@@ -30,7 +30,8 @@ func TestNewClient_ValidParameters(t *testing.T) {
 }
 
 // Test NewClient - Missing required parameters
-func TestNewClient_MissingParameters(t *testing.T) {
+func TestInitClient_MissingParameters(t *testing.T) {
+	// Case 1: Missing `host`
 	host := ""
 	username := "admin"
 	password := "password"
@@ -43,10 +44,49 @@ func TestNewClient_MissingParameters(t *testing.T) {
 	assert.Nil(t, client)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "required parameter `host`")
+
+	// Case 2: Missing `username`
+	host = "localhost"
+	username = ""
+	client, err = NewClient(&host, &username, &password, &scheme, &timeout)
+
+	// Assertions
+	assert.Nil(t, client)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "required parameter `username`")
+
+	// Case 3: Missing `password`
+	username = "admin"
+	password = ""
+	client, err = NewClient(&host, &username, &password, &scheme, &timeout)
+
+	// Assertions
+	assert.Nil(t, client)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "required parameter `password`")
+
+	// Case 4: Missing `scheme`
+	password = "password"
+	scheme = ""
+	client, err = NewClient(&host, &username, &password, &scheme, &timeout)
+
+	// Assertions
+	assert.NoError(t, err)
+	assert.NotNil(t, client)
+	assert.Contains(t, client.HostURL, "https://")
+
+	// Case 5: Missing `timeout`
+	scheme = "http"
+	client, err = NewClient(&host, &username, &password, &scheme, nil)
+
+	// Assertions
+	assert.NoError(t, err)
+	assert.NotNil(t, client)
+	assert.Equal(t, client.HTTPClient.Timeout, time.Duration(10)*time.Second)
 }
 
 // Test doRequest - Successful request
-func TestDoRequest_Success(t *testing.T) {
+func TestInitDoRequest_Success(t *testing.T) {
 	// Create a mock server
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
@@ -78,7 +118,7 @@ func TestDoRequest_Success(t *testing.T) {
 }
 
 // Test doRequest - Request error
-func TestDoRequest_RequestError(t *testing.T) {
+func TestInitDoRequest_RequestError(t *testing.T) {
 	// Create a client
 	host := "localhost"
 	username := "admin"
@@ -99,7 +139,7 @@ func TestDoRequest_RequestError(t *testing.T) {
 }
 
 // Test doRequest - Non-200 response
-func TestDoRequest_Non200Response(t *testing.T) {
+func TestInitDoRequest_Non200Response(t *testing.T) {
 	// Create a mock server
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusForbidden)

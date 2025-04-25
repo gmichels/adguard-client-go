@@ -36,8 +36,9 @@ func NewClient(host, username, password, scheme *string, timeout *int, enableIns
 	if *scheme == "" {
 		*scheme = "https"
 	}
-	if *timeout == 0 {
-		*timeout = 10
+	if timeout == nil || *timeout == 0 {
+		defaultTimeout := 10
+		timeout = &defaultTimeout
 	}
 	// default for insecureSkipVerify
 	insecureSkipVerify := false
