@@ -43,6 +43,54 @@ func TestSafeSearchSettings(t *testing.T) {
 	assert.True(t, result.Youtube)
 }
 
+// Test SafeSearchSettings - Error initializing request
+func TestSafeSearchSettings_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Create a new SafeSearch configuration
+	safeSearchConfig := models.SafeSearchConfig{
+		Enabled:    true,
+		Bing:       true,
+		Duckduckgo: false,
+		Ecosia:     true,
+		Google:     true,
+		Pixabay:    false,
+		Yandex:     true,
+		Youtube:    true,
+	}
+
+	// Call the method
+	err := adg.SafeSearchSettings(safeSearchConfig)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test SafeSearchSettings - Error performing request
+func TestSafeSearchSettings_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Create a new SafeSearch configuration
+	safeSearchConfig := models.SafeSearchConfig{
+		Enabled:    true,
+		Bing:       true,
+		Duckduckgo: false,
+		Ecosia:     true,
+		Google:     true,
+		Pixabay:    false,
+		Yandex:     true,
+		Youtube:    true,
+	}
+
+	// Call the method
+	err := adg.SafeSearchSettings(safeSearchConfig)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
 // Test SafeSearchStatus
 func TestSafeSearchStatus(t *testing.T) {
 	adg := testADG()
@@ -57,4 +105,44 @@ func TestSafeSearchStatus(t *testing.T) {
 	assert.Condition(t, func() bool {
 		return result.Enabled == true || result.Enabled == false
 	})
+}
+
+// Test SafeSearchStatus - Error initializing request
+func TestSafeSearchStatus_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Call the method
+	result, err := adg.SafeSearchStatus()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test SafeSearchStatus - Error performing request
+func TestSafeSearchStatus_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Call the method
+	result, err := adg.SafeSearchStatus()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
+// Test SafeSearchStatus - Error unmarshaling response
+func TestSafeSearchStatus_InvalidJSONError(t *testing.T) {
+	adg, server := testADGWithInvalidJSON(t)
+	defer server.Close()
+
+	// Call the method
+	result, err := adg.SafeSearchStatus()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "unexpected end of JSON input")
 }

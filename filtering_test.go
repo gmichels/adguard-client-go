@@ -29,6 +29,46 @@ func TestFilteringStatus(t *testing.T) {
 	assert.Len(t, result.UserRules, 7)
 }
 
+// Test FilteringStatus - Error initializing request
+func TestFilteringStatus_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Call the method
+	result, err := adg.FilteringStatus()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test FilteringStatus - Error performing request
+func TestFilteringStatus_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Call the method
+	result, err := adg.FilteringStatus()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
+// Test FilteringStatus - Error unmarshaling response
+func TestFilteringStatus_InvalidJSONError(t *testing.T) {
+	adg, server := testADGWithInvalidJSON(t)
+	defer server.Close()
+
+	// Call the method
+	result, err := adg.FilteringStatus()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "unexpected end of JSON input")
+}
+
 // Test FilteringConfig
 func TestFilteringConfig(t *testing.T) {
 	adg := testADG()
@@ -49,6 +89,42 @@ func TestFilteringConfig(t *testing.T) {
 	result, err := adg.FilteringStatus()
 	assert.NoError(t, err)
 	assert.False(t, result.Enabled)
+}
+
+// Test FilteringConfig - Error initializing request
+func TestFilteringConfig_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Create a new filtering configuration
+	filterConfig := models.FilterConfig{
+		Enabled:  false,
+		Interval: 12,
+	}
+
+	// Call the method
+	err := adg.FilteringConfig(filterConfig)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test FilteringConfig - Error performing request
+func TestFilteringConfig_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Create a new filtering configuration
+	filterConfig := models.FilterConfig{
+		Enabled:  false,
+		Interval: 12,
+	}
+
+	// Call the method
+	err := adg.FilteringConfig(filterConfig)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
 
 // Test FilteringAddUrl
@@ -74,6 +150,42 @@ func TestFilteringAddUrl(t *testing.T) {
 	_ = adg.FilteringRemoveUrl(filterDelete)
 }
 
+// Test FilteringAddUrl - Error initializing request
+func TestFilteringAddUrl_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Create a new filter URL
+	filterData := models.AddUrlRequest{
+		Name: "Test Filter to Add",
+		Url:  "https://example.com/filter.txt",
+	}
+
+	// Call the method
+	err := adg.FilteringAddUrl(filterData)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test FilteringAddUrl - Error performing request
+func TestFilteringAddUrl_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Create a new filter URL
+	filterData := models.AddUrlRequest{
+		Name: "Test Filter to Add",
+		Url:  "https://example.com/filter.txt",
+	}
+
+	// Call the method
+	err := adg.FilteringAddUrl(filterData)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
 // Test FilteringRemoveUrl
 func TestFilteringRemoveUrl(t *testing.T) {
 	adg := testADG()
@@ -95,6 +207,40 @@ func TestFilteringRemoveUrl(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+// Test FilteringRemoveUrl - Error initializing request
+func TestFilteringRemoveUrl_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Create a filter URL to remove
+	filterDelete := models.RemoveUrlRequest{
+		Url: "https://example.com/filter.txt",
+	}
+
+	// Call the method
+	err := adg.FilteringRemoveUrl(filterDelete)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test FilteringRemoveUrl - Error performing request
+func TestFilteringRemoveUrl_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Create a filter URL to remove
+	filterDelete := models.RemoveUrlRequest{
+		Url: "https://example.com/filter.txt",
+	}
+
+	// Call the method
+	err := adg.FilteringRemoveUrl(filterDelete)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
 // Test FilteringSetRules
 func TestFilteringSetRules(t *testing.T) {
 	adg := testADG()
@@ -109,6 +255,40 @@ func TestFilteringSetRules(t *testing.T) {
 
 	// Assertions
 	assert.NoError(t, err)
+}
+
+// Test FilteringSetRules - Error initializing request
+func TestFilteringSetRules_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Create a new set of rules
+	rules := models.SetRulesRequest{
+		Rules: []string{"||example.com^", "@@||allowed.com^"},
+	}
+
+	// Call the method
+	err := adg.FilteringSetRules(rules)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test FilteringSetRules - Error performing request
+func TestFilteringSetRules_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Create a new set of rules
+	rules := models.SetRulesRequest{
+		Rules: []string{"||example.com^", "@@||allowed.com^"},
+	}
+
+	// Call the method
+	err := adg.FilteringSetRules(rules)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
 
 // Test FilteringCheckHost
@@ -130,6 +310,55 @@ func TestFilteringCheckHost(t *testing.T) {
 	assert.Equal(t, "||example.com^", result.Rules[0].Text)
 }
 
+// Test FilteringCheckHost - Error initializing request
+func TestFilteringCheckHost_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Call the method
+	name := "example.com"
+	client := "192.168.1.100"
+	qtype := "A"
+	result, err := adg.FilteringCheckHost(&name, &client, &qtype)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test FilteringCheckHost - Error performing request
+func TestFilteringCheckHost_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Call the method
+	name := "example.com"
+	client := "192.168.1.100"
+	qtype := "A"
+	result, err := adg.FilteringCheckHost(&name, &client, &qtype)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
+// Test FilteringCheckHost - Error unmarshaling response
+func TestFilteringCheckHost_InvalidJSONError(t *testing.T) {
+	adg, server := testADGWithInvalidJSON(t)
+	defer server.Close()
+
+	// Call the method
+	name := "example.com"
+	client := "192.168.1.100"
+	qtype := "A"
+	result, err := adg.FilteringCheckHost(&name, &client, &qtype)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "unexpected end of JSON input")
+}
+
 // Test FilteringRefresh
 func TestFilteringRefresh(t *testing.T) {
 	adg := testADG()
@@ -147,4 +376,59 @@ func TestFilteringRefresh(t *testing.T) {
 	assert.NotNil(t, result)
 	// ensure at least 0 filters were updated
 	assert.GreaterOrEqual(t, result.Updated, 0)
+}
+
+// Test FilteringRefresh - Error initializing request
+func TestFilteringRefresh_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Create a refresh request
+	refreshRequest := models.FilterRefreshRequest{
+		Whitelist: false,
+	}
+
+	// Call the method
+	result, err := adg.FilteringRefresh(refreshRequest)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test FilteringRefresh - Error performing request
+func TestFilteringRefresh_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Create a refresh request
+	refreshRequest := models.FilterRefreshRequest{
+		Whitelist: false,
+	}
+
+	// Call the method
+	result, err := adg.FilteringRefresh(refreshRequest)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
+// Test FilteringRefresh - Error unmarshaling response
+func TestFilteringRefresh_InvalidJSONError(t *testing.T) {
+	adg, server := testADGWithInvalidJSON(t)
+	defer server.Close()
+
+	// Create a refresh request
+	refreshRequest := models.FilterRefreshRequest{
+		Whitelist: false,
+	}
+
+	// Call the method
+	result, err := adg.FilteringRefresh(refreshRequest)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "unexpected end of JSON input")
 }

@@ -26,6 +26,46 @@ func TestInstallGetAddresses(t *testing.T) {
 	assert.NotEmpty(t, result.Version)
 }
 
+// Test InstallGetAddresses - Error initializing request
+func TestInstallGetAddresses_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Call the method
+	result, err := adg.InstallGetAddresses()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test InstallGetAddresses - Error performing request
+func TestInstallGetAddresses_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Call the method
+	result, err := adg.InstallGetAddresses()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
+// Test InstallGetAddresses - Error unmarshaling response
+func TestInstallGetAddresses_InvalidJSONError(t *testing.T) {
+	adg, server := testADGWithInvalidJSON(t)
+	defer server.Close()
+
+	// Call the method
+	result, err := adg.InstallGetAddresses()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "unexpected end of JSON input")
+}
+
 // Test InstallCheckConfig
 func TestInstallCheckConfig(t *testing.T) {
 	adg := testADG(true)
@@ -53,6 +93,91 @@ func TestInstallCheckConfig(t *testing.T) {
 	assert.NotNil(t, result)
 }
 
+// Test InstallCheckConfig - Error initializing request
+func TestInstallCheckConfig_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Create a configuration request
+	checkConfigRequest := models.CheckConfigRequest{
+		Dns: models.CheckConfigRequestInfo{
+			Ip:      "192.168.1.1",
+			Port:    53,
+			Autofix: true,
+		},
+		Web: models.CheckConfigRequestInfo{
+			Ip:      "192.168.1.1",
+			Port:    80,
+			Autofix: true,
+		},
+		SetStaticIp: true,
+	}
+
+	// Call the method
+	result, err := adg.InstallCheckConfig(checkConfigRequest)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test InstallCheckConfig - Error performing request
+func TestInstallCheckConfig_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Create a configuration request
+	checkConfigRequest := models.CheckConfigRequest{
+		Dns: models.CheckConfigRequestInfo{
+			Ip:      "192.168.1.1",
+			Port:    53,
+			Autofix: true,
+		},
+		Web: models.CheckConfigRequestInfo{
+			Ip:      "192.168.1.1",
+			Port:    80,
+			Autofix: true,
+		},
+		SetStaticIp: true,
+	}
+
+	// Call the method
+	result, err := adg.InstallCheckConfig(checkConfigRequest)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
+// Test InstallCheckConfig - Error unmarshaling response
+func TestInstallCheckConfig_InvalidJSONError(t *testing.T) {
+	adg, server := testADGWithInvalidJSON(t)
+	defer server.Close()
+
+	// Create a configuration request
+	checkConfigRequest := models.CheckConfigRequest{
+		Dns: models.CheckConfigRequestInfo{
+			Ip:      "192.168.1.1",
+			Port:    53,
+			Autofix: true,
+		},
+		Web: models.CheckConfigRequestInfo{
+			Ip:      "192.168.1.1",
+			Port:    80,
+			Autofix: true,
+		},
+		SetStaticIp: true,
+	}
+
+	// Call the method
+	result, err := adg.InstallCheckConfig(checkConfigRequest)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "unexpected end of JSON input")
+}
+
 // Test InstallConfigure
 func TestInstallConfigure(t *testing.T) {
 	adg := testADG(true)
@@ -76,4 +201,56 @@ func TestInstallConfigure(t *testing.T) {
 
 	// assertions
 	assert.NoError(t, err)
+}
+
+// Test InstallConfigure - Error initializing request
+func TestInstallConfigure_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Create an initial configuration
+	initialConfiguration := models.InitialConfiguration{
+		Dns: models.AddressInfo{
+			Ip:   "192.168.1.1",
+			Port: 53,
+		},
+		Web: models.AddressInfo{
+			Ip:   "192.168.1.1",
+			Port: 80,
+		},
+		Username: "admin",
+		Password: "password",
+	}
+
+	// Call the method
+	err := adg.InstallConfigure(initialConfiguration)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test InstallConfigure - Error performing request
+func TestInstallConfigure_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Create an initial configuration
+	initialConfiguration := models.InitialConfiguration{
+		Dns: models.AddressInfo{
+			Ip:   "192.168.1.1",
+			Port: 53,
+		},
+		Web: models.AddressInfo{
+			Ip:   "192.168.1.1",
+			Port: 80,
+		},
+		Username: "admin",
+		Password: "password",
+	}
+
+	// Call the method
+	err := adg.InstallConfigure(initialConfiguration)
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }

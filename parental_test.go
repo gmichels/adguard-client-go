@@ -24,6 +24,30 @@ func TestParentalEnable(t *testing.T) {
 	assert.True(t, result.Enabled)
 }
 
+// Test ParentalEnable - Error initializing request
+func TestParentalEnable_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Call the method
+	err := adg.ParentalEnable()
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test ParentalEnable - Error performing request
+func TestParentalEnable_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Call the method
+	err := adg.ParentalEnable()
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
 // Test ParentalDisable
 func TestParentalDisable(t *testing.T) {
 	adg := testADG()
@@ -42,6 +66,30 @@ func TestParentalDisable(t *testing.T) {
 	assert.False(t, result.Enabled)
 }
 
+// Test ParentalDisable - Error initializing request
+func TestParentalDisable_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Call the method
+	err := adg.ParentalDisable()
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test ParentalDisable - Error performing request
+func TestParentalDisable_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Call the method
+	err := adg.ParentalDisable()
+
+	// Assertions
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
 // Test ParentalStatus
 func TestParentalStatus(t *testing.T) {
 	adg := testADG()
@@ -55,4 +103,44 @@ func TestParentalStatus(t *testing.T) {
 	// ensure the sensitivity level is within a valid range
 	assert.GreaterOrEqual(t, result.Sensitivity, 0)
 	assert.LessOrEqual(t, result.Sensitivity, 10)
+}
+
+// Test ParentalStatus - Error initializing request
+func TestParentalStatus_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Call the method
+	result, err := adg.ParentalStatus()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test ParentalStatus - Error performing request
+func TestParentalStatus_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Call the method
+	result, err := adg.ParentalStatus()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
+// Test ParentalStatus - Error unmarshaling response
+func TestParentalStatus_InvalidJSONError(t *testing.T) {
+	adg, server := testADGWithInvalidJSON(t)
+	defer server.Close()
+
+	// Call the method
+	result, err := adg.ParentalStatus()
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "unexpected end of JSON input")
 }

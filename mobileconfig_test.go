@@ -39,6 +39,36 @@ func TestAppleDohMobileconfigNilParams(t *testing.T) {
 	assert.Contains(t, err.Error(), "status: 500, body: {\"message\":\"no host in query parameters and no server_name\"}")
 }
 
+// Test AppleDohMobileconfig - Error initializing request
+func TestAppleDohMobileconfig_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Call the method with valid parameters
+	host := "example.com"
+	clientId := "test-client-id"
+	result, err := adg.AppleDohMobileconfig(&host, &clientId)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test AppleDohMobileconfig - Error performing request
+func TestAppleDohMobileconfig_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Call the method with valid parameters
+	host := "example.com"
+	clientId := "test-client-id"
+	result, err := adg.AppleDohMobileconfig(&host, &clientId)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
 // Test AppleDotMobileconfig
 func TestAppleDotMobileconfig(t *testing.T) {
 	adg := testADG()
@@ -70,4 +100,34 @@ func TestAppleDotMobileconfigNilParams(t *testing.T) {
 	assert.Error(t, err)
 	assert.NotNil(t, result)
 	assert.Contains(t, err.Error(), "status: 500, body: {\"message\":\"no host in query parameters and no server_name\"}")
+}
+
+// Test AppleDotMobileconfig - Error initializing request
+func TestAppleDotMobileconfig_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	// Call the method with valid parameters
+	host := "example.com"
+	clientId := "test-client-id"
+	result, err := adg.AppleDotMobileconfig(&host, &clientId)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test AppleDotMobileconfig - Error performing request
+func TestAppleDotMobileconfig_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	// Call the method with valid parameters
+	host := "example.com"
+	clientId := "test-client-id"
+	result, err := adg.AppleDotMobileconfig(&host, &clientId)
+
+	// Assertions
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
