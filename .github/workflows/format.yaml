@@ -31,10 +31,10 @@ jobs:
         run: |
           if [[ -n "$(git diff --exit-code)" ]]; then
             echo "Changes detected."
-            echo "{HAS_CHANGES}={true}" >> $GITHUB_OUTPUT
+            echo "HAS_CHANGES=true" >> $GITHUB_OUTPUT
           else
             echo "No changes detected."
-            echo "{HAS_CHANGES}={false}" >> $GITHUB_OUTPUT
+            echo "HAS_CHANGES=false" >> $GITHUB_OUTPUT
           fi
       - name: Commit and push changes
         env:
@@ -43,14 +43,14 @@ jobs:
         run: |
           echo has_changes: $HAS_CHANGES
           # configure user
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions@github.com"
+          # git config --global user.name "GitHub Actions"
+          # git config --global user.email "github-actions@github.com"
 
-          # stage any file changes to be committed
-          git add .
+          # # stage any file changes to be committed
+          # git add .
 
-          # make commit with staged changes
-          git commit -m 'Formatting changes'
+          # # make commit with staged changes
+          # git commit -m 'Formatting changes'
 
-          # push the commit back up to source GitHub repository
-          git push
+          # # push the commit back up to source GitHub repository
+          # git push
