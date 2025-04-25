@@ -15,7 +15,7 @@ env:
   DEBIAN_FRONTEND: noninteractive
 
 jobs:
-  docs:
+  format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,20 +24,22 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: "go.mod"
-      - name: Format
+      - name: Format Go code
         run: go fmt ./...
       - name: Check for changes
         id: check_changes
         run: |
           if [[ -n "$(git diff --exit-code)" ]]; then
             echo "Changes detected."
-            echo "::set-output name=has_changes::true"
+            echo "{HAS_CHANGES}={true}" >> $GITHUB_OUTPUT
           else
             echo "No changes detected."
-            echo "::set-output name=has_changes::false"
+            echo "{HAS_CHANGES}={false}" >> $GITHUB_OUTPUT
           fi
-      - name: Commit and push Changes
-        if: steps.check_changes.outputs.has_changes == 'true'
+      - name: Commit and push changes
+        env:
+          HAS_CHANGES: ${{ steps.check_changes.outputs.HAS_CHANGES }}
+        if: env.HAS_CHANGES == 'true'
         run: |
           # configure user
           git config --global user.name "GitHub Actions"
