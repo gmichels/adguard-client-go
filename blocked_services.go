@@ -1,11 +1,12 @@
 package adguard
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
+	// custom json module to allow for omitting zero value structs
+	"github.com/clarketm/json"
 	"github.com/gmichels/adguard-client-go/models"
 )
 
