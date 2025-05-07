@@ -16,7 +16,7 @@ permissions:
 jobs:
   # run acceptance tests
   tests:
-    uses: ./.github/workflows/testacc.yaml
+    uses: ./.github/workflows/testacc.yml
   goreleaser:
     # require tests to pass
     needs: [tests]
