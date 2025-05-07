@@ -14,7 +14,12 @@ permissions:
   contents: write
 
 jobs:
+  # run acceptance tests
+  tests:
+    uses: ./.github/workflows/testacc.yaml
   goreleaser:
+    # require tests to pass
+    needs: [tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

@@ -6,6 +6,8 @@ on:
       - "**.go"
       - go.mod
       - ".github/workflows/testacc.yml"
+  # allow this workflow to be called from other workflows
+  workflow_call:
 
 env:
   GOPROXY: https://proxy.golang.org,direct
