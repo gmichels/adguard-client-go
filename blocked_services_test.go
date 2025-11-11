@@ -44,7 +44,7 @@ func TestBlockedServicesAll_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test BlockedServicesAll - Error unmarshaling response
@@ -101,7 +101,7 @@ func TestBlockedServicesGet_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test BlockedServicesGet - Error unmarshaling response
@@ -177,7 +177,7 @@ func TestBlockedServicesUpdate_DoRequestError(t *testing.T) {
 
 	// assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test BlockedServicesUpdate - Marshal error

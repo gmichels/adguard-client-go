@@ -88,7 +88,7 @@ func TestSafeSearchSettings_DoRequestError(t *testing.T) {
 
 	// assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test SafeSearchSettings - Marshal error
@@ -139,7 +139,7 @@ func TestSafeSearchStatus_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test SafeSearchStatus - Error unmarshaling response

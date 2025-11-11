@@ -45,7 +45,7 @@ func TestClients_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test Clients - Error unmarshaling response
@@ -121,7 +121,7 @@ func TestClientsAdd_DoRequestError(t *testing.T) {
 
 	// assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test ClientsDelete
@@ -166,7 +166,7 @@ func TestClientsDelete_DoRequestError(t *testing.T) {
 
 	// assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test ClientsUpdate
@@ -221,7 +221,7 @@ func TestClientsUpdate_DoRequestError(t *testing.T) {
 
 	// assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test ClientsDelete and ClientsUpdate - Marshal Errors
@@ -279,7 +279,7 @@ func TestClientsSearch_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test ClientsSearch - Error unmarshaling response

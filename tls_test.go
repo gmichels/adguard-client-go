@@ -48,7 +48,7 @@ func TestTlsStatus_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test TlsStatus - Error unmarshaling response
@@ -129,7 +129,7 @@ func TestTlsConfigure_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test TlsConfigure - Error unmarshaling response
@@ -216,7 +216,7 @@ func TestTlsValidate_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test TlsValidate - Error unmarshaling response

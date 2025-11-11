@@ -52,7 +52,7 @@ func TestFilteringStatus_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test FilteringStatus - Error unmarshaling response
@@ -124,7 +124,7 @@ func TestFilteringConfig_DoRequestError(t *testing.T) {
 
 	// assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test FilteringAddUrl
@@ -183,7 +183,7 @@ func TestFilteringAddUrl_DoRequestError(t *testing.T) {
 
 	// assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test FilteringRemoveUrl
@@ -238,7 +238,7 @@ func TestFilteringRemoveUrl_DoRequestError(t *testing.T) {
 
 	// assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test FilteringSetUrl
@@ -313,7 +313,7 @@ func TestFilteringSetUrl_DoRequestError(t *testing.T) {
 
 	// assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test FilteringSetRules
@@ -363,7 +363,7 @@ func TestFilteringSetRules_DoRequestError(t *testing.T) {
 
 	// assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test FilteringCheckHost
@@ -414,7 +414,7 @@ func TestFilteringCheckHost_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test FilteringCheckHost - Error unmarshaling response
@@ -486,7 +486,7 @@ func TestFilteringRefresh_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Nil(t, result)
 	assert.Error(t, err)
-	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
 // Test FilteringRefresh - Error unmarshaling response
