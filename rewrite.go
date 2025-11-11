@@ -37,7 +37,7 @@ func (c *ADG) RewriteList() (*models.RewriteList, error) {
 // RewriteAdd - Add a new Rewrite rule
 func (c *ADG) RewriteAdd(rewriteEntry models.RewriteEntry) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(rewriteEntry)
+	rb, err := JSONMarshal(rewriteEntry)
 	if err != nil {
 		return err
 	}
@@ -61,7 +61,7 @@ func (c *ADG) RewriteAdd(rewriteEntry models.RewriteEntry) error {
 // RewriteDelete - Remove a Rewrite rule
 func (c *ADG) RewriteDelete(rewriteEntry models.RewriteEntry) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(rewriteEntry)
+	rb, err := JSONMarshal(rewriteEntry)
 	if err != nil {
 		return err
 	}
@@ -85,7 +85,7 @@ func (c *ADG) RewriteDelete(rewriteEntry models.RewriteEntry) error {
 // RewriteUpdate - Update a Rewrite rule
 func (c *ADG) RewriteUpdate(rewriteUpdate models.RewriteUpdate) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(rewriteUpdate)
+	rb, err := JSONMarshal(rewriteUpdate)
 	if err != nil {
 		return err
 	}
@@ -128,7 +128,7 @@ func (c *ADG) RewriteSettings() (*models.RewriteSettings, error) {
 
 // RewriteSettingsUpdate - Update rewrite settings
 func (c *ADG) RewriteSettingsUpdate(settings models.RewriteSettings) error {
-	rb, err := json.Marshal(settings)
+	rb, err := JSONMarshal(settings)
 	if err != nil {
 		return err
 	}

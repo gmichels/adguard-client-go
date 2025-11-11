@@ -12,7 +12,7 @@ import (
 // SafeSearchSettings - Update safesearch settings
 func (c *ADG) SafeSearchSettings(safeSearchConfig models.SafeSearchConfig) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(safeSearchConfig)
+	rb, err := JSONMarshal(safeSearchConfig)
 	if err != nil {
 		return err
 	}

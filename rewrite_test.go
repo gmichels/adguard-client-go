@@ -1,6 +1,7 @@
 package adguard
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/gmichels/adguard-client-go/models"
@@ -214,10 +215,20 @@ func TestRewriteSettingsUpdate_DoRequestError(t *testing.T) {
 
 // Test RewriteSettingsUpdate - Error marshaling request
 func TestRewriteSettingsUpdate_MarshalError(t *testing.T) {
-	// If JSONMarshal wrapper exists tests would override it; fall back to
-	// attempting to pass an invalid type (not possible here). So just ensure
-	// the normal path works. Placeholder for JSONMarshal-based test.
-	t.Skip("marshal error injection not configured; add JSONMarshal wrapper to test this")
+	adg := testADG()
+
+	// override JSONMarshal to simulate a marshal failure
+	orig := JSONMarshal
+	JSONMarshal = func(v any) ([]byte, error) {
+		return nil, fmt.Errorf("forced marshal error")
+	}
+	defer func() { JSONMarshal = orig }()
+
+	settings := models.RewriteSettings{Enabled: true}
+
+	err := adg.RewriteSettingsUpdate(settings)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "forced marshal error")
 }
 
 // Test RewriteDelete - Error performing request

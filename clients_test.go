@@ -1,6 +1,7 @@
 package adguard
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/gmichels/adguard-client-go/models"
@@ -76,6 +77,21 @@ func TestClientsAdd(t *testing.T) {
 
 	// cleanup: delete the client after the test
 	_ = adg.ClientsDelete(models.ClientDelete{Name: "Test Client Add"})
+}
+
+func TestClientsAdd_MarshalError(t *testing.T) {
+	adg := testADG()
+
+	// override JSONMarshal to force an error
+	orig := JSONMarshal
+	JSONMarshal = func(v any) ([]byte, error) {
+		return nil, fmt.Errorf("forced marshal error")
+	}
+	defer func() { JSONMarshal = orig }()
+
+	err := adg.ClientsAdd(models.Client{})
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "forced marshal error")
 }
 
 // Test ClientsAdd - Error initializing request

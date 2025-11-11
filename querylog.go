@@ -103,7 +103,7 @@ func (c *ADG) QuerylogConfig() (*models.GetQueryLogConfigResponse, error) {
 // QuerylogConfigUpdate - Set query log parameters
 func (c *ADG) QuerylogConfigUpdate(getQueryLogConfigResponse models.GetQueryLogConfigResponse) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(getQueryLogConfigResponse)
+	rb, err := JSONMarshal(getQueryLogConfigResponse)
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,7 @@
 package adguard
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/gmichels/adguard-client-go/models"
@@ -96,6 +97,21 @@ func TestAccessSet(t *testing.T) {
 		BlockedHosts:      []string{},
 	}
 	_ = adg.AccessSet(cleanupAccessList)
+}
+
+func TestAccessSet_MarshalError(t *testing.T) {
+	adg := testADG()
+
+	// override JSONMarshal to force an error
+	orig := JSONMarshal
+	JSONMarshal = func(v any) ([]byte, error) {
+		return nil, fmt.Errorf("forced marshal error")
+	}
+	defer func() { JSONMarshal = orig }()
+
+	err := adg.AccessSet(models.AccessList{})
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "forced marshal error")
 }
 
 // Test AccessSet - Error initializing request

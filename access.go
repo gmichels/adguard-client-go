@@ -36,7 +36,7 @@ func (c *ADG) AccessList() (*models.AccessList, error) {
 // AccessSet - Set (dis)allowed clients, blocked hosts, etc
 func (c *ADG) AccessSet(accessList models.AccessList) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(accessList)
+	rb, err := JSONMarshal(accessList)
 	if err != nil {
 		return err
 	}
