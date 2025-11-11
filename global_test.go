@@ -79,6 +79,18 @@ func TestDnsInfo(t *testing.T) {
 	assert.GreaterOrEqual(t, len(result.UpstreamDns), 1)
 }
 
+// Test DnsInfo CacheEnabled parsing
+func TestDnsInfo_CacheEnabled(t *testing.T) {
+	adg := testADG()
+
+	result, err := adg.DnsInfo()
+
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+	// Ensure CacheEnabled field is present (default may be false)
+	_ = result.CacheEnabled
+}
+
 // Test DnsInfo - Error initializing request
 func TestDnsInfo_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
