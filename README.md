@@ -7,6 +7,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/gmichels/adguard-client-go)](https://goreportcard.com/report/github.com/gmichels/adguard-client-go)
 [![codecov](https://codecov.io/github/gmichels/adguard-client-go/graph/badge.svg?token=3WMOYDJ5CS)](https://codecov.io/github/gmichels/adguard-client-go)
 
-Updated to version 0.107.60 of the [upstream API](https://github.com/AdguardTeam/AdGuardHome/blob/v0.107.60/openapi/openapi.yaml).
+Updated to version 0.107.69 of the [upstream API](https://github.com/AdguardTeam/AdGuardHome/blob/v0.107.69/openapi/openapi.yaml).
 
 This was written primarily for use in my [Terraform provider for AdGuard Home](https://github.com/gmichels/terraform-provider-adguard).
