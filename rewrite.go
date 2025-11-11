@@ -128,7 +128,7 @@ func (c *ADG) RewriteSettings() (*models.RewriteSettings, error) {
 
 // RewriteSettingsUpdate - Update rewrite settings
 func (c *ADG) RewriteSettingsUpdate(settings models.RewriteSettings) error {
-	rb, err := json.Marshal(settings)
+	rb, err := JSONMarshal(settings)
 	if err != nil {
 		return err
 	}
