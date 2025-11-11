@@ -179,3 +179,20 @@ func TestBlockedServicesUpdate_DoRequestError(t *testing.T) {
 	assert.Error(t, err)
 	assert.Equal(t, "status: 401, body: ", err.Error())
 }
+
+// Test BlockedServicesAll contains groups and group ids
+func TestBlockedServicesAll_Groups(t *testing.T) {
+	adg := testADG()
+
+	result, err := adg.BlockedServicesAll()
+
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+	// groups should be present
+	assert.GreaterOrEqual(t, len(result.Groups), 1)
+	// each blocked service may have a group_id (optional)
+	for _, svc := range result.BlockedServices {
+		// group id may be empty; ensure field exists by checking zero value
+		_ = svc.GroupId
+	}
+}
