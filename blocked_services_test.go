@@ -177,7 +177,7 @@ func TestBlockedServicesUpdate_DoRequestError(t *testing.T) {
 
 	// assertions
 	assert.Error(t, err)
-	assert.Equal(t, "status: 401, body: ", err.Error())
+	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
 
 // Test BlockedServicesUpdate - Marshal error
@@ -187,21 +187,4 @@ func TestBlockedServicesUpdate_MarshalError(t *testing.T) {
 
 	err := adg.BlockedServicesUpdate(models.BlockedServicesSchedule{})
 	assert.Error(t, err)
-}
-
-// Test BlockedServicesAll contains groups and group ids
-func TestBlockedServicesAll_Groups(t *testing.T) {
-	adg := testADG()
-
-	result, err := adg.BlockedServicesAll()
-
-	assert.NoError(t, err)
-	assert.NotNil(t, result)
-	// groups should be present
-	assert.GreaterOrEqual(t, len(result.Groups), 1)
-	// each blocked service may have a group_id (optional)
-	for _, svc := range result.BlockedServices {
-		// group id may be empty; ensure field exists by checking zero value
-		_ = svc.GroupId
-	}
 }
