@@ -225,15 +225,6 @@ func TestClientsUpdate_DoRequestError(t *testing.T) {
 }
 
 // Test ClientsDelete and ClientsUpdate - Marshal Errors
-func TestClientsDeleteAndUpdate_MarshalErrors(t *testing.T) {
-	adg := testADG()
-	defer forceMarshalError(t)()
-
-	assert.Error(t, adg.ClientsDelete(models.ClientDelete{}))
-	assert.Error(t, adg.ClientsUpdate(models.ClientUpdate{}))
-	_, err := adg.ClientsSearch([]string{"1.2.3.4"})
-	assert.Error(t, err)
-}
 
 // Test ClientsDelete and ClientsUpdate - Marshal Errors
 func TestClientsDeleteAndUpdate_MarshalErrors(t *testing.T) {
