@@ -123,6 +123,15 @@ func TestRewriteAdd_MarshalError(t *testing.T) {
 	assert.Error(t, err)
 }
 
+// Test RewriteAdd - Marshal error
+func TestRewriteAdd_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.RewriteAdd(models.RewriteEntry{})
+	assert.Error(t, err)
+}
+
 // Test RewriteDelete
 func TestRewriteDelete(t *testing.T) {
 	adg := testADG()

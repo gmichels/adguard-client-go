@@ -287,3 +287,12 @@ func TestQuerylogConfigUpdate_MarshalError(t *testing.T) {
 	err := adg.QuerylogConfigUpdate(models.GetQueryLogConfigResponse{})
 	assert.Error(t, err)
 }
+
+// Test QuerylogConfigUpdate - Marshal error
+func TestQuerylogConfigUpdate_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.QuerylogConfigUpdate(models.GetQueryLogConfigResponse{})
+	assert.Error(t, err)
+}
