@@ -507,3 +507,17 @@ func TestFilteringRefresh_InvalidJSONError(t *testing.T) {
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
 }
+
+// Test multiple Filtering methods - Marshal errors
+func TestFiltering_MarshalErrors(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	assert.Error(t, adg.FilteringConfig(models.FilterConfig{}))
+	assert.Error(t, adg.FilteringAddUrl(models.AddUrlRequest{}))
+	assert.Error(t, adg.FilteringRemoveUrl(models.RemoveUrlRequest{}))
+	assert.Error(t, adg.FilteringSetUrl(models.FilterSetUrl{}))
+	_, err := adg.FilteringRefresh(models.FilterRefreshRequest{})
+	assert.Error(t, err)
+	assert.Error(t, adg.FilteringSetRules(models.SetRulesRequest{}))
+}

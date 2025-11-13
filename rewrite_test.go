@@ -115,6 +115,15 @@ func TestRewriteAdd_DoRequestError(t *testing.T) {
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
 
+// Test RewriteAdd - Marshal error
+func TestRewriteAdd_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.RewriteAdd(models.RewriteEntry{})
+	assert.Error(t, err)
+}
+
 // Test RewriteDelete
 func TestRewriteDelete(t *testing.T) {
 	adg := testADG()
@@ -131,6 +140,15 @@ func TestRewriteDelete(t *testing.T) {
 
 	// assertions
 	assert.NoError(t, err)
+}
+
+// Test RewriteDelete - Marshal error
+func TestRewriteDelete_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.RewriteDelete(models.RewriteEntry{})
+	assert.Error(t, err)
 }
 
 // Test RewriteSettings
@@ -272,6 +290,15 @@ func TestRewriteUpdate(t *testing.T) {
 
 	// assertions
 	assert.NoError(t, err)
+}
+
+// Test RewriteUpdate - Marshal error
+func TestRewriteUpdate_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.RewriteUpdate(models.RewriteUpdate{})
+	assert.Error(t, err)
 }
 
 // Test RewriteDelete - Error initializing request
