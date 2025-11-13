@@ -278,3 +278,12 @@ func TestQuerylogConfigUpdate_DoRequestError(t *testing.T) {
 	assert.Error(t, err)
 	assert.Equal(t, "status: 401, body: ", err.Error())
 }
+
+// Test QuerylogConfigUpdate - Marshal error
+func TestQuerylogConfigUpdate_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.QuerylogConfigUpdate(models.GetQueryLogConfigResponse{})
+	assert.Error(t, err)
+}

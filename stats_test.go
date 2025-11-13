@@ -229,3 +229,12 @@ func TestStatsConfigUpdate_DoRequestError(t *testing.T) {
 	assert.Error(t, err)
 	assert.Equal(t, "status: 401, body: ", err.Error())
 }
+
+// Test StatsConfigUpdate - Marshal error
+func TestStatsConfigUpdate_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.StatsConfigUpdate(models.GetStatsConfigResponse{})
+	assert.Error(t, err)
+}

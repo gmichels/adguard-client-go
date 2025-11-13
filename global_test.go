@@ -249,6 +249,15 @@ func TestProtection_DoRequestError(t *testing.T) {
 	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
+// Test DnsConfig and Protection - Marshal errors
+func TestDnsConfigAndProtection_MarshalErrors(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	assert.Error(t, adg.DnsConfig(models.DNSConfig{}))
+	assert.Error(t, adg.Protection(models.SetProtectionRequest{}))
+}
+
 // Test CacheClear
 func TestCacheClear(t *testing.T) {
 	adg := testADG()
@@ -668,4 +677,17 @@ func TestProfileUpdate_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 401, body: ", err.Error())
+}
+
+// Test TestUpstreamDns, VersionJson, Login, ProfileUpdate - Marshal errors
+func TestTestUpstreamDns_Version_Login_Profile_MarshalErrors(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	_, err := adg.TestUpstreamDns(models.UpstreamsConfig{})
+	assert.Error(t, err)
+	_, err = adg.VersionJson(models.GetVersionRequest{})
+	assert.Error(t, err)
+	assert.Error(t, adg.Login(models.Login{}))
+	assert.Error(t, adg.ProfileUpdate(models.ProfileInfo{}))
 }

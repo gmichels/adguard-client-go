@@ -178,6 +178,16 @@ func TestInstallCheckConfig_InvalidJSONError(t *testing.T) {
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
 }
 
+// Test InstallCheckConfig - Marshal error
+func TestInstallCheckConfig_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	_, err := adg.InstallCheckConfig(models.CheckConfigRequest{})
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "forced marshal error")
+}
+
 // Test InstallConfigure
 func TestInstallConfigure(t *testing.T) {
 	adg := testADG(true)
@@ -253,4 +263,13 @@ func TestInstallConfigure_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "connect: connection refused")
+}
+
+// Test InstallConfigure - Marshal error
+func TestInstallConfigure_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.InstallConfigure(models.InitialConfiguration{})
+	assert.Error(t, err)
 }

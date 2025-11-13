@@ -180,6 +180,15 @@ func TestBlockedServicesUpdate_DoRequestError(t *testing.T) {
 	assert.Equal(t, "status: 401, body: ", err.Error())
 }
 
+// Test BlockedServicesUpdate - Marshal error
+func TestBlockedServicesUpdate_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.BlockedServicesUpdate(models.BlockedServicesSchedule{})
+	assert.Error(t, err)
+}
+
 // Test BlockedServicesAll contains groups and group ids
 func TestBlockedServicesAll_Groups(t *testing.T) {
 	adg := testADG()
