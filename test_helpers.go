@@ -1,6 +1,7 @@
 package adguard
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -99,4 +100,13 @@ func testADGWithInvalidJSON(t *testing.T) (*ADG, *httptest.Server) {
 	adg.HTTPClient = server.Client()
 
 	return adg, server
+}
+
+// forceMarshalError - Helper function to override JSONMarshal to force a marshal error
+func forceMarshalError(t *testing.T) func() {
+	orig := JSONMarshal
+	JSONMarshal = func(v any) ([]byte, error) {
+		return nil, fmt.Errorf("forced marshal error")
+	}
+	return func() { JSONMarshal = orig }
 }

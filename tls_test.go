@@ -239,3 +239,14 @@ func TestTlsValidate_InvalidJSONError(t *testing.T) {
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
 }
+
+// Test TlsConfigure and TlsValidate - Marshal errors
+func TestTls_MarshalErrors(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	_, err := adg.TlsConfigure(models.TlsConfig{})
+	assert.Error(t, err)
+	_, err = adg.TlsValidate(models.TlsConfig{})
+	assert.Error(t, err)
+}

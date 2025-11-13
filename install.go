@@ -36,7 +36,7 @@ func (c *ADG) InstallGetAddresses() (*models.AddressesInfo, error) {
 // InstallCheckConfig - Checks configuration
 func (c *ADG) InstallCheckConfig(checkConfigRequest models.CheckConfigRequest) (*models.CheckConfigResponse, error) {
 	// convert provided object to JSON
-	rb, err := json.Marshal(checkConfigRequest)
+	rb, err := JSONMarshal(checkConfigRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func (c *ADG) InstallCheckConfig(checkConfigRequest models.CheckConfigRequest) (
 // InstallConfigure - Applies the initial configuration
 func (c *ADG) InstallConfigure(initialConfiguration models.InitialConfiguration) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(initialConfiguration)
+	rb, err := JSONMarshal(initialConfiguration)
 	if err != nil {
 		return err
 	}

@@ -63,7 +63,7 @@ func (c *ADG) DhcpInterfaces() (*models.NetInterfaces, error) {
 // DhcpSetConfig - Updates the current DHCP server configuration
 func (c *ADG) DhcpSetConfig(dhcpConfig models.DhcpConfig) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(dhcpConfig)
+	rb, err := JSONMarshal(dhcpConfig)
 	if err != nil {
 		return err
 	}
@@ -87,7 +87,7 @@ func (c *ADG) DhcpSetConfig(dhcpConfig models.DhcpConfig) error {
 // DhcpFindActiveDhcp - Searches for an active DHCP server on the network
 func (c *ADG) DhcpFindActiveDhcp(dhcpFindActiveReq models.DhcpFindActiveReq) (*models.DhcpSearchResult, error) {
 	// convert provided object to JSON
-	rb, err := json.Marshal(dhcpFindActiveReq)
+	rb, err := JSONMarshal(dhcpFindActiveReq)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func (c *ADG) DhcpFindActiveDhcp(dhcpFindActiveReq models.DhcpFindActiveReq) (*m
 // DhcpAddStaticLease - Adds a static lease
 func (c *ADG) DhcpAddStaticLease(dhcpStaticLease models.DhcpStaticLease) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(dhcpStaticLease)
+	rb, err := JSONMarshal(dhcpStaticLease)
 	if err != nil {
 		return err
 	}
@@ -142,7 +142,7 @@ func (c *ADG) DhcpAddStaticLease(dhcpStaticLease models.DhcpStaticLease) error {
 // DhcpRemoveStaticLease - Removes a static lease
 func (c *ADG) DhcpRemoveStaticLease(dhcpStaticLease models.DhcpStaticLease) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(dhcpStaticLease)
+	rb, err := JSONMarshal(dhcpStaticLease)
 	if err != nil {
 		return err
 	}
@@ -166,7 +166,7 @@ func (c *ADG) DhcpRemoveStaticLease(dhcpStaticLease models.DhcpStaticLease) erro
 // DhcpUpdateStaticLease - Updates a static lease
 func (c *ADG) DhcpUpdateStaticLease(dhcpStaticLease models.DhcpStaticLease) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(dhcpStaticLease)
+	rb, err := JSONMarshal(dhcpStaticLease)
 	if err != nil {
 		return err
 	}

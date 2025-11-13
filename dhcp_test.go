@@ -201,6 +201,15 @@ func TestDhcpSetConfig_DoRequestError(t *testing.T) {
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
 
+// Test DhcpSetConfig - Marshal error
+func TestDhcpSetConfig_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.DhcpSetConfig(models.DhcpConfig{})
+	assert.Error(t, err)
+}
+
 // Test DhcpFindActiveDhcp
 func TestDhcpFindActiveDhcp(t *testing.T) {
 	adg := testADG()
@@ -273,6 +282,15 @@ func TestDhcpFindActiveDhcp_InvalidJSONError(t *testing.T) {
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected end of JSON input")
+}
+
+// Test DHCPFindActiveDhcp - Marshal error
+func TestDhcpFindActiveDhcp_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	_, err := adg.DhcpFindActiveDhcp(models.DhcpFindActiveReq{})
+	assert.Error(t, err)
 }
 
 // Test DhcpAddStaticLease
@@ -454,6 +472,16 @@ func TestDhcpUpdateStaticLease_DoRequestError(t *testing.T) {
 	// assertions
 	assert.Error(t, err)
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
+}
+
+// Test DhcpStaticLease, DhcpRemoveStaticLease, DhcpUpdateStaticLease - Marshal Errors
+func TestDhcpStaticLease_MarshalErrors(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	assert.Error(t, adg.DhcpAddStaticLease(models.DhcpStaticLease{}))
+	assert.Error(t, adg.DhcpRemoveStaticLease(models.DhcpStaticLease{}))
+	assert.Error(t, adg.DhcpUpdateStaticLease(models.DhcpStaticLease{}))
 }
 
 // Test DhcpReset

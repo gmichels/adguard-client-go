@@ -37,7 +37,7 @@ func (c *ADG) FilteringStatus() (*models.FilterStatus, error) {
 // FilteringConfig - Set filtering parameters
 func (c *ADG) FilteringConfig(filterConfig models.FilterConfig) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(filterConfig)
+	rb, err := JSONMarshal(filterConfig)
 	if err != nil {
 		return err
 	}
@@ -61,7 +61,7 @@ func (c *ADG) FilteringConfig(filterConfig models.FilterConfig) error {
 // FilteringAddUrl - Add filter URL or an absolute file path
 func (c *ADG) FilteringAddUrl(filterData models.AddUrlRequest) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(filterData)
+	rb, err := JSONMarshal(filterData)
 	if err != nil {
 		return err
 	}
@@ -85,7 +85,7 @@ func (c *ADG) FilteringAddUrl(filterData models.AddUrlRequest) error {
 // FilteringRemoveUrl - Remove filter URL
 func (c *ADG) FilteringRemoveUrl(filterDelete models.RemoveUrlRequest) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(filterDelete)
+	rb, err := JSONMarshal(filterDelete)
 	if err != nil {
 		return err
 	}
@@ -109,7 +109,7 @@ func (c *ADG) FilteringRemoveUrl(filterDelete models.RemoveUrlRequest) error {
 // FilteringSetUrl - Set URL parameters
 func (c *ADG) FilteringSetUrl(filterUpdate models.FilterSetUrl) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(filterUpdate)
+	rb, err := JSONMarshal(filterUpdate)
 	if err != nil {
 		return err
 	}
@@ -133,7 +133,7 @@ func (c *ADG) FilteringSetUrl(filterUpdate models.FilterSetUrl) error {
 // FilteringRefresh - Set URL parameters
 func (c *ADG) FilteringRefresh(filterRefreshRequest models.FilterRefreshRequest) (*models.FilterRefreshResponse, error) {
 	// convert provided object to JSON
-	rb, err := json.Marshal(filterRefreshRequest)
+	rb, err := JSONMarshal(filterRefreshRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +164,7 @@ func (c *ADG) FilteringRefresh(filterRefreshRequest models.FilterRefreshRequest)
 // FilteringSetRules - Set user-defined filter rules
 func (c *ADG) FilteringSetRules(rules models.SetRulesRequest) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(rules)
+	rb, err := JSONMarshal(rules)
 	if err != nil {
 		return err
 	}

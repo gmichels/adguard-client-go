@@ -91,6 +91,15 @@ func TestSafeSearchSettings_DoRequestError(t *testing.T) {
 	assert.Equal(t, "status: 403, body: Forbidden", err.Error())
 }
 
+// Test SafeSearchSettings - Marshal error
+func TestSafeSearchSettings_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.SafeSearchSettings(models.SafeSearchConfig{})
+	assert.Error(t, err)
+}
+
 // Test SafeSearchStatus
 func TestSafeSearchStatus(t *testing.T) {
 	adg := testADG()
