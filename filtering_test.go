@@ -134,7 +134,7 @@ func TestFilteringAddUrl(t *testing.T) {
 	// create a new filter URL
 	filterData := models.AddUrlRequest{
 		Name: "Test Filter to Add",
-		Url:  "https://raw.githubusercontent.com/gmichels/terraform-provider-adguard/refs/heads/main/assets/list_filter_3.txt",
+		Url:  "/opt/adguardhome/work/data/userfilters/list_filter_3.txt",
 	}
 
 	// call the method
@@ -193,7 +193,7 @@ func TestFilteringRemoveUrl(t *testing.T) {
 	// add a filter URL to remove
 	filterData := models.AddUrlRequest{
 		Name: "Test Filter to Remove",
-		Url:  "https://raw.githubusercontent.com/gmichels/terraform-provider-adguard/refs/heads/main/assets/list_filter_4.txt",
+		Url:  "/opt/adguardhome/work/data/userfilters/list_filter_4.txt",
 	}
 	_ = adg.FilteringAddUrl(filterData)
 
@@ -248,7 +248,7 @@ func TestFilteringSetUrl(t *testing.T) {
 	// add a filter URL to update
 	filterData := models.AddUrlRequest{
 		Name: "Test Filter to Update",
-		Url:  "https://raw.githubusercontent.com/gmichels/terraform-provider-adguard/refs/heads/main/assets/list_filter_4.txt",
+		Url:  "/opt/adguardhome/work/data/userfilters/list_filter_4.txt",
 	}
 	_ = adg.FilteringAddUrl(filterData)
 
@@ -257,7 +257,7 @@ func TestFilteringSetUrl(t *testing.T) {
 		Data: models.FilterSetUrlData{
 			Enabled: true,
 			Name:    "Test Filter Updated",
-			Url:     "https://raw.githubusercontent.com/gmichels/terraform-provider-adguard/refs/heads/main/assets/list_filter_3.txt",
+			Url:     "/opt/adguardhome/work/data/userfilters/list_filter_3.txt",
 		},
 		Url:       filterData.Url,
 		Whitelist: false,
