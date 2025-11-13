@@ -105,3 +105,39 @@ func (c *ADG) RewriteUpdate(rewriteUpdate models.RewriteUpdate) error {
 	// return nothing
 	return nil
 }
+
+// RewriteSettings - Get rewrite settings
+func (c *ADG) RewriteSettings() (*models.RewriteSettings, error) {
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/rewrite/settings", c.HostURL), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	var settings models.RewriteSettings
+	if err := json.Unmarshal(body, &settings); err != nil {
+		return nil, err
+	}
+
+	return &settings, nil
+}
+
+// RewriteSettingsUpdate - Update rewrite settings
+func (c *ADG) RewriteSettingsUpdate(settings models.RewriteSettings) error {
+	rb, err := JSONMarshal(settings)
+	if err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/control/rewrite/settings/update", c.HostURL), strings.NewReader(string(rb)))
+	if err != nil {
+		return err
+	}
+
+	_, err = c.doRequest(req)
+	return err
+}
