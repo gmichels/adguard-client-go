@@ -37,7 +37,7 @@ func (c *ADG) Clients() (*models.Clients, error) {
 // ClientsAdd - Add a new client
 func (c *ADG) ClientsAdd(client models.Client) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(client)
+	rb, err := JSONMarshal(client)
 	if err != nil {
 		return err
 	}
@@ -61,7 +61,7 @@ func (c *ADG) ClientsAdd(client models.Client) error {
 // ClientsDelete - Remove a client
 func (c *ADG) ClientsDelete(clientDelete models.ClientDelete) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(clientDelete)
+	rb, err := JSONMarshal(clientDelete)
 	if err != nil {
 		return err
 	}
@@ -85,7 +85,7 @@ func (c *ADG) ClientsDelete(clientDelete models.ClientDelete) error {
 // ClientsUpdate - Update client information
 func (c *ADG) ClientsUpdate(clientUpdate models.ClientUpdate) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(clientUpdate)
+	rb, err := JSONMarshal(clientUpdate)
 	if err != nil {
 		return err
 	}
@@ -124,7 +124,7 @@ func (c *ADG) ClientsSearch(identifiers []string) (*models.ClientsFindResponse, 
 	}
 
 	// convert object to JSON
-	rb, err := json.Marshal(clientsSearchRequest)
+	rb, err := JSONMarshal(clientsSearchRequest)
 	if err != nil {
 		return nil, err
 	}

@@ -80,7 +80,7 @@ func (c *ADG) StatsConfig() (*models.GetStatsConfigResponse, error) {
 // StatsConfigUpdate - Sets statistics parameters
 func (c *ADG) StatsConfigUpdate(statsConfig models.GetStatsConfigResponse) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(statsConfig)
+	rb, err := JSONMarshal(statsConfig)
 	if err != nil {
 		return err
 	}

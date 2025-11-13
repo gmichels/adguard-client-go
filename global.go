@@ -62,7 +62,7 @@ func (c *ADG) DnsInfo() (*models.DNSInfo, error) {
 // DnsConfig - Set general DNS parameters
 func (c *ADG) DnsConfig(dnsConfig models.DNSConfig) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(dnsConfig)
+	rb, err := JSONMarshal(dnsConfig)
 	if err != nil {
 		return err
 	}
@@ -86,7 +86,7 @@ func (c *ADG) DnsConfig(dnsConfig models.DNSConfig) error {
 // Protection - Set protection state and duration
 func (c *ADG) Protection(setProtectionRequest models.SetProtectionRequest) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(setProtectionRequest)
+	rb, err := JSONMarshal(setProtectionRequest)
 	if err != nil {
 		return err
 	}
@@ -128,7 +128,7 @@ func (c *ADG) CacheClear() error {
 // TestUpstreamDns - Test upstream configuration
 func (c *ADG) TestUpstreamDns(upstreamsConfig models.UpstreamsConfig) (*models.UpstreamsConfigResponse, error) {
 	// convert provided object to JSON
-	rb, err := json.Marshal(upstreamsConfig)
+	rb, err := JSONMarshal(upstreamsConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +159,7 @@ func (c *ADG) TestUpstreamDns(upstreamsConfig models.UpstreamsConfig) (*models.U
 // VersionJson - Gets information about the latest available version of AdGuard
 func (c *ADG) VersionJson(getVersionRequest models.GetVersionRequest) (*models.VersionInfo, error) {
 	// convert provided object to JSON
-	rb, err := json.Marshal(getVersionRequest)
+	rb, err := JSONMarshal(getVersionRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +208,7 @@ func (c *ADG) Update() error {
 // Login - Perform administrator login
 func (c *ADG) Login(login models.Login) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(login)
+	rb, err := JSONMarshal(login)
 	if err != nil {
 		return err
 	}
@@ -250,7 +250,7 @@ func (c *ADG) Logout() error {
 // ProfileUpdate - Updates current user info
 func (c *ADG) ProfileUpdate(profileInfo models.ProfileInfo) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(profileInfo)
+	rb, err := JSONMarshal(profileInfo)
 	if err != nil {
 		return err
 	}

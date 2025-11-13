@@ -1,6 +1,7 @@
 package adguard
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/gmichels/adguard-client-go/models"
@@ -130,6 +131,104 @@ func TestRewriteDelete(t *testing.T) {
 
 	// assertions
 	assert.NoError(t, err)
+}
+
+// Test RewriteSettings
+func TestRewriteSettings(t *testing.T) {
+	adg := testADG()
+
+	// call
+	result, err := adg.RewriteSettings()
+
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+}
+
+// Test RewriteSettings - Error initializing request
+func TestRewriteSettings_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	result, err := adg.RewriteSettings()
+
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test RewriteSettings - Error performing request
+func TestRewriteSettings_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	result, err := adg.RewriteSettings()
+
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Equal(t, "status: 401, body: ", err.Error())
+}
+
+// Test RewriteSettings - Error unmarshaling response
+func TestRewriteSettings_InvalidJSONError(t *testing.T) {
+	adg, server := testADGWithInvalidJSON(t)
+	defer server.Close()
+
+	result, err := adg.RewriteSettings()
+
+	assert.Nil(t, result)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "unexpected end of JSON input")
+}
+
+// Test RewriteSettingsUpdate
+func TestRewriteSettingsUpdate(t *testing.T) {
+	adg := testADG()
+
+	settings := models.RewriteSettings{Enabled: true}
+
+	err := adg.RewriteSettingsUpdate(settings)
+
+	assert.NoError(t, err)
+}
+
+// Test RewriteSettingsUpdate - Error initializing request
+func TestRewriteSettingsUpdate_NewRequestError(t *testing.T) {
+	adg := testADGWithNewRequestError()
+
+	settings := models.RewriteSettings{Enabled: true}
+
+	err := adg.RewriteSettingsUpdate(settings)
+
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "invalid URL")
+}
+
+// Test RewriteSettingsUpdate - Error performing request
+func TestRewriteSettingsUpdate_DoRequestError(t *testing.T) {
+	adg := testADGWithDoRequestError()
+
+	settings := models.RewriteSettings{Enabled: true}
+
+	err := adg.RewriteSettingsUpdate(settings)
+
+	assert.Error(t, err)
+	assert.Equal(t, "status: 401, body: ", err.Error())
+}
+
+// Test RewriteSettingsUpdate - Error marshaling request
+func TestRewriteSettingsUpdate_MarshalError(t *testing.T) {
+	adg := testADG()
+
+	// override JSONMarshal to simulate a marshal failure
+	orig := JSONMarshal
+	JSONMarshal = func(v any) ([]byte, error) {
+		return nil, fmt.Errorf("forced marshal error")
+	}
+	defer func() { JSONMarshal = orig }()
+
+	settings := models.RewriteSettings{Enabled: true}
+
+	err := adg.RewriteSettingsUpdate(settings)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "forced marshal error")
 }
 
 // Test RewriteDelete - Error performing request

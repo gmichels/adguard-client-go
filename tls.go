@@ -37,7 +37,7 @@ func (c *ADG) TlsStatus() (*models.TlsConfig, error) {
 // TlsConfigure - Updates current TLS configuration
 func (c *ADG) TlsConfigure(tlsConfig models.TlsConfig) (*models.TlsConfig, error) {
 	// convert provided object to JSON
-	rb, err := json.Marshal(tlsConfig)
+	rb, err := JSONMarshal(tlsConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (c *ADG) TlsConfigure(tlsConfig models.TlsConfig) (*models.TlsConfig, error
 // TlsValidate - Checks if the current TLS configuration is valid
 func (c *ADG) TlsValidate(tlsConfig models.TlsConfig) (*models.TlsConfig, error) {
 	// convert provided object to JSON
-	rb, err := json.Marshal(tlsConfig)
+	rb, err := JSONMarshal(tlsConfig)
 	if err != nil {
 		return nil, err
 	}

@@ -63,7 +63,7 @@ func (c *ADG) BlockedServicesGet() (*models.BlockedServicesSchedule, error) {
 // BlockedServicesUpdate - Update blocked services
 func (c *ADG) BlockedServicesUpdate(blockedServicesSchedule models.BlockedServicesSchedule) error {
 	// convert provided object to JSON
-	rb, err := json.Marshal(blockedServicesSchedule)
+	rb, err := JSONMarshal(blockedServicesSchedule)
 	if err != nil {
 		return err
 	}
