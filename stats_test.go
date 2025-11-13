@@ -238,3 +238,12 @@ func TestStatsConfigUpdate_MarshalError(t *testing.T) {
 	err := adg.StatsConfigUpdate(models.GetStatsConfigResponse{})
 	assert.Error(t, err)
 }
+
+// Test StatsConfigUpdate - Marshal error
+func TestStatsConfigUpdate_MarshalError(t *testing.T) {
+	adg := testADG()
+	defer forceMarshalError(t)()
+
+	err := adg.StatsConfigUpdate(models.GetStatsConfigResponse{})
+	assert.Error(t, err)
+}
