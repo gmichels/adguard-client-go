@@ -1,10 +1,10 @@
 module github.com/gmichels/adguard-client-go
 
-go 1.24.2
+go 1.25.4
 
 require (
 	github.com/clarketm/json v1.17.1
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
