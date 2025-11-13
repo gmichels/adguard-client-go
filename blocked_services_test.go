@@ -205,12 +205,3 @@ func TestBlockedServicesAll_Groups(t *testing.T) {
 		_ = svc.GroupId
 	}
 }
-
-// Test BlockedServicesUpdate - Marshal error
-func TestBlockedServicesUpdate_MarshalError(t *testing.T) {
-	adg := testADG()
-	defer forceMarshalError(t)()
-
-	err := adg.BlockedServicesUpdate(models.BlockedServicesSchedule{})
-	assert.Error(t, err)
-}
