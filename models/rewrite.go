@@ -7,7 +7,7 @@ type RewriteList []RewriteEntry
 type RewriteEntry struct {
 	Domain  string `json:"domain" description:"Domain name"`
 	Answer  string `json:"answer" description:"value of A, AAAA or CNAME DNS record"`
-	Enabled bool   `json:"enabled,omitempty" description:"Optional. If omitted on add, defaults to true. On update, omitted preserves previous value."`
+	Enabled bool   `json:"enabled" description:"Optional. If omitted on add, defaults to true. On update, omitted preserves previous value."`
 }
 
 // RewriteUpdate - Rewrite rule update object
