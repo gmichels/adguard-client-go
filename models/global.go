@@ -43,7 +43,7 @@ type DNSConfig struct {
 	CacheSize                    uint     `json:"cache_size"`
 	CacheTtlMin                  uint     `json:"cache_ttl_min"`
 	CacheTtlMax                  uint     `json:"cache_ttl_max"`
-	CacheEnabled                 bool     `json:"cache_enabled,omitempty" description:"Enables or disables the DNS response cache. If cache is enabled, companion field cache_size must be present and greater than 0 or dns.cache_size in config must be > 0."`
+	CacheEnabled                 bool     `json:"cache_enabled" description:"Enables or disables the DNS response cache. If cache is enabled, companion field cache_size must be present and greater than 0 or dns.cache_size in config must be > 0."`
 	CacheOptimistic              bool     `json:"cache_optimistic"`
 	UpstreamMode                 string   `json:"upstream_mode" description:"Upstream modes enumeration."`
 	UsePrivatePtrResolvers       bool     `json:"use_private_ptr_resolvers"`
