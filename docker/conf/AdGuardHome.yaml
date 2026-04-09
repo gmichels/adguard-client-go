@@ -45,10 +45,13 @@ dns:
   trusted_proxies:
     - 127.0.0.0/8
     - ::1/128
+  cache_enabled: true
   cache_size: 4194304
   cache_ttl_min: 0
   cache_ttl_max: 0
   cache_optimistic: false
+  cache_optimistic_answer_ttl: 30s
+  cache_optimistic_max_age: 12h
   bogus_nxdomain: []
   aaaa_disabled: false
   enable_dnssec: false
@@ -71,6 +74,8 @@ dns:
   use_http3_upstreams: false
   serve_plain_dns: true
   hostsfile_enabled: true
+  pending_requests:
+    enabled: true
 tls:
   enabled: true
   server_name: TestAdGuardHome
@@ -95,6 +100,7 @@ querylog:
   interval: 4h
   size_memory: 1000
   enabled: true
+  ignored_enabled: true
   file_enabled: true
 statistics:
   dir_path: ""
@@ -104,6 +110,7 @@ statistics:
     - test3.zyx
   interval: 8h
   enabled: true
+  ignored_enabled: true
 filters:
   - enabled: true
     url: /opt/adguardhome/work/data/userfilters/list_filter_1.txt
@@ -172,6 +179,7 @@ filtering:
   rewrites:
     - domain: example.org
       answer: 1.2.3.4
+      enabled: true
   safe_fs_patterns:
     - /opt/adguardhome/work/data/userfilters/*
   safebrowsing_cache_size: 1048576
@@ -181,6 +189,7 @@ filtering:
   filters_update_interval: 24
   blocked_response_ttl: 10
   filtering_enabled: true
+  rewrites_enabled: true
   parental_enabled: false
   safebrowsing_enabled: false
   protection_enabled: true
@@ -243,4 +252,4 @@ os:
   group: ""
   user: ""
   rlimit_nofile: 0
-schema_version: 29
+schema_version: 33

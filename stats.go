@@ -10,9 +10,15 @@ import (
 )
 
 // Stats - Get DNS server statistics
-func (c *ADG) Stats() (*models.Stats, error) {
+func (c *ADG) Stats(recent *int) (*models.Stats, error) {
+	// create query parameters dynamically
+	queryParams := ""
+	if recent != nil {
+		queryParams = fmt.Sprintf("?recent=%d", *recent)
+	}
+
 	// initialize request
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/stats", c.HostURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/control/stats%s", c.HostURL, queryParams), nil)
 	if err != nil {
 		return nil, err
 	}

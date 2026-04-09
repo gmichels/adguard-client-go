@@ -11,6 +11,7 @@ type ServerStatus struct {
 	Running                    bool     `json:"running"`
 	Version                    string   `json:"version"`
 	Language                   string   `json:"language"`
+	StartTime                  float64  `json:"start_time,omitempty" description:"Start time of the web API server (Unix time in milliseconds)."`
 }
 
 // DNSInfo - model does not formally exist in the upstream API
