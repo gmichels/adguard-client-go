@@ -63,4 +63,5 @@ type GetQueryLogConfigResponse struct {
 	Interval          uint64   `json:"interval" description:"Time period for query log rotation in milliseconds"`
 	AnonymizeClientIp bool     `json:"anonymize_client_ip" description:"Anonymize clients' IP address"`
 	Ignored           []string `json:"ignored" description:"List of host names, which should not be written to log"`
+	IgnoredEnabled    bool     `json:"ignored_enabled" description:"If true, the host names in the ignored array are excluded from the query log."`
 }

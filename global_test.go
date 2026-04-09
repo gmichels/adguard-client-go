@@ -21,6 +21,8 @@ func TestStatus(t *testing.T) {
 	assert.True(t, result.ProtectionEnabled)
 	// ensure 6 DNS addresses are returned
 	assert.Len(t, result.DnsAddresses, 6)
+	// ensure start_time is a valid number
+	assert.GreaterOrEqual(t, result.StartTime, float64(0))
 }
 
 // Test Status - Error initializing request

@@ -28,7 +28,8 @@ type TopArrayEntry struct {
 
 // GetStatsConfigResponse
 type GetStatsConfigResponse struct {
-	Enabled  bool     `json:"enabled"`
-	Interval uint64   `json:"interval"`
-	Ignored  []string `json:"ignored"`
+	Enabled        bool     `json:"enabled"`
+	Interval       uint64   `json:"interval"`
+	Ignored        []string `json:"ignored"`
+	IgnoredEnabled bool     `json:"ignored_enabled" description:"If true, the host names in the ignored array are excluded from the statistics."`
 }

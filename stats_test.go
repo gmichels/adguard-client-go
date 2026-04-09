@@ -11,8 +11,8 @@ import (
 func TestStats(t *testing.T) {
 	adg := testADG()
 
-	// call the method
-	result, err := adg.Stats()
+	// case 1: No recent parameter
+	result, err := adg.Stats(nil)
 
 	// assertions
 	assert.NoError(t, err)
@@ -21,6 +21,16 @@ func TestStats(t *testing.T) {
 	assert.GreaterOrEqual(t, result.NumDnsQueries, 0)
 	// ensure the number of blocked filtering requests is valid
 	assert.GreaterOrEqual(t, result.NumBlockedFiltering, 0)
+
+	// case 2: With recent parameter
+	recent := 3600000 // 1 hour in milliseconds
+	result, err = adg.Stats(&recent)
+
+	// assertions
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+	// ensure the number of DNS queries is valid
+	assert.GreaterOrEqual(t, result.NumDnsQueries, 0)
 }
 
 // Test Stats - Error initializing request
@@ -28,7 +38,7 @@ func TestStats_NewRequestError(t *testing.T) {
 	adg := testADGWithNewRequestError()
 
 	// call the method
-	result, err := adg.Stats()
+	result, err := adg.Stats(nil)
 
 	// assertions
 	assert.Nil(t, result)
@@ -41,7 +51,7 @@ func TestStats_DoRequestError(t *testing.T) {
 	adg := testADGWithDoRequestError()
 
 	// call the method
-	result, err := adg.Stats()
+	result, err := adg.Stats(nil)
 
 	// assertions
 	assert.Nil(t, result)
@@ -55,7 +65,7 @@ func TestStats_InvalidJSONError(t *testing.T) {
 	defer server.Close()
 
 	// call the method
-	result, err := adg.Stats()
+	result, err := adg.Stats(nil)
 
 	// assertions
 	assert.Nil(t, result)
@@ -74,7 +84,7 @@ func TestStatsReset(t *testing.T) {
 	assert.NoError(t, err)
 
 	// verify the changes by calling Stats
-	result, err := adg.Stats()
+	result, err := adg.Stats(nil)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	// ensure all statistics are reset to zero
@@ -124,6 +134,10 @@ func TestStatsConfig(t *testing.T) {
 	assert.GreaterOrEqual(t, result.Interval, uint64(28800000))
 	// ensure the ignored list has 3 entries
 	assert.Len(t, result.Ignored, 3)
+	// ensure ignored_enabled is a valid boolean
+	assert.Condition(t, func() bool {
+		return result.IgnoredEnabled == true || result.IgnoredEnabled == false
+	})
 }
 
 // Test StatsConfig - Error initializing request
@@ -172,9 +186,10 @@ func TestStatsConfigUpdate(t *testing.T) {
 
 	// create a new statistics configuration
 	statsConfig := models.GetStatsConfigResponse{
-		Enabled:  false,
-		Interval: 3600000, // 1 hour in milliseconds
-		Ignored:  []string{"example.com", "test.com"},
+		Enabled:        false,
+		Interval:       3600000, // 1 hour in milliseconds
+		Ignored:        []string{"example.com", "test.com"},
+		IgnoredEnabled: true,
 	}
 
 	// call the method
@@ -190,6 +205,7 @@ func TestStatsConfigUpdate(t *testing.T) {
 	assert.Equal(t, uint64(3600000), result.Interval)
 	assert.Contains(t, result.Ignored, "example.com")
 	assert.Contains(t, result.Ignored, "test.com")
+	assert.True(t, result.IgnoredEnabled)
 }
 
 // Test StatsConfigUpdate - Error initializing request

@@ -169,6 +169,10 @@ func TestQuerylogConfig(t *testing.T) {
 	assert.GreaterOrEqual(t, result.Interval, uint64(14400000))
 	// ensure the ignored list has 3 entries
 	assert.Len(t, result.Ignored, 3)
+	// ensure ignored_enabled is a valid boolean
+	assert.Condition(t, func() bool {
+		return result.IgnoredEnabled == true || result.IgnoredEnabled == false
+	})
 }
 
 // Test QuerylogConfig - Error initializing request
@@ -221,6 +225,7 @@ func TestQuerylogConfigUpdate(t *testing.T) {
 		Interval:          28800000,
 		AnonymizeClientIp: true,
 		Ignored:           []string{"example.org", "test.org"},
+		IgnoredEnabled:    true,
 	}
 
 	// call the method
@@ -237,6 +242,7 @@ func TestQuerylogConfigUpdate(t *testing.T) {
 	assert.True(t, result.AnonymizeClientIp)
 	assert.Contains(t, result.Ignored, "example.org")
 	assert.Contains(t, result.Ignored, "test.org")
+	assert.True(t, result.IgnoredEnabled)
 }
 
 // Test QuerylogConfigUpdate - Error initializing request
